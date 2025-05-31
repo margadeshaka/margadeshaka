@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Sudarshan Chakra Model</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1a1a2e;
+      color: #fff;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #e94560;
+    }
+    .model-container {
+      width: 100%;
+      height: 400px;
+      background-color: #16213e;
+      border-radius: 8px;
+      margin: 20px 0;
+      position: relative;
+    }
+    #model-viewer {
+      width: 100%;
+      height: 100%;
+    }
+    .status {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #0f3460;
+    }
+    .error {
+      background-color: #e94560;
+      color: white;
+    }
+    .success {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      background-color: #e94560;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #c73e54;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sudarshan Chakra Model Test</h1>
+
+    <div class="model-container">
+      <model-viewer id="model-viewer" 
+                   src="/models/sudarshan-chakra.glb" 
+                   alt="Sudarshan Chakra 3D Model"
+                   auto-rotate 
+                   camera-controls 
+                   shadow-intensity="1">
+      </model-viewer>
+    </div>
+
+    <div id="loading-status" class="status">
+      Loading model...
+    </div>
+
+    <div id="error-status" class="status error hidden">
+      Error loading model: <span id="error-message"></span>
+    </div>
+
+    <div id="success-status" class="status success hidden">
+      Model loaded successfully!
+    </div>
+
+    <div id="check-status" class="status hidden">
+      <h3>Model File Check Results:</h3>
+      <pre id="check-output" style="white-space: pre-wrap; max-height: 200px; overflow-y: auto;"></pre>
+    </div>
+
+    <div>
+      <button id="reload-btn">Reload Model</button>
+      <button id="check-btn">Check Model File</button>
+      <button id="fix-btn" class="bg-green-600 hover:bg-green-700">Fix Model File</button>
+    </div>
+  </div>
+
+  <!-- Import model-viewer component -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const modelViewer = document.getElementById('model-viewer');
+      const loadingStatus = document.getElementById('loading-status');
+      const errorStatus = document.getElementById('error-status');
+      const successStatus = document.getElementById('success-status');
+      const errorMessage = document.getElementById('error-message');
+      const reloadBtn = document.getElementById('reload-btn');
+      const checkBtn = document.getElementById('check-btn');
+      const fixBtn = document.getElementById('fix-btn');
+
+      const checkStatus = document.getElementById('check-status');
+      const checkOutput = document.getElementById('check-output');
+
+      // Function to show status
+      function showStatus(element) {
+        loadingStatus.classList.add('hidden');
+        errorStatus.classList.add('hidden');
+        successStatus.classList.add('hidden');
+        checkStatus.classList.add('hidden');
+        element.classList.remove('hidden');
+      }
+
+      // Event listeners for model-viewer
+      modelViewer.addEventListener('load', function() {
+        showStatus(successStatus);
+      });
+
+      modelViewer.addEventListener('error', function(event) {
+        errorMessage.textContent = event.detail.sourceError ? 
+          event.detail.sourceError.message : 'Unknown error';
+        showStatus(errorStatus);
+        console.error('Error loading model:', event.detail);
+      });
+
+      // Reload button
+      reloadBtn.addEventListener('click', function() {
+        showStatus(loadingStatus);
+        const currentSrc = modelViewer.src;
+        modelViewer.src = '';
+        setTimeout(() => {
+          modelViewer.src = currentSrc + '?t=' + Date.now(); // Add timestamp to bypass cache
+        }, 100);
+      });
+
+      // Check model file button
+      checkBtn.addEventListener('click', async function() {
+        checkBtn.disabled = true;
+        checkBtn.textContent = 'Checking...';
+        checkOutput.textContent = 'Running model check script...';
+        checkStatus.classList.remove('hidden');
+
+        try {
+          const response = await fetch('/api/check-model');
+          const data = await response.json();
+
+          if (data.error) {
+            checkOutput.textContent = `Error: ${data.error}\n${data.details || ''}`;
+          } else {
+            checkOutput.textContent = data.output || 'No output from check script';
+          }
+        } catch (error) {
+          checkOutput.textContent = `Failed to run check: ${error.message}`;
+        } finally {
+          checkBtn.disabled = false;
+          checkBtn.textContent = 'Check Model File';
+        }
+      });
+
+      // Fix model file button
+      fixBtn.addEventListener('click', async function() {
+        if (!confirm('This will replace the current model file. Are you sure you want to continue?')) {
+          return;
+        }
+
+        fixBtn.disabled = true;
+        fixBtn.textContent = 'Fixing...';
+        checkOutput.textContent = 'Running model fix script...';
+        checkStatus.classList.remove('hidden');
+
+        try {
+          const response = await fetch('/api/fix-model');
+          const data = await response.json();
+
+          if (data.error) {
+            checkOutput.textContent = `Error: ${data.error}\n${data.details || ''}`;
+          } else {
+            checkOutput.textContent = data.output || 'No output from fix script';
+            // Add a note about reloading
+            checkOutput.textContent += '\n\nPlease reload the model to see the changes.';
+          }
+        } catch (error) {
+          checkOutput.textContent = `Failed to run fix: ${error.message}`;
+        } finally {
+          fixBtn.disabled = false;
+          fixBtn.textContent = 'Fix Model File';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
