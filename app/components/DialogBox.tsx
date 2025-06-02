@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useChakra } from '../context/ChakraContext';
-import { useLanguage } from '../context/LanguageContext';
 
 interface DialogBoxProps {
   pointId: string;
@@ -12,16 +11,14 @@ interface DialogBoxProps {
 export default function DialogBox({ pointId, position }: DialogBoxProps) {
   const [isVisible, setIsVisible] = useState(false);
   const { chakraPoints, unlockPoint, unlockedPoints } = useChakra();
-  const { language } = useLanguage();
 
   // Find the chakra point data
   const point = chakraPoints.find(p => p.id === pointId);
 
   if (!point) return null;
 
-  // Get the translated content
-  const title = point.translations[language]?.title || '';
-  const description = point.translations[language]?.description || '';
+  // Get the content
+  const { title, description } = point;
 
   // Animation effect when dialog appears
   useEffect(() => {
@@ -38,15 +35,13 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
     return () => clearTimeout(timer);
   }, [pointId, unlockPoint, unlockedPoints]);
 
-  // Enhanced responsive positioning - positioned on sides
+  // Enhanced responsive positioning - positioned at extreme edges
   const positionClasses = position === 'left'
-    ? 'left-4 sm:left-8 lg:left-16' // Position on left side
-    : 'right-4 sm:right-8 lg:right-16'; // Position on right side
+    ? 'left-0' // Position at leftmost edge
+    : 'right-0'; // Position at rightmost edge
 
-  // For small screens, position at bottom center
-  const smallScreenPosition = position === 'left'
-    ? 'bottom-4 sm:bottom-auto left-1/2 -translate-x-1/2 sm:translate-x-0' // Center on small screens, left on larger
-    : 'bottom-4 sm:bottom-auto left-1/2 -translate-x-1/2 sm:left-auto'; // Center on small screens, use right positioning on larger
+  // Center dialog in middle of screen on mobile
+  // const smallScreenPosition = 'top-1/2 -translate-y-1/2 sm:translate-y-0 sm:top-auto left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0';
 
   // Determine animation based on position and screen size
   const animationClass = position === 'left'
@@ -56,11 +51,11 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
   return (
     <div 
       className={`
-        absolute ${smallScreenPosition} ${positionClasses} 
+        absolute ${position === 'left' ? 'sm:left-0' : 'sm:right-0'} 
         max-w-full sm:max-w-sm md:max-w-md w-auto sm:w-full dialog-box
         ${isVisible ? animationClass : 'opacity-0'}
         border-2 border-indigo-300/30 hover:border-indigo-300/50
-        animate-glow z-10
+        animate-glow z-50 px-4 mx-2
       `}
       style={{ animationDelay: '0.25s' }} // Slightly reduced delay for better synchronization
     >

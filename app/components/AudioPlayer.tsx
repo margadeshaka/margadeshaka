@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { useChakra } from '../context/ChakraContext';
-import { useLanguage } from '../context/LanguageContext';
 import { useLogging } from '../context/LoggingContext';
 import ErrorBoundary from './ErrorBoundary';
 
@@ -12,7 +11,6 @@ import ErrorBoundary from './ErrorBoundary';
  */
 export default function AudioPlayer() {
   const { isAudioPlaying, toggleAudio } = useChakra();
-  const { t } = useLanguage();
   const logging = useLogging();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -65,7 +63,7 @@ export default function AudioPlayer() {
       <button
         onClick={handleToggleAudio}
         className="fixed bottom-8 right-8 z-10 bg-indigo-900/70 hover:bg-indigo-800/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
-        aria-label={isAudioPlaying ? t('audio.pause', 'Pause Mantra') : t('audio.play', 'Play Mantra')}
+        aria-label={isAudioPlaying ? 'Pause Mantra' : 'Play Mantra'}
       >
         {isAudioPlaying ? (
           // Pause icon

@@ -3,18 +3,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import * as THREE from 'three';
 import chakraPointsData from '../data/chakraPoints.json';
-import { Language } from './LanguageContext';
 import { useLogging } from './LoggingContext';
 
 // Define the types for our chakra points
-export interface ChakraPointTranslation {
-  title: string;
-  description: string;
-}
-
 export interface ChakraPoint {
   id: string;
-  translations: Record<Language, ChakraPointTranslation>;
+  title: string;
+  description: string;
   position: 'left' | 'right';
   cameraPosition: [number, number, number]; // x, y, z coordinates for the camera
   unlocked: boolean;

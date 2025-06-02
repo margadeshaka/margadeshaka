@@ -95,23 +95,23 @@ export default function ScrollManager() {
         );
       })}
 
-      {/* Mobile navigation indicators */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 md:hidden">
-        {chakraPoints.map(point => (
-          <button
-            key={point.id}
-            className={`w-3 h-3 rounded-full ${activePointId === point.id ? 'bg-indigo-500' : 'bg-gray-400'}`}
-            onClick={() => {
-              setActivePointId(point.id);
-              const section = document.getElementById(`section-${point.id}`);
-              if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            aria-label={`Navigate to point ${point.id}`}
-          />
-        ))}
-      </div>
+      {/*/!* Mobile navigation indicators *!/*/}
+      {/*<div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 md:hidden">*/}
+      {/*  {chakraPoints.map(point => (*/}
+      {/*    <button*/}
+      {/*      key={point.id}*/}
+      {/*      className={`w-3 h-3 rounded-full ${activePointId === point.id ? 'bg-indigo-500' : 'bg-gray-400'}`}*/}
+      {/*      onClick={() => {*/}
+      {/*        setActivePointId(point.id);*/}
+      {/*        const section = document.getElementById(`section-${point.id}`);*/}
+      {/*        if (section) {*/}
+      {/*          section.scrollIntoView({ behavior: 'smooth' });*/}
+      {/*        }*/}
+      {/*      }}*/}
+      {/*      aria-label={`Navigate to point ${point.id}`}*/}
+      {/*    />*/}
+      {/*  ))}*/}
+      {/*</div>*/}
     </div>
   );
 }

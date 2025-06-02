@@ -2,100 +2,40 @@
   "points": [
     {
       "id": "1",
-      "translations": {
-        "en": {
-          "title": "Divine Origin",
-          "description": "The Sudarshan Chakra was forged by Vishwakarma, the divine architect, from the dust of the sun."
-        },
-        "sa": {
-          "title": "दिव्य उत्पत्ति",
-          "description": "सुदर्शन चक्र विश्वकर्मा द्वारा, दिव्य वास्तुकार, सूर्य के धूल से निर्मित किया गया था।"
-        },
-        "hi": {
-          "title": "दिव्य उत्पत्ति",
-          "description": "सुदर्शन चक्र विश्वकर्मा द्वारा, दिव्य वास्तुकार, सूर्य की धूल से बनाया गया था।"
-        }
-      },
+      "title": "Divine Origin",
+      "description": "The Sudarshan Chakra was forged by Vishwakarma, the divine architect, from the dust of the sun.",
       "position": "right",
       "cameraPosition": [5, 0, 8],
       "unlocked": false
     },
     {
       "id": "2",
-      "translations": {
-        "en": {
-          "title": "Cosmic Power",
-          "description": "With 108 serrated edges, the chakra represents the 108 elements that constitute the material universe."
-        },
-        "sa": {
-          "title": "ब्रह्माण्डीय शक्ति",
-          "description": "108 दांतेदार किनारों के साथ, चक्र 108 तत्वों का प्रतिनिधित्व करता है जो भौतिक ब्रह्मांड का निर्माण करते हैं।"
-        },
-        "hi": {
-          "title": "ब्रह्मांडीय शक्ति",
-          "description": "108 दांतेदार किनारों के साथ, चक्र उन 108 तत्वों का प्रतिनिधित्व करता है जो भौतिक ब्रह्मांड का निर्माण करते हैं।"
-        }
-      },
+      "title": "Cosmic Power",
+      "description": "With 108 serrated edges, the chakra represents the 108 elements that constitute the material universe.",
       "position": "left",
       "cameraPosition": [-5, 0, 8],
       "unlocked": false
     },
     {
       "id": "3",
-      "translations": {
-        "en": {
-          "title": "Eternal Motion",
-          "description": "The chakra spins perpetually, symbolizing the eternal nature of time and cosmic order (Dharma)."
-        },
-        "sa": {
-          "title": "शाश्वत गति",
-          "description": "चक्र निरंतर घूमता रहता है, जो समय और ब्रह्मांडीय व्यवस्था (धर्म) की शाश्वत प्रकृति का प्रतीक है।"
-        },
-        "hi": {
-          "title": "शाश्वत गति",
-          "description": "चक्र लगातार घूमता रहता है, जो समय और ब्रह्मांडीय व्यवस्था (धर्म) की शाश्वत प्रकृति का प्रतीक है।"
-        }
-      },
+      "title": "Eternal Motion",
+      "description": "The chakra spins perpetually, symbolizing the eternal nature of time and cosmic order (Dharma).",
       "position": "right",
       "cameraPosition": [0, 5, 8],
       "unlocked": false
     },
     {
       "id": "4",
-      "translations": {
-        "en": {
-          "title": "Time Mastery",
-          "description": "Sudarshan Chakra represents Lord Vishnu's mastery over time itself, cutting through past, present, and future."
-        },
-        "sa": {
-          "title": "काल नियंत्रण",
-          "description": "सुदर्शन चक्र भगवान विष्णु के समय पर नियंत्रण का प्रतिनिधित्व करता है, भूत, वर्तमान और भविष्य को काटते हुए।"
-        },
-        "hi": {
-          "title": "समय पर नियंत्रण",
-          "description": "सुदर्शन चक्र भगवान विष्णु के समय पर नियंत्रण का प्रतिनिधित्व करता है, जो भूत, वर्तमान और भविष्य को काटता है।"
-        }
-      },
+      "title": "Time Mastery",
+      "description": "Sudarshan Chakra represents Lord Vishnu's mastery over time itself, cutting through past, present, and future.",
       "position": "left",
       "cameraPosition": [0, -5, 8],
       "unlocked": false
     },
     {
       "id": "5",
-      "translations": {
-        "en": {
-          "title": "Divine Justice",
-          "description": "The chakra serves as an instrument of divine justice, protecting dharma and destroying adharma."
-        },
-        "sa": {
-          "title": "दिव्य न्याय",
-          "description": "चक्र दिव्य न्याय के उपकरण के रूप में कार्य करता है, धर्म की रक्षा करता है और अधर्म का नाश करता है।"
-        },
-        "hi": {
-          "title": "दिव्य न्याय",
-          "description": "चक्र दिव्य न्याय के उपकरण के रूप में कार्य करता है, धर्म की रक्षा करता है और अधर्म का नाश करता है।"
-        }
-      },
+      "title": "Divine Justice",
+      "description": "The chakra serves as an instrument of divine justice, protecting dharma and destroying adharma.",
       "position": "right",
       "cameraPosition": [8, 3, 5],
       "unlocked": false

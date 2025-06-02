@@ -1,7 +1,6 @@
 'use client';
 
 import { useAuth } from '../context/AuthContext';
-import { useLanguage } from '../context/LanguageContext';
 import { useLogging } from '../context/LoggingContext';
 
 /**
@@ -10,7 +9,6 @@ import { useLogging } from '../context/LoggingContext';
  */
 export default function LoginButton() {
   const { isAuthenticated, login, logout, userData } = useAuth();
-  const { t } = useLanguage();
   const logging = useLogging();
 
   const handleLogin = () => {
@@ -35,7 +33,7 @@ export default function LoginButton() {
             className="bg-indigo-900/70 hover:bg-indigo-800/90 text-white px-3 py-1 rounded text-sm transition-all duration-300"
             aria-label="Logout"
           >
-            {t('logout.button', 'Logout')}
+            Logout
           </button>
         </div>
       ) : (
@@ -44,7 +42,7 @@ export default function LoginButton() {
           className="bg-indigo-900/70 hover:bg-indigo-800/90 text-white px-3 py-1 rounded text-sm transition-all duration-300"
           aria-label="Login"
         >
-          {t('login.button', 'Login')}
+          Login
         </button>
       )}
     </div>

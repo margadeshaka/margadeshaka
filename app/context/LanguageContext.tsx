@@ -25,8 +25,8 @@ export const useLanguage = () => useContext(LanguageContext);
 // Translations
 const translations: Record<Language, Record<string, string>> = {
   en: {
-    'app.title': 'Margadeshaka',
-    'app.subtitle': 'Scroll to explore the Sudarshan Chakra',
+    'app.title': 'MARGADESHAKA',
+    'app.subtitle': 'AI',
     'language.english': 'English',
     'language.sanskrit': 'Sanskrit',
     'language.hindi': 'Hindi',
