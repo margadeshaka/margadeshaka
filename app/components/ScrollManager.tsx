@@ -10,11 +10,12 @@ export default function ScrollManager() {
   const { activePointId, setActivePointId, chakraPoints } = useChakra();
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
-  // Create refs for each section
+  // Create refs for each section with a lower threshold for smoother transitions
   const sections = chakraPoints.map(point => {
     const { ref, inView } = useInView({
-      threshold: 0.7,
-      triggerOnce: false
+      threshold: 0.5, // Lower threshold for earlier detection
+      triggerOnce: false,
+      rootMargin: '-10% 0px', // Add some margin to improve timing
     });
 
     return { id: point.id, ref, inView };
@@ -24,7 +25,11 @@ export default function ScrollManager() {
   useEffect(() => {
     const visibleSection = sections.find(section => section.inView);
     if (visibleSection) {
-      setActivePointId(visibleSection.id);
+      // Use a small timeout to allow the scroll animation to start
+      // This helps synchronize the card appearance with the chakra rotation
+      setTimeout(() => {
+        setActivePointId(visibleSection.id);
+      }, 50);
     }
   }, [sections.map(s => s.inView), setActivePointId]);
 
@@ -45,10 +50,13 @@ export default function ScrollManager() {
     const newPointId = chakraPoints[newIndex].id;
     setActivePointId(newPointId);
 
-    // Scroll to the new section
+    // Scroll to the new section with improved behavior
     const newSection = document.getElementById(`section-${newPointId}`);
     if (newSection) {
-      newSection.scrollIntoView({ behavior: 'smooth' });
+      newSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'center', // Center the section in the viewport for better visibility
+      });
     }
   };
 
@@ -74,7 +82,7 @@ export default function ScrollManager() {
             id={`section-${point.id}`}
             key={point.id}
             ref={section?.ref}
-            className="h-screen w-full flex items-center justify-center"
+            className="h-screen w-full flex items-center"
           >
             {/* Dialog box will be rendered by DialogBox component */}
             {activePointId === point.id && (

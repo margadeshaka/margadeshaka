@@ -25,10 +25,10 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
 
   // Animation effect when dialog appears
   useEffect(() => {
-    // Small delay before showing for better animation effect
+    // Slightly longer delay to better synchronize with chakra rotation
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 100);
+    }, 200); // Increased from 100ms to 200ms for better synchronization
 
     // Unlock this point when it's viewed
     if (!unlockedPoints.includes(pointId)) {
@@ -38,13 +38,15 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
     return () => clearTimeout(timer);
   }, [pointId, unlockPoint, unlockedPoints]);
 
-  // Enhanced responsive positioning
+  // Enhanced responsive positioning - positioned on sides
   const positionClasses = position === 'left'
-    ? 'left-4 sm:left-8 lg:left-16' // More responsive left positioning
-    : 'right-4 sm:right-8 lg:right-16'; // More responsive right positioning
+    ? 'left-4 sm:left-8 lg:left-16' // Position on left side
+    : 'right-4 sm:right-8 lg:right-16'; // Position on right side
 
-  // For small screens, position at bottom instead of sides
-  const smallScreenPosition = 'bottom-4 sm:bottom-auto left-4 right-4 sm:left-auto sm:right-auto';
+  // For small screens, position at bottom center
+  const smallScreenPosition = position === 'left'
+    ? 'bottom-4 sm:bottom-auto left-1/2 -translate-x-1/2 sm:translate-x-0' // Center on small screens, left on larger
+    : 'bottom-4 sm:bottom-auto left-1/2 -translate-x-1/2 sm:left-auto'; // Center on small screens, use right positioning on larger
 
   // Determine animation based on position and screen size
   const animationClass = position === 'left'
@@ -60,7 +62,7 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
         border-2 border-indigo-300/30 hover:border-indigo-300/50
         animate-glow z-10
       `}
-      style={{ animationDelay: '0.3s' }}
+      style={{ animationDelay: '0.25s' }} // Slightly reduced delay for better synchronization
     >
       {/* Decorative elements for cosmic theme - hidden on smallest screens */}
       <div className="hidden sm:block absolute -top-3 -left-3 w-4 sm:w-6 h-4 sm:h-6 border-t-2 border-l-2 border-indigo-400/60"></div>
@@ -72,7 +74,7 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
           bg-gradient-to-r from-blue-400 to-purple-500
           ${isVisible ? 'animate-fadeInUp' : 'opacity-0'}
         `}
-        style={{ animationDelay: '0.5s' }}
+        style={{ animationDelay: '0.4s' }} // Slightly reduced delay for better synchronization
       >
         {title}
       </h2>
@@ -82,7 +84,7 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
           text-base sm:text-lg text-blue-50
           ${isVisible ? 'animate-fadeInUp' : 'opacity-0'}
         `}
-        style={{ animationDelay: '0.7s' }}
+        style={{ animationDelay: '0.55s' }} // Slightly reduced delay for better synchronization
       >
         {description}
       </p>
@@ -90,7 +92,7 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
       {/* Enhanced visual indicator - hidden on smallest screens */}
       <div 
         className={`
-          hidden sm:block absolute top-1/2 h-[2px] w-12 sm:w-20 
+          hidden sm:block absolute top-1/2 h-[2px] w-12 sm:w-16 
           ${position === 'left' 
             ? 'right-0 translate-x-full bg-gradient-to-r from-indigo-500 to-transparent' 
             : 'left-0 -translate-x-full bg-gradient-to-l from-indigo-500 to-transparent'}
