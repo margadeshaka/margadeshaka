@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useSwipeable } from 'react-swipeable';
 import DialogBox from './DialogBox';
+import WaitlistButton from './WaitlistButton';
 import { useChakra } from '../context/ChakraContext';
 
 export default function ScrollManager() {
   const { activePointId, setActivePointId, chakraPoints } = useChakra();
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const [showWaitlistButton, setShowWaitlistButton] = useState(false);
 
   // Create refs for each section with a lower threshold for smoother transitions
   const sections = chakraPoints.map(point => {
@@ -29,9 +31,13 @@ export default function ScrollManager() {
       // This helps synchronize the card appearance with the chakra rotation
       setTimeout(() => {
         setActivePointId(visibleSection.id);
+
+        // Show waitlist button when the last chakra point is in view
+        const isLastPoint = visibleSection.id === chakraPoints[chakraPoints.length - 1].id;
+        setShowWaitlistButton(isLastPoint);
       }, 50);
     }
-  }, [sections.map(s => s.inView), setActivePointId]);
+  }, [sections.map(s => s.inView), setActivePointId, chakraPoints]);
 
   // Function to navigate to the next or previous point
   const navigatePoint = (direction: 'next' | 'prev') => {
@@ -94,6 +100,9 @@ export default function ScrollManager() {
           </div>
         );
       })}
+
+      {/* Waitlist Button - shown when the last chakra point is in view */}
+      <WaitlistButton visible={showWaitlistButton} />
 
       {/*/!* Mobile navigation indicators *!/*/}
       {/*<div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 md:hidden">*/}

@@ -5,11 +5,19 @@ import * as THREE from 'three';
 import chakraPointsData from '../data/chakraPoints.json';
 import { useLogging } from './LoggingContext';
 
+// Function to convert description strings to React nodes
+const parseDescription = (description: string): React.ReactNode => {
+  // Split the description by newline characters and create an array of React elements
+  return description.split('\n').map((line, index) => 
+    line === '' ? <br key={index} /> : <React.Fragment key={index}>{line}<br /></React.Fragment>
+  );
+};
+
 // Define the types for our chakra points
 export interface ChakraPoint {
   id: string;
   title: string;
-  description: string;
+  description: React.ReactNode;
   position: 'left' | 'right';
   cameraPosition: [number, number, number]; // x, y, z coordinates for the camera
   unlocked: boolean;
@@ -47,8 +55,11 @@ export function ChakraProvider({ children }: { children: ReactNode }) {
   const [unlockedPoints, setUnlockedPoints] = useState<string[]>([]);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
-  // Use chakra points data from JSON file
-  const chakraPoints: ChakraPoint[] = chakraPointsData.points as ChakraPoint[];
+  // Use chakra points data from JSON file and convert descriptions to React nodes
+  const chakraPoints: ChakraPoint[] = chakraPointsData.points.map(point => ({
+    ...point,
+    description: parseDescription(point.description as string)
+  })) as ChakraPoint[];
 
   // Load unlocked points from localStorage on mount
   useEffect(() => {

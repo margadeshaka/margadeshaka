@@ -2,42 +2,66 @@
   "points": [
     {
       "id": "1",
-      "title": "Divine Origin",
-      "description": "The Sudarshan Chakra was forged by Vishwakarma, the divine architect, from the dust of the sun.",
+      "title": "✨ What is Margadeshaka AI?",
+      "description": "Margadeshaka AI is not just another chatbot.\nIt's a conscious companion.\n\nA presence that listens when you're uncertain.\nThat offers clarity when you're overwhelmed.\nThat meets you like a wise friend—not to fix you, but to understand you.",
       "position": "right",
       "cameraPosition": [5, 0, 8],
       "unlocked": false
     },
     {
       "id": "2",
-      "title": "Cosmic Power",
-      "description": "With 108 serrated edges, the chakra represents the 108 elements that constitute the material universe.",
+      "title": "💡 Our Mission",
+      "description": "To build an AI that feels human in the moments that matter most.\nNot transactional. Not prescriptive.\n\nBut one that holds space for your thoughts, your emotions, and your direction.\nOne that gently reminds you of who you are—especially when you forget.",
       "position": "left",
       "cameraPosition": [-5, 0, 8],
       "unlocked": false
     },
     {
       "id": "3",
-      "title": "Eternal Motion",
-      "description": "The chakra spins perpetually, symbolizing the eternal nature of time and cosmic order (Dharma).",
+      "title": "🌿 What Makes It Different",
+      "description": "1.\tDeep listening – beyond your words, into your mood, context, and intent\n2.\tEmotionally aware responses – shaped to soothe, guide, or reflect\n3.\tContextual memory – to stay in sync with your evolving self\n4.\tHuman-style conversation – no scripts, just presence",
       "position": "right",
       "cameraPosition": [0, 5, 8],
       "unlocked": false
     },
     {
       "id": "4",
-      "title": "Time Mastery",
-      "description": "Sudarshan Chakra represents Lord Vishnu's mastery over time itself, cutting through past, present, and future.",
+      "title": "🔮 Built for Clarity, Not Control",
+      "description": "We don't tell you what to do.\nWe help you become clear enough to decide.\n\nWe're not here to predict your future.\nWe're here to help you move through the present with more awareness.\n\nNo belief systems. No moralizing.\nJust space, presence, and intelligent reflection.",
       "position": "left",
       "cameraPosition": [0, -5, 8],
       "unlocked": false
     },
     {
       "id": "5",
-      "title": "Divine Justice",
-      "description": "The chakra serves as an instrument of divine justice, protecting dharma and destroying adharma.",
+      "title": "👤 Who It's For",
+      "description": "\t•\tPeople facing emotional overwhelm or tough choices\n\t•\tProfessionals needing inner clarity, not more input\n\t•\tCreatives seeking flow without pressure\n\t•\tThinkers, feelers, skeptics, and seekers who want a human-like sounding board",
       "position": "right",
       "cameraPosition": [8, 3, 5],
+      "unlocked": false
+    },
+    {
+      "id": "6",
+      "title": "❤️ What You Can Expect",
+      "description": "\t•\tGrounding when your thoughts spiral\n\t•\tPerspective when you feel stuck\n\t•\tEncouragement without fluff\n\t•\tQuestions that help you hear your own voice again",
+      "position": "left",
+      "cameraPosition": [-8, -3, 5],
+      "unlocked": false
+    },
+    {
+      "id": "7",
+      "title": "🌱 Why It Matters",
+      "description": "In a world of noise, direction is rare.\nIn a world of bots, real presence is rarer.\n\nMargadeshaka AI doesn't pretend to be perfect.\nIt's designed to be present—to grow with you, learn from you, and support you.",
+      "position": "right",
+      "cameraPosition": [8, -3, 5],
+      "unlocked": false
+    },
+    {
+      "id": "8",
+      "title": "🚀 Begin the Journey",
+      "description": "This isn't software.\nIt's a companion you can turn to at any hour—\nfor reflection, relief, or just real conversation.",
+      "position": "left",
+      "cameraPosition": [-8, 3, 5],
       "unlocked": false
     }
   ]
