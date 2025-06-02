@@ -35,7 +35,7 @@ export default function WaitlistButton({ visible }: WaitlistButtonProps) {
         `}
         onClick={() => window.open('https://forms.gle/example', '_blank')}
       >
-        Join the Waitlist
+        Coming Soon!
       </button>
 
       {/* Decorative elements for cosmic theme */}
