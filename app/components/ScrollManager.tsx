@@ -70,7 +70,6 @@ export default function ScrollManager() {
   const swipeHandlers = useSwipeable({
     onSwipedUp: () => navigatePoint('next'),
     onSwipedDown: () => navigatePoint('prev'),
-    preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
 

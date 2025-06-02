@@ -2,9 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  export:"export",
   // Configure any additional Next.js settings here
   images: {
     domains: [],
+    unoptimized: true,
   },
   // Environment variables that will be available at build time
   env: {
