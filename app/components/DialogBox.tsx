@@ -15,13 +15,10 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
   // Find the chakra point data
   const point = chakraPoints.find(p => p.id === pointId);
 
-  if (!point) return null;
-
-  // Get the content
-  const { title, description } = point;
-
   // Animation effect when dialog appears
   useEffect(() => {
+    if (!point) return;
+
     // Slightly longer delay to better synchronize with chakra rotation
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -33,12 +30,17 @@ export default function DialogBox({ pointId, position }: DialogBoxProps) {
     }
 
     return () => clearTimeout(timer);
-  }, [pointId, unlockPoint, unlockedPoints]);
+  }, [pointId, unlockPoint, unlockedPoints, point]);
+
+  if (!point) return null;
+
+  // Get the content
+  const { title, description } = point;
 
   // Enhanced responsive positioning - positioned at extreme edges
-  const positionClasses = position === 'left'
-    ? 'left-0' // Position at leftmost edge
-    : 'right-0'; // Position at rightmost edge
+  // const positionClasses = position === 'left'
+  //   ? 'left-0' // Position at leftmost edge
+  //   : 'right-0'; // Position at rightmost edge
 
   // Center dialog in middle of screen on mobile
   // const smallScreenPosition = 'top-1/2 -translate-y-1/2 sm:translate-y-0 sm:top-auto left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0';

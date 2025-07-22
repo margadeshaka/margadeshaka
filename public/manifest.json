@@ -1,0 +1,54 @@
+{
+  "name": "Margadeshaka AI - Your Conscious AI Companion",
+  "short_name": "Margadeshaka AI",
+  "description": "Your conscious companion designed to listen deeply, reflect wisely, and guide you toward clarity. Experience human-like conversations with AI that understands context, emotions, and your unique journey.",
+  "start_url": "/?utm_source=pwa",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/images/chakra.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/chakra.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["health", "lifestyle", "wellness", "productivity", "education"],
+  "screenshots": [
+    {
+      "src": "/images/chakra.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Conversation",
+      "short_name": "Chat",
+      "description": "Begin a conversation with Margadeshaka AI",
+      "url": "/?action=chat",
+      "icons": [{
+        "src": "/images/chakra.png",
+        "sizes": "96x96"
+      }]
+    }
+  ],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "protocol_handlers": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

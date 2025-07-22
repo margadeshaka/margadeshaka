@@ -1,15 +1,14 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import * as THREE from 'three';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 import chakraPointsData from '../data/chakraPoints.json';
 import { useLogging } from './LoggingContext';
 
-// Function to convert description strings to React nodes
+// Optimized function to convert description strings to React nodes
 const parseDescription = (description: string): React.ReactNode => {
-  // Split the description by newline characters and create an array of React elements
-  return description.split('\n').map((line, index) => 
-    line === '' ? <br key={index} /> : <React.Fragment key={index}>{line}<br /></React.Fragment>
+  const lines = description.split('\n');
+  return lines.map((line, index) => 
+    line === '' ? <br key={`br-${index}`} /> : <React.Fragment key={`text-${index}`}>{line}<br /></React.Fragment>
   );
 };
 
@@ -51,59 +50,81 @@ export const useChakra = () => useContext(ChakraContext);
 // Provider component
 export function ChakraProvider({ children }: { children: ReactNode }) {
   const logging = useLogging();
-  const [activePointId, setActivePointId] = useState<string | null>(null);
+  // Initialize with first chakra point
+  const [activePointId, setActivePointId] = useState<string | null>(() => 
+    chakraPointsData.points.length > 0 ? chakraPointsData.points[0].id : null
+  );
   const [unlockedPoints, setUnlockedPoints] = useState<string[]>([]);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
-  // Use chakra points data from JSON file and convert descriptions to React nodes
-  const chakraPoints: ChakraPoint[] = chakraPointsData.points.map(point => ({
-    ...point,
-    description: parseDescription(point.description as string)
-  })) as ChakraPoint[];
+  // Memoize chakra points to prevent unnecessary re-parsing
+  const chakraPoints: ChakraPoint[] = useMemo(() => 
+    chakraPointsData.points.map(point => ({
+      ...point,
+      description: parseDescription(point.description as string)
+    })) as ChakraPoint[],
+    []
+  );
 
-  // Load unlocked points from localStorage on mount
+  // Optimized localStorage loading with error handling
   useEffect(() => {
-    const savedUnlockedPoints = localStorage.getItem('unlockedPoints');
-    if (savedUnlockedPoints) {
-      try {
-        setUnlockedPoints(JSON.parse(savedUnlockedPoints));
-        logging.info('Loaded unlocked points from localStorage', { count: JSON.parse(savedUnlockedPoints).length });
-      } catch (e) {
-        logging.error('Error parsing unlocked points from localStorage', e);
+    try {
+      const savedUnlockedPoints = localStorage.getItem('unlockedPoints');
+      if (savedUnlockedPoints) {
+        const parsed = JSON.parse(savedUnlockedPoints);
+        setUnlockedPoints(Array.isArray(parsed) ? parsed : []);
+        logging.info('Loaded unlocked points from localStorage', { count: parsed.length });
       }
+    } catch (e) {
+      logging.error('Error parsing unlocked points from localStorage', e);
+      // Clear corrupted data
+      localStorage.removeItem('unlockedPoints');
     }
   }, [logging]);
 
-  // Save unlocked points to localStorage when they change
+  // Debounced localStorage saving for better performance
   useEffect(() => {
-    localStorage.setItem('unlockedPoints', JSON.stringify(unlockedPoints));
-    logging.debug('Saved unlocked points to localStorage', { unlockedPoints });
+    const timeoutId = setTimeout(() => {
+      try {
+        localStorage.setItem('unlockedPoints', JSON.stringify(unlockedPoints));
+        logging.debug('Saved unlocked points to localStorage', { count: unlockedPoints.length });
+      } catch (e) {
+        logging.error('Error saving unlocked points to localStorage', e);
+      }
+    }, 100);
+    
+    return () => clearTimeout(timeoutId);
   }, [unlockedPoints, logging]);
 
-  // Unlock a point
-  const unlockPoint = (id: string) => {
+  // Memoized functions for better performance
+  const unlockPoint = useCallback((id: string) => {
     if (!unlockedPoints.includes(id)) {
-      setUnlockedPoints([...unlockedPoints, id]);
+      setUnlockedPoints(prev => [...prev, id]);
       logging.info('Unlocked new chakra point', { id });
     }
-  };
+  }, [unlockedPoints, logging]);
 
-  // Toggle audio playback
-  const toggleAudio = () => {
-    setIsAudioPlaying(!isAudioPlaying);
-    logging.debug('Toggled audio playback', { isPlaying: !isAudioPlaying });
-  };
+  const toggleAudio = useCallback(() => {
+    setIsAudioPlaying(prev => {
+      const newState = !prev;
+      logging.debug('Toggled audio playback', { isPlaying: newState });
+      return newState;
+    });
+  }, [logging]);
+
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    activePointId,
+    setActivePointId,
+    chakraPoints,
+    unlockedPoints,
+    unlockPoint,
+    isAudioPlaying,
+    toggleAudio
+  }), [activePointId, chakraPoints, unlockedPoints, unlockPoint, isAudioPlaying, toggleAudio]);
 
   return (
-    <ChakraContext.Provider value={{ 
-      activePointId, 
-      setActivePointId, 
-      chakraPoints,
-      unlockedPoints,
-      unlockPoint,
-      isAudioPlaying,
-      toggleAudio
-    }}>
+    <ChakraContext.Provider value={contextValue}>
       {children}
     </ChakraContext.Provider>
   );

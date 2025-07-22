@@ -21,20 +21,20 @@ export default function CosmicBackground() {
     setCanvasDimensions();
     window.addEventListener('resize', setCanvasDimensions);
 
-    // Create stars
+    // Optimized star management with object pooling
     const stars: { x: number; y: number; radius: number; color: string; speed: number }[] = [];
     const createStars = () => {
-      stars.length = 0; // Clear existing stars
-      const starCount = Math.floor(canvas.width * canvas.height / 3000);
+      stars.length = 0;
+      const starCount = Math.min(200, Math.floor(canvas.width * canvas.height / 4000)); // Cap for performance
 
       for (let i = 0; i < starCount; i++) {
-        const radius = Math.random() * 1.5;
+        const radius = 0.5 + Math.random() * 1;
         stars.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           radius,
           color: getStarColor(),
-          speed: 0.05 + Math.random() * 0.1
+          speed: 0.02 + Math.random() * 0.05 // Slower for better performance
         });
       }
     };
@@ -52,67 +52,81 @@ export default function CosmicBackground() {
     createStars();
     window.addEventListener('resize', createStars);
 
-    // Animation loop
+    // Optimized animation loop with performance improvements
     let animationFrameId: number;
+    let lastFrameTime = 0;
+    const targetFPS = 30; // Reduced FPS for better performance
+    const frameInterval = 1000 / targetFPS;
 
-    const render = () => {
+    const render = (currentTime: number) => {
+      if (currentTime - lastFrameTime < frameInterval) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+      lastFrameTime = currentTime;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw stars
+      // Batch star operations for better performance
+      ctx.save();
       stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.globalAlpha = 0.8;
         ctx.fillStyle = star.color;
-        ctx.fill();
+        ctx.fillRect(star.x - star.radius/2, star.y - star.radius/2, star.radius, star.radius); // Faster than arc
 
-        // Move stars slightly for subtle motion
         star.y += star.speed;
-
-        // Reset position if star goes off screen
         if (star.y > canvas.height) {
-          star.y = 0;
+          star.y = -star.radius;
           star.x = Math.random() * canvas.width;
         }
       });
+      ctx.restore();
 
-      // Draw nebula-like clouds
-      drawNebulaClouds(ctx, canvas.width, canvas.height);
+      // Draw nebula clouds less frequently
+      if (Math.floor(currentTime / 100) % 3 === 0) {
+        drawNebulaClouds(ctx, canvas.width, canvas.height);
+      }
 
       animationFrameId = requestAnimationFrame(render);
     };
 
+    // Optimized nebula cloud rendering with caching
+    const gradientCache: CanvasGradient[] = [];
     const drawNebulaClouds = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-      // Create a few large, very transparent colored areas
-      const cloudCount = 3;
-      const time = Date.now() * 0.0001;
+      const cloudCount = 2; // Reduced for performance
+      const time = Date.now() * 0.00005; // Slower animation
 
-      for (let i = 0; i < cloudCount; i++) {
-        const x = width * (0.2 + 0.6 * Math.sin(time + i * 1.5));
-        const y = height * (0.3 + 0.4 * Math.cos(time + i * 1.2));
-        const radius = Math.min(width, height) * (0.2 + 0.1 * Math.sin(time * 0.7 + i));
-
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-
-        // Different colors for each cloud
-        if (i % 3 === 0) {
-          gradient.addColorStop(0, 'rgba(75, 0, 130, 0.2)'); // Indigo
-          gradient.addColorStop(1, 'rgba(75, 0, 130, 0)');
-        } else if (i % 3 === 1) {
-          gradient.addColorStop(0, 'rgba(138, 43, 226, 0.15)'); // BlueViolet
-          gradient.addColorStop(1, 'rgba(138, 43, 226, 0)');
-        } else {
-          gradient.addColorStop(0, 'rgba(65, 105, 225, 0.1)'); // RoyalBlue
-          gradient.addColorStop(1, 'rgba(65, 105, 225, 0)');
-        }
-
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fill();
+      // Create gradients only once
+      if (gradientCache.length === 0) {
+        const colors = [
+          ['rgba(75, 0, 130, 0.15)', 'rgba(75, 0, 130, 0)'],
+          ['rgba(138, 43, 226, 0.1)', 'rgba(138, 43, 226, 0)']
+        ];
+        
+        colors.forEach(colorPair => {
+          const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 100);
+          gradient.addColorStop(0, colorPair[0]);
+          gradient.addColorStop(1, colorPair[1]);
+          gradientCache.push(gradient);
+        });
       }
+
+      ctx.save();
+      for (let i = 0; i < cloudCount; i++) {
+        const x = width * (0.2 + 0.5 * Math.sin(time + i * 1.5));
+        const y = height * (0.3 + 0.3 * Math.cos(time + i * 1.2));
+        const radius = Math.min(width, height) * (0.15 + 0.08 * Math.sin(time * 0.5 + i));
+
+        ctx.translate(x, y);
+        ctx.scale(radius / 100, radius / 100);
+        ctx.fillStyle = gradientCache[i % gradientCache.length];
+        ctx.fillRect(-100, -100, 200, 200);
+        ctx.resetTransform();
+      }
+      ctx.restore();
     };
 
-    render();
+    render(0);
 
     // Cleanup
     return () => {
@@ -128,7 +142,8 @@ export default function CosmicBackground() {
       className="fixed inset-0 -z-10"
       style={{ 
         background: 'linear-gradient(to bottom, #000000, #191932)',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        willChange: 'transform'
       }}
     />
   );

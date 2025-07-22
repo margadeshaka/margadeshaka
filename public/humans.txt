@@ -1,0 +1,26 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+    Developer & AI Specialist -- Margadeshaka AI Team
+    Contact: contact [at] margadeshaka.ai
+    From: Global
+
+# THANKS
+    To all the users who seek clarity and reflection
+    To the open-source community
+    To the seekers and thinkers who inspired this project
+
+# TECHNOLOGY COLOPHON
+    HTML5, CSS3, JavaScript
+    Next.js 14, React 18, TypeScript
+    Tailwind CSS, GSAP Animation
+    Three.js, React Three Fiber
+    Vercel, Azure Static Web Apps
+
+# SITE
+    Last update: 2025/01/22
+    Language: English
+    Doctype: HTML5
+    IDE: Various
+    Components: Conscious AI, Spiritual Guidance, Emotional Support

@@ -5,10 +5,24 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
+    "lint:check": "next lint",
+    "typecheck": "tsc --noEmit",
     "export": "next export",
-    "build:static": "next build && next export"
+    "build:static": "next build",
+    "preview": "next build && next start",
+    "clean": "rm -rf .next out node_modules/.cache",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:accessibility": "playwright test accessibility",
+    "test:performance": "playwright test performance",
+    "test:visual": "playwright test visual-regression",
+    "test:ci": "playwright test --reporter=github"
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^3.0.0",
@@ -23,6 +37,8 @@
     "three": "^0.160.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.54.1",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
@@ -31,6 +47,7 @@
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.0.0",
     "postcss": "^8.4.0",
+    "serve": "^14.2.4",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.0.0"
   }

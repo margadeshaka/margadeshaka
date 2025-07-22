@@ -5,6 +5,16 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+*.log
+test-results.json
+test-report.html
+test-report.xml
+junit.xml
+coverage.xml
 
 # next.js
 /.next/

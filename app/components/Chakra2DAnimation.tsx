@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useChakra } from '../context/ChakraContext';
 import gsap from 'gsap';
 
@@ -17,123 +17,73 @@ export default function Chakra2DAnimation({ className = '' }: Chakra2DAnimationP
   const chakraRef = useRef<HTMLImageElement>(null);
   const [rotation, setRotation] = useState(0);
 
-  // Handle scroll events to update rotation
-  useEffect(() => {
-    let lastScrollTop = 0;
-    let rotationVelocity = 0;
-    let animationFrameId: number;
-    let isScrolling = false;
-    let scrollTimeout: NodeJS.Timeout;
+  // Remove scroll handling since we're using fixed viewport now
+  // Rotation will be controlled purely by active point changes
 
-    const handleScroll = () => {
-      // Get current scroll position
-      const scrollTop = window.scrollY;
-
-      // Calculate scroll direction and speed
-      const scrollDelta = scrollTop - lastScrollTop;
-      lastScrollTop = scrollTop;
-
-      // Set scrolling flag
-      isScrolling = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-      }, 100);
-
-      // Update rotation velocity based on scroll speed
-      // The faster the scroll, the faster the rotation
-      // Reduced multiplier for smoother rotation
-      rotationVelocity += scrollDelta * 0.1;
-
-      // Apply stronger damping to slow down rotation when not scrolling
-      rotationVelocity *= 0.9;
-
-      // Only update rotation if we're actively scrolling or have significant velocity
-      if (isScrolling || Math.abs(rotationVelocity) > 0.1) {
-        setRotation(prev => (prev + rotationVelocity) % 360);
-      }
-    };
-
-    // Animation loop for smooth rotation
-    const animate = () => {
-      handleScroll();
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    // Start animation loop
-    animate();
-
-    // Add scroll event listener for velocity updates
-    window.addEventListener('scroll', () => {
-      // This empty listener ensures the browser calculates scroll position
-      // The actual work is done in the animation loop
-    });
-
-    // Clean up
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('scroll', () => {});
-      clearTimeout(scrollTimeout);
-    };
+  // Optimized rotation animation with performance improvements
+  const animateRotation = useCallback((targetRotation: number) => {
+    if (chakraRef.current) {
+      gsap.to(chakraRef.current, {
+        rotation: targetRotation,
+        duration: 0.2, // Faster for better responsiveness
+        ease: 'power1.out',
+        overwrite: 'auto',
+        force3D: true, // Enable hardware acceleration
+        willChange: 'transform'
+      });
+    }
   }, []);
 
   // Animate rotation when it changes
   useEffect(() => {
-    if (chakraRef.current) {
-      // Use a shorter duration for scroll-based rotation to make it more responsive
-      gsap.to(chakraRef.current, {
-        rotation: rotation,
-        duration: 0.3, // Faster for scroll-based rotation
-        ease: 'power1.out',
-        overwrite: 'auto', // Prevent animation conflicts
-      });
-    }
-  }, [rotation]);
+    animateRotation(rotation);
+  }, [rotation, animateRotation]);
+
+  // Memoize segment angle calculation for performance
+  const segmentAngle = useMemo(() => 360 / chakraPoints.length, [chakraPoints.length]);
 
   // Animate rotation when active point changes
   useEffect(() => {
     if (!activePointId || !chakraRef.current) return;
 
-    // Find the index of the active point
     const activeIndex = chakraPoints.findIndex(point => point.id === activePointId);
     if (activeIndex === -1) return;
 
-    // Calculate rotation based on active point index
-    // Each point corresponds to a segment of the full 360 degrees
-    const segmentAngle = 360 / chakraPoints.length;
     const targetRotation = activeIndex * segmentAngle;
-
-    // Update the rotation state to match the target rotation
     setRotation(targetRotation);
 
-    // Animate to the target rotation with a synchronized duration
+    // Optimized animation with hardware acceleration
     gsap.to(chakraRef.current, {
       rotation: targetRotation,
-      duration: 1.0, // Slightly faster for better responsiveness
+      duration: 0.8,
       ease: 'power2.inOut',
-      onComplete: () => {
-        // Ensure rotation state is exactly at target after animation
-        setRotation(targetRotation);
-      }
+      force3D: true,
+      willChange: 'transform',
+      onComplete: () => setRotation(targetRotation)
     });
-  }, [activePointId, chakraPoints]);
+  }, [activePointId, chakraPoints, segmentAngle]);
 
-  // Add a pulsing animation effect
+  // Optimized pulsing animation with performance improvements
   useEffect(() => {
-    if (chakraRef.current) {
-      // Create a timeline for the pulsing effect
-      const timeline = gsap.timeline({
-        repeat: -1, // Infinite repeat
-        yoyo: true, // Back and forth
-      });
+    if (!chakraRef.current) return;
 
-      // Add the pulsing animation - only scale the image slightly
-      timeline.to(chakraRef.current, {
-        scale: 1.05,
-        duration: 2,
-        ease: 'sine.inOut',
-      });
-    }
+    const timeline = gsap.timeline({
+      repeat: -1,
+      yoyo: true,
+      paused: false
+    });
+
+    timeline.to(chakraRef.current, {
+      scale: 1.03, // Reduced for subtlety and performance
+      duration: 3, // Slower for better performance
+      ease: 'sine.inOut',
+      force3D: true,
+      willChange: 'transform'
+    });
+
+    return () => {
+      timeline.kill();
+    };
   }, []);
 
   return (
@@ -169,7 +119,11 @@ export default function Chakra2DAnimation({ className = '' }: Chakra2DAnimationP
           className="object-contain relative z-10 w-[100%] h-full"
           style={{
             transformOrigin: 'center center',
+            willChange: 'transform',
+            backfaceVisibility: 'hidden'
           }}
+          loading="eager"
+          decoding="async"
         />
       </div>
     </div>
