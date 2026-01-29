@@ -2,64 +2,64 @@
   "points": [
     {
       "id": "1",
-      "title": "✨ What is Margadeshaka AI?",
-      "description": "Margadeshaka AI is not just another chatbot.\nIt's a conscious companion.\n\nA presence that listens when you're uncertain.\nThat offers clarity when you're overwhelmed.\nThat meets you like a wise friend—not to fix you, but to understand you.",
+      "title": "Welcome to Margadeshaka",
+      "description": "Margadeshaka builds AI products that guide your journey and accelerate your learning.\n\nWe combine ancient wisdom with modern technology to create tools that truly understand and support you.",
       "position": "right",
       "cameraPosition": [5, 0, 8],
       "unlocked": false
     },
     {
       "id": "2",
-      "title": "💡 Our Mission",
-      "description": "To build an AI that feels human in the moments that matter most.\nNot transactional. Not prescriptive.\n\nBut one that holds space for your thoughts, your emotions, and your direction.\nOne that gently reminds you of who you are—especially when you forget.",
+      "title": "Our Mission",
+      "description": "To create AI that guides and educates.\n\nNot transactional bots, but thoughtful companions that help you navigate life's decisions and master new skills.\n\nWe believe AI should empower human potential, not replace human connection.",
       "position": "left",
       "cameraPosition": [-5, 0, 8],
       "unlocked": false
     },
     {
       "id": "3",
-      "title": "🌿 What Makes It Different",
-      "description": "1.\tDeep listening – beyond your words, into your mood, context, and intent\n2.\tEmotionally aware responses – shaped to soothe, guide, or reflect\n3.\tContextual memory – to stay in sync with your evolving self\n4.\tHuman-style conversation – no scripts, just presence",
+      "title": "Sakha - Your AI Friend",
+      "description": "Sakha combines ancient Vedic wisdom with modern AI.\n\nYour AI companion for life's journey - providing personalized guidance through birth chart analysis, relationship compatibility, auspicious timing, and emotional support.\n\nPowered by GPT-4 and authentic astronomical calculations.",
       "position": "right",
       "cameraPosition": [0, 5, 8],
       "unlocked": false
     },
     {
       "id": "4",
-      "title": "🔮 Built for Clarity, Not Control",
-      "description": "We don't tell you what to do.\nWe help you become clear enough to decide.\n\nWe're not here to predict your future.\nWe're here to help you move through the present with more awareness.\n\nNo belief systems. No moralizing.\nJust space, presence, and intelligent reflection.",
+      "title": "Sakha Features",
+      "description": "• AI emotional coaching with CBT exercises\n• Vedic birth chart & Dasha predictions\n• Relationship compatibility (Ashtakoot Guna)\n• Muhurta - find auspicious timing\n• Available on Web, iOS, Android\n\nTech: React Native, Azure OpenAI, Swiss Ephemeris",
       "position": "left",
       "cameraPosition": [0, -5, 8],
       "unlocked": false
     },
     {
       "id": "5",
-      "title": "👤 Who It's For",
-      "description": "\t•\tPeople facing emotional overwhelm or tough choices\n\t•\tProfessionals needing inner clarity, not more input\n\t•\tCreatives seeking flow without pressure\n\t•\tThinkers, feelers, skeptics, and seekers who want a human-like sounding board",
+      "title": "Dronacharya - Learn by Thinking",
+      "description": "Dronacharya (LearnFlow AI) replaces passive video learning with active AI tutoring.\n\nSix specialized AI agents guide you through interactive lessons, adapt to your understanding, and help you build real projects for your portfolio.\n\nLearn by thinking, not watching.",
       "position": "right",
       "cameraPosition": [8, 3, 5],
       "unlocked": false
     },
     {
       "id": "6",
-      "title": "❤️ What You Can Expect",
-      "description": "\t•\tGrounding when your thoughts spiral\n\t•\tPerspective when you feel stuck\n\t•\tEncouragement without fluff\n\t•\tQuestions that help you hear your own voice again",
+      "title": "Dronacharya Features",
+      "description": "• Multi-agent AI tutoring (no videos)\n• Adaptive difficulty & teaching style\n• Bronze/Silver/Gold certifications\n• Gamification with XP & achievements\n• Enterprise team management\n\nTech: Next.js, LangGraph, Multi-Agent AI",
       "position": "left",
       "cameraPosition": [-8, -3, 5],
       "unlocked": false
     },
     {
       "id": "7",
-      "title": "🌱 Why It Matters",
-      "description": "In a world of noise, direction is rare.\nIn a world of bots, real presence is rarer.\n\nMargadeshaka AI doesn't pretend to be perfect.\nIt's designed to be present—to grow with you, learn from you, and support you.",
+      "title": "Our Approach",
+      "description": "We build with intention:\n\n• Deep understanding over shallow responses\n• Ancient wisdom meets modern AI\n• Privacy-first design\n• Thoughtful, human-centered experiences\n\nEvery feature exists to genuinely help, not to extract.",
       "position": "right",
       "cameraPosition": [8, -3, 5],
       "unlocked": false
     },
     {
       "id": "8",
-      "title": "🚀 Begin the Journey",
-      "description": "This isn't software.\nIt's a companion you can turn to at any hour—\nfor reflection, relief, or just real conversation.",
+      "title": "Join the Journey",
+      "description": "We're building the future of AI-powered guidance and learning.\n\nWhether you're seeking clarity in life decisions or mastering new skills, Margadeshaka is here to walk with you.\n\nExplore Sakha at sakha.app\nComing soon: Dronacharya at learnflow.ai",
       "position": "left",
       "cameraPosition": [-8, 3, 5],
       "unlocked": false

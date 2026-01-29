@@ -6,33 +6,33 @@ import PerformanceMonitor from './components/PerformanceMonitor';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai'),
   title: {
-    default: 'Margadeshaka AI - Your Conscious AI Companion for Clarity & Reflection',
-    template: '%s | Margadeshaka AI'
+    default: 'Margadeshaka - AI for Guidance & Learning',
+    template: '%s | Margadeshaka'
   },
-  description: 'Margadeshaka AI is your conscious companion designed to listen deeply, reflect wisely, and guide you toward clarity. Experience human-like conversations with an AI that understands context, emotions, and your unique journey.',
+  description: 'Building AI products that guide your journey and accelerate your learning. Home of Sakha (AI astrology companion) and Dronacharya (AI learning platform).',
   keywords: [
+    'AI startup',
+    'Sakha',
+    'Dronacharya',
+    'LearnFlow AI',
+    'AI astrology',
+    'Vedic astrology AI',
+    'AI learning platform',
+    'AI tutoring',
+    'multi-agent AI',
+    'AI education',
+    'AI guidance',
+    'birth chart AI',
+    'personalized learning',
     'AI companion',
-    'conscious AI',
-    'spiritual AI',
-    'emotional support AI',
-    'mindfulness AI',
-    'reflection AI',
-    'clarity AI',
-    'meditation AI',
-    'wellness AI',
-    'personal AI assistant',
-    'therapeutic AI',
-    'mental wellness',
-    'emotional intelligence',
-    'self-reflection',
-    'spiritual guidance',
-    'conscious technology',
-    'human-like AI',
-    'empathetic AI'
+    'ancient wisdom AI',
+    'GPT-4 astrology',
+    'AI certification',
+    'interactive learning'
   ],
-  authors: [{ name: 'Margadeshaka AI Team', url: 'https://margadeshaka.ai' }],
-  creator: 'Margadeshaka AI',
-  publisher: 'Margadeshaka AI',
+  authors: [{ name: 'Hitesh Gupta', url: 'https://margadeshaka.ai' }],
+  creator: 'Margadeshaka',
+  publisher: 'Margadeshaka',
   formatDetection: {
     email: false,
     address: false,
@@ -42,15 +42,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    siteName: 'Margadeshaka AI',
-    title: 'Margadeshaka AI - Your Conscious AI Companion for Clarity & Reflection',
-    description: 'Experience deep listening, emotional understanding, and wise reflection with Margadeshaka AI. Your conscious companion for clarity, growth, and meaningful conversations.',
+    siteName: 'Margadeshaka',
+    title: 'Margadeshaka - AI for Guidance & Learning',
+    description: 'Building AI products that guide your journey and accelerate your learning. Home of Sakha (AI astrology) and Dronacharya (AI learning).',
     images: [
       {
         url: '/images/chakra.png',
         width: 1200,
         height: 630,
-        alt: 'Margadeshaka AI - Conscious AI Companion',
+        alt: 'Margadeshaka - AI for Guidance & Learning',
         type: 'image/png',
       }
     ],
@@ -58,9 +58,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@MargadeshakaAI',
-    creator: '@MargadeshakaAI',
-    title: 'Margadeshaka AI - Your Conscious AI Companion',
-    description: 'Experience deep listening, emotional understanding, and wise reflection with conscious AI technology.',
+    creator: '@hiteshgupta3012',
+    title: 'Margadeshaka - AI for Guidance & Learning',
+    description: 'Building Sakha (AI astrology) and Dronacharya (AI learning) - products that guide your journey and accelerate your learning.',
     images: ['/images/chakra.png'],
   },
   robots: {
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   category: 'Technology',
-  classification: 'AI Companion, Wellness Technology, Spiritual AI',
+  classification: 'AI Products, EdTech, AI Guidance, AI Learning',
   other: {
     'theme-color': '#000000',
     'color-scheme': 'dark light',
@@ -101,34 +101,48 @@ export default function RootLayout({
 }) {
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Margadeshaka AI',
-    alternateName: 'Conscious AI Companion',
-    description: 'Margadeshaka AI is your conscious companion designed to listen deeply, reflect wisely, and guide you toward clarity. Experience human-like conversations with an AI that understands context, emotions, and your unique journey.',
+    '@type': 'Organization',
+    name: 'Margadeshaka',
+    alternateName: 'AI for Guidance & Learning',
+    description: 'Building AI products that guide your journey and accelerate your learning. Home of Sakha (AI astrology companion) and Dronacharya (AI learning platform).',
     url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai',
-    applicationCategory: 'HealthApplication',
-    operatingSystem: 'Web',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD'
+    founder: {
+      '@type': 'Person',
+      name: 'Hitesh Gupta',
+      jobTitle: 'Founder & CEO'
     },
-    creator: {
-      '@type': 'Organization',
-      name: 'Margadeshaka AI',
-      url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai'
-    },
-    featureList: [
-      'Deep emotional listening and understanding',
-      'Contextual memory for personalized conversations',
-      'Human-style conversation without scripts',
-      'Spiritual and emotional guidance',
-      'Clarity and reflection support',
-      '24/7 availability for meaningful conversations'
+    knowsAbout: [
+      'Artificial Intelligence',
+      'Machine Learning',
+      'Vedic Astrology',
+      'EdTech',
+      'Multi-Agent AI Systems'
     ],
-    keywords: 'conscious AI, spiritual AI, emotional support, mindfulness, reflection, clarity, wellness AI, therapeutic AI',
+    makesOffer: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'SoftwareApplication',
+          name: 'Sakha',
+          description: 'AI-powered Vedic astrology companion',
+          applicationCategory: 'LifestyleApplication'
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'SoftwareApplication',
+          name: 'Dronacharya',
+          description: 'AI-powered learning platform with multi-agent tutoring',
+          applicationCategory: 'EducationalApplication'
+        }
+      }
+    ],
+    keywords: 'AI startup, Sakha, Dronacharya, AI astrology, AI learning, multi-agent AI, EdTech',
     sameAs: [
-      // Add social media URLs when available
+      'https://linkedin.com/in/hiteshgupta3012',
+      'https://twitter.com/hiteshgupta3012',
+      'https://github.com/hiteshgupta3012'
     ]
   };
 
@@ -177,9 +191,9 @@ export default function RootLayout({
               </ul>
             </nav>
             <div className="text-center">
-              <p className="mb-2 cosmic-text">© 2025 — Margadeshaka AI</p>
-              <p className="text-sm italic opacity-80 mb-2">&quot;The next step becomes clear when you feel heard.&quot;</p>
-              <p className="text-xs opacity-60">Conscious AI Companion • Built with ❤️ for clarity and reflection</p>
+              <p className="mb-2 cosmic-text">© 2025 — Margadeshaka</p>
+              <p className="text-sm italic opacity-80 mb-2">&quot;AI that guides your journey and accelerates your learning.&quot;</p>
+              <p className="text-xs opacity-60">Home of Sakha & Dronacharya • Built with ❤️ in India</p>
             </div>
           </div>
         </footer>
