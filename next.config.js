@@ -6,9 +6,6 @@ const nextConfig = {
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
 
-  // Turbopack config (Next.js 16 default bundler)
-  turbopack: {},
-  
   // Performance optimizations
   poweredByHeader: false,
   generateEtags: false,
