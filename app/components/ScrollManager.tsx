@@ -12,14 +12,6 @@ export default function ScrollManager() {
   // const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [showWaitlistButton, setShowWaitlistButton] = useState(false);
 
-  // Debug log on mount and when activePointId changes
-  useEffect(() => {
-    console.log('ScrollManager mounted/updated:', { 
-      activePointId, 
-      chakraPointsLength: chakraPoints.length,
-      chakraPointIds: chakraPoints.map(p => p.id)
-    });
-  }, [activePointId, chakraPoints]);
 
   // Create individual useInView hooks for all 8 chakra points - following Rules of Hooks
   const point1InView = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: '-20% 0px', skip: false });
@@ -49,42 +41,29 @@ export default function ScrollManager() {
 
   // Optimized navigation with memoization
   const navigatePoint = useCallback((direction: 'next' | 'prev') => {
-    console.log('NavigatePoint called:', direction, 'activePointId:', activePointId); // Debug log
-    
-    if (!activePointId) {
-      console.log('No active point ID'); // Debug log
-      return;
-    }
+    if (!activePointId) return;
 
     const currentIndex = chakraPoints.findIndex(point => point.id === activePointId);
-    if (currentIndex === -1) {
-      console.log('Current point not found in chakraPoints'); // Debug log
-      return;
-    }
+    if (currentIndex === -1) return;
 
-    const newIndex = direction === 'next' 
-      ? Math.min(currentIndex + 1, chakraPoints.length - 1) // Don't wrap around
-      : Math.max(currentIndex - 1, 0); // Don't wrap around
+    const newIndex = direction === 'next'
+      ? Math.min(currentIndex + 1, chakraPoints.length - 1)
+      : Math.max(currentIndex - 1, 0);
 
-    const newPointId = chakraPoints[newIndex].id;
-    console.log('Navigating from index', currentIndex, 'to', newIndex, 'pointId:', newPointId); // Debug log
-    setActivePointId(newPointId);
+    setActivePointId(chakraPoints[newIndex].id);
   }, [activePointId, chakraPoints, setActivePointId]);
 
   // Keyboard and wheel navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log('Key pressed:', e.key); // Debug log
       switch (e.key) {
         case 'ArrowDown':
         case ' ':
           e.preventDefault();
-          console.log('Navigating next via keyboard'); // Debug log
           navigatePoint('next');
           break;
         case 'ArrowUp':
           e.preventDefault();
-          console.log('Navigating prev via keyboard'); // Debug log
           navigatePoint('prev');
           break;
       }
@@ -110,25 +89,15 @@ export default function ScrollManager() {
       
       // Accumulate wheel delta to require more intentional scrolling
       wheelAccumulator += e.deltaY;
-      console.log('Wheel delta:', e.deltaY, 'accumulated:', wheelAccumulator);
 
       // Only navigate when we cross the threshold
       if (Math.abs(wheelAccumulator) >= wheelThreshold) {
-        lastWheelTime = now; // Reset the debounce timer only when we actually navigate
-        
-        if (wheelAccumulator > 0) {
-          console.log('Navigating next via wheel (accumulated enough)');
-          navigatePoint('next');
-        } else {
-          console.log('Navigating prev via wheel (accumulated enough)');
-          navigatePoint('prev');
-        }
-        
-        wheelAccumulator = 0; // Reset accumulator after navigation
+        lastWheelTime = now;
+        navigatePoint(wheelAccumulator > 0 ? 'next' : 'prev');
+        wheelAccumulator = 0;
       } else {
         // Set timeout to reset accumulator if user stops scrolling
         wheelResetTimeout = setTimeout(() => {
-          console.log('Resetting wheel accumulator due to inactivity');
           wheelAccumulator = 0;
         }, wheelResetDelay);
       }
@@ -153,17 +122,11 @@ export default function ScrollManager() {
 
   // Optimized swipe handlers with better configuration
   const swipeHandlers = useSwipeable({
-    onSwipedUp: () => {
-      console.log('Swiped up'); // Debug log
-      navigatePoint('next');
-    },
-    onSwipedDown: () => {
-      console.log('Swiped down'); // Debug log
-      navigatePoint('prev');
-    },
+    onSwipedUp: () => navigatePoint('next'),
+    onSwipedDown: () => navigatePoint('prev'),
     trackMouse: true,
     preventScrollOnSwipe: false,
-    delta: 50 // Minimum swipe distance
+    delta: 50
   });
 
   return (
@@ -200,23 +163,21 @@ export default function ScrollManager() {
       })}
 
       {/* Navigation dots for better UX */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+      <nav className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30" aria-label="Section navigation">
         {chakraPoints.map((point, index) => (
           <button
             key={point.id}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              activePointId === point.id 
-                ? 'bg-indigo-400 scale-125' 
+            className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-black ${
+              activePointId === point.id
+                ? 'bg-indigo-400 scale-125'
                 : 'bg-gray-500/50 hover:bg-gray-400/70'
             }`}
-            onClick={() => {
-              console.log('Navigation button clicked for point:', point.id); // Debug log
-              setActivePointId(point.id);
-            }}
-            aria-label={`Navigate to ${point.title || `point ${point.id}`}`}
+            onClick={() => setActivePointId(point.id)}
+            aria-label={`Go to section ${index + 1}: ${point.title}`}
+            aria-current={activePointId === point.id ? 'step' : undefined}
           />
         ))}
-      </div>
+      </nav>
 
       {/* Keyboard navigation hint */}
       <div className="fixed top-8 left-1/2 transform -translate-x-1/2 text-center z-30">

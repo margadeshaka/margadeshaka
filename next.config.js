@@ -1,14 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   compress: true,
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+
+  // Turbopack config (Next.js 16 default bundler)
+  turbopack: {},
   
   // Performance optimizations
   poweredByHeader: false,

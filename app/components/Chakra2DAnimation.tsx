@@ -111,20 +111,23 @@ export default function Chakra2DAnimation({ className = '' }: Chakra2DAnimationP
         {/*  }}*/}
         {/*/>*/}
 
-        {/* Chakra image */}
-        <img
-          ref={chakraRef}
-          src="/images/chakra.png"
-          alt="Sudarshan Chakra"
-          className="object-contain relative z-10 w-[100%] h-full"
-          style={{
-            transformOrigin: 'center center',
-            willChange: 'transform',
-            backfaceVisibility: 'hidden'
-          }}
-          loading="eager"
-          decoding="async"
-        />
+        {/* Chakra image with WebP support */}
+        <picture>
+          <source srcSet="/images/chakra.webp" type="image/webp" />
+          <img
+            ref={chakraRef}
+            src="/images/chakra.png"
+            alt="Sudarshan Chakra - Divine spinning disc symbolizing cosmic energy"
+            className="object-contain relative z-10 w-[100%] h-full"
+            style={{
+              transformOrigin: 'center center',
+              willChange: 'transform',
+              backfaceVisibility: 'hidden'
+            }}
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
       </div>
     </div>
   );

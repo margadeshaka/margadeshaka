@@ -4,11 +4,59 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useMe
 import chakraPointsData from '../data/chakraPoints.json';
 import { useLogging } from './LoggingContext';
 
-// Optimized function to convert description strings to React nodes
+// Helper function to parse line and make URLs clickable
+const parseLineWithLinks = (line: string, lineIndex: number): React.ReactNode => {
+  // Pattern to match URLs like sakha.app, learnflow.ai, etc.
+  const urlPattern = /\b((?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})(?:\/[^\s]*)?)\b/g;
+
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = urlPattern.exec(line)) !== null) {
+    // Add text before the URL
+    if (match.index > lastIndex) {
+      parts.push(line.slice(lastIndex, match.index));
+    }
+
+    // Add the URL as a clickable link
+    const url = match[1];
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    parts.push(
+      <a
+        key={`link-${lineIndex}-${match.index}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="content-link"
+      >
+        {url}
+      </a>
+    );
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text
+  if (lastIndex < line.length) {
+    parts.push(line.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : line;
+};
+
+// Optimized function to convert description strings to React nodes with clickable links
 const parseDescription = (description: string): React.ReactNode => {
   const lines = description.split('\n');
-  return lines.map((line, index) => 
-    line === '' ? <br key={`br-${index}`} /> : <React.Fragment key={`text-${index}`}>{line}<br /></React.Fragment>
+  return lines.map((line, index) =>
+    line === '' ? (
+      <br key={`br-${index}`} />
+    ) : (
+      <React.Fragment key={`text-${index}`}>
+        {parseLineWithLinks(line, index)}
+        <br />
+      </React.Fragment>
+    )
   );
 };
 

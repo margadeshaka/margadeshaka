@@ -3,14 +3,19 @@
 import dynamic from 'next/dynamic';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
+import { ChakraSkeleton, DialogSkeleton } from './components/Skeleton';
 import SEOStructuredData from './components/SEOStructuredData';
 import { ChakraProvider } from './context/ChakraContext';
 import { LoggingProvider, LogLevel } from './context/LoggingContext';
 
-// Lazy load components for better performance
+// Lazy load components for better performance with skeleton loaders
 const ScrollManager = dynamic(() => import('./components/ScrollManager'), {
   ssr: false,
-  loading: () => <div className="h-screen w-full flex items-center justify-center"><LoadingSpinner /></div>
+  loading: () => (
+    <div className="fixed inset-0 w-full h-screen flex items-center justify-center">
+      <DialogSkeleton position="right" />
+    </div>
+  )
 });
 
 const CosmicBackground = dynamic(() => import('./components/CosmicBackground'), {
@@ -28,7 +33,7 @@ const WelcomeOverlay = dynamic(() => import('./components/WelcomeOverlay'), {
 
 const Chakra2DAnimation = dynamic(() => import('./components/Chakra2DAnimation'), {
   ssr: false,
-  loading: () => <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 opacity-50"><LoadingSpinner /></div>
+  loading: () => <ChakraSkeleton />
 });
 
 const ScrollIndicator = dynamic(() => import('./components/ScrollIndicator'), {
@@ -53,7 +58,7 @@ export default function Home() {
             </div>
 
             {/* Main interactive content */}
-            <main role="main" aria-label="Interactive Margadeshaka AI Experience">
+            <main id="main-content" role="main" aria-label="Interactive Margadeshaka AI Experience">
               {/* Cosmic Background with subtle animation */}
               <CosmicBackground />
 

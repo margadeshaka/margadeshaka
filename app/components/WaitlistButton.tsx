@@ -33,7 +33,8 @@ export default function WaitlistButton({ visible }: WaitlistButtonProps) {
           hover:scale-110 hover:shadow-indigo-500/70
           border-2 border-indigo-300/30
         `}
-        onClick={() => window.open('https://forms.gle/example', '_blank')}
+        onClick={() => window.open('https://sakha.app', '_blank')}
+        aria-label="Visit Sakha App - Coming Soon"
       >
         Coming Soon!
       </button>

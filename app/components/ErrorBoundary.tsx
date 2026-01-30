@@ -115,7 +115,7 @@ export default function ErrorBoundary({
   children, 
   fallback,
   onError 
-}: ErrorBoundaryProps): JSX.Element {
+}: ErrorBoundaryProps): React.JSX.Element {
   // We'll use a default onError handler that logs to our LoggingContext
   const logging = useLogging();
   

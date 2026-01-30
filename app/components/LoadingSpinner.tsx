@@ -14,7 +14,7 @@ interface LoadingSpinnerProps {
 export default function LoadingSpinner({ 
   message = 'Loading...', 
   size = 'md' 
-}: LoadingSpinnerProps): JSX.Element {
+}: LoadingSpinnerProps): React.JSX.Element {
   // Size classes for the spinner and text
   const sizeClasses = {
     sm: {

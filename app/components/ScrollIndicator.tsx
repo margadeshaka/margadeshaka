@@ -39,15 +39,23 @@ export default function ScrollIndicator() {
   if (!showIndicator) return null;
 
   return (
-    <div className="fixed bottom-2 left-1/2 -translate-x-1/2 text-center z-20">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        className={`h-10 w-10 mx-auto text-indigo-500 hover:text-indigo-400 ${styles.webkitAnimation}`}
-        fill="none" 
-        viewBox="0 0 24 24" 
+    <div
+      className="fixed bottom-20 left-1/2 -translate-x-1/2 text-center z-20 flex flex-col items-center gap-1"
+      role="status"
+      aria-live="polite"
+    >
+      <span className="text-xs text-indigo-300/80 font-medium tracking-wide uppercase">
+        Scroll to explore
+      </span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className={`h-8 w-8 mx-auto text-indigo-400 ${styles.webkitAnimation}`}
+        fill="none"
+        viewBox="0 0 24 24"
         stroke="currentColor"
+        aria-hidden="true"
       >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     </div>
   );

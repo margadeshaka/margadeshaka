@@ -164,6 +164,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="preload" href="/images/chakra.webp" as="image" type="image/webp" />
         <link rel="preload" href="/images/chakra.png" as="image" type="image/png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -175,6 +176,10 @@ export default function RootLayout({
         />
       </head>
       <body className="flex flex-col min-h-screen antialiased">
+        {/* Skip to content link for accessibility */}
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
         <div className="flex-grow contain-layout">
           {children}
           <Analytics />
