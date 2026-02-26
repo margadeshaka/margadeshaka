@@ -44,12 +44,12 @@ export default function ScrollIndicator() {
       role="status"
       aria-live="polite"
     >
-      <span className="text-xs text-indigo-300/80 font-medium tracking-wide uppercase">
+      <span className="text-xs text-amber-300/70 font-medium tracking-wide uppercase">
         Scroll to explore
       </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={`h-8 w-8 mx-auto text-indigo-400 ${styles.webkitAnimation}`}
+        className={`h-8 w-8 mx-auto text-amber-400/70 ${styles.webkitAnimation}`}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

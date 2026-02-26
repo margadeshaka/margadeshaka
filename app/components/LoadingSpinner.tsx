@@ -36,7 +36,7 @@ export default function LoadingSpinner({
       <div className="animate-pulse text-center">
         <div className={`${sizeClasses[size].text} cosmic-text mb-2`}>{message}</div>
         <div 
-          className={`${sizeClasses[size].spinner} border-t-indigo-500 border-r-indigo-300 border-b-indigo-500 border-l-indigo-300 rounded-full animate-spin mx-auto`}
+          className={`${sizeClasses[size].spinner} border-t-amber-500 border-r-amber-300 border-b-amber-500 border-l-amber-300 rounded-full animate-spin mx-auto`}
         ></div>
       </div>
     </div>

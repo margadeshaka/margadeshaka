@@ -9,10 +9,10 @@ test.describe('Chakra Navigation Tests', () => {
 
   test('should load the main page with chakra animation', async ({ page }) => {
     // Check if the page title is correct
-    await expect(page).toHaveTitle(/ChakraVision/);
+    await expect(page).toHaveTitle(/Margadeshaka/);
     
     // Verify the chakra image is visible
-    const chakraImage = page.locator('img[alt="Sudarshan Chakra"]');
+    const chakraImage = page.locator('img[alt="Margadeshaka — interactive chakra animation"]');
     await expect(chakraImage).toBeVisible();
     
     // Check if the cosmic background canvas is present
@@ -31,14 +31,14 @@ test.describe('Chakra Navigation Tests', () => {
 
     // Scroll through each chakra point and verify content
     const chakraPoints = [
-      { id: '1', title: '✨ What is Margadeshaka AI?' },
-      { id: '2', title: '💡 Our Mission' },
-      { id: '3', title: '🌿 What Makes It Different' },
-      { id: '4', title: '🔮 Built for Clarity, Not Control' },
-      { id: '5', title: '👤 Who It\'s For' },
-      { id: '6', title: '❤️ What You Can Expect' },
-      { id: '7', title: '🌱 Why It Matters' },
-      { id: '8', title: '🚀 Begin the Journey' }
+      { id: '1', title: 'Welcome to Margadeshaka' },
+      { id: '2', title: 'Our Mission' },
+      { id: '3', title: 'Sakha — Your AI Friend' },
+      { id: '4', title: 'Sakha Features' },
+      { id: '5', title: 'Dronacharya — Learn by Thinking' },
+      { id: '6', title: 'Dronacharya Features' },
+      { id: '7', title: 'Our Approach' },
+      { id: '8', title: 'Join the Journey' }
     ];
 
     for (let i = 0; i < chakraPoints.length; i++) {
@@ -75,10 +75,8 @@ test.describe('Chakra Navigation Tests', () => {
     await page.waitForTimeout(2000);
     
     // Check if waitlist button is visible
-    const waitlistButton = page.locator('text=Join the Early Access Waitlist').or(
-      page.locator('button').filter({ hasText: 'Waitlist' })
-    );
-    await expect(waitlistButton.first()).toBeVisible({ timeout: 5000 });
+    const sakhaButton = page.locator('button').filter({ hasText: 'Explore Sakha' });
+    await expect(sakhaButton.first()).toBeVisible({ timeout: 5000 });
   });
 
   test('should handle keyboard navigation', async ({ page }) => {
@@ -100,7 +98,7 @@ test.describe('Chakra Navigation Tests', () => {
     await page.waitForLoadState('networkidle');
     
     // Check if chakra image is still visible and properly sized
-    const chakraImage = page.locator('img[alt="Sudarshan Chakra"]');
+    const chakraImage = page.locator('img[alt="Margadeshaka — interactive chakra animation"]');
     await expect(chakraImage).toBeVisible();
     
     // Verify the image doesn't overflow

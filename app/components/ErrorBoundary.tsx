@@ -66,7 +66,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
     if (this.state.hasError) {
       // Render fallback UI if provided, otherwise render a production-ready error message
       return this.props.fallback || (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black to-indigo-950 text-white p-8">
+        <div className="min-h-screen flex items-center justify-center bg-black text-white p-8">
           <div className="text-center max-w-md mx-auto">
             <div className="mb-6">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
@@ -75,7 +75,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
                 </svg>
               </div>
               <h2 className="text-2xl font-bold mb-2">Something went wrong</h2>
-              <p className="text-gray-300 mb-6">We apologize for the inconvenience. Please try refreshing the page.</p>
+              <p className="text-gray-300 mb-6">Something went wrong on our end. Please try refreshing the page.</p>
             </div>
             
             {process.env.NODE_ENV === 'development' && (
@@ -90,7 +90,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={() => window.location.reload()}
-                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
+                className="px-6 py-3 bg-amber-700 hover:bg-amber-600 rounded-lg transition-colors"
               >
                 Refresh Page
               </button>
@@ -98,7 +98,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
                 onClick={() => this.setState({ hasError: false, error: null })}
                 className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
               >
-                Try Again
+                Dismiss Error
               </button>
             </div>
           </div>

@@ -54,7 +54,7 @@ export default function AudioPlayer() {
 
   return (
     <ErrorBoundary fallback={
-      <button className="fixed bottom-8 right-8 z-10 bg-red-900/70 text-white p-3 rounded-full shadow-lg">
+      <button className="fixed bottom-8 right-8 z-10 bg-red-900/70 text-white p-3 rounded-full shadow-lg" aria-label="Audio unavailable">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
@@ -62,7 +62,7 @@ export default function AudioPlayer() {
     }>
       <button
         onClick={handleToggleAudio}
-        className="fixed bottom-8 right-8 z-10 bg-indigo-900/70 hover:bg-indigo-800/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+        className="fixed bottom-8 right-8 z-10 bg-amber-900/50 hover:bg-amber-800/70 text-amber-200 p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center border border-amber-600/20"
         aria-label={isAudioPlaying ? 'Pause Mantra' : 'Play Mantra'}
       >
         {isAudioPlaying ? (

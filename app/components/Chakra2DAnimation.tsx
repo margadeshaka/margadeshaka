@@ -117,7 +117,7 @@ export default function Chakra2DAnimation({ className = '' }: Chakra2DAnimationP
           <img
             ref={chakraRef}
             src="/images/chakra.png"
-            alt="Sudarshan Chakra - Divine spinning disc symbolizing cosmic energy"
+            alt="Margadeshaka — interactive chakra animation"
             className="object-contain relative z-10 w-[100%] h-full"
             style={{
               transformOrigin: 'center center',

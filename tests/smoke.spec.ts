@@ -15,12 +15,12 @@ test.describe('Smoke Tests - Critical Functionality', () => {
     await page.waitForTimeout(3000);
     
     // Basic page load assertions
-    await expect(page).toHaveTitle(/ChakraVision|Margadeshaka/i);
+    await expect(page).toHaveTitle(/Margadeshaka/i);
     
     // Wait for critical elements to appear after client-side rendering
-    const chakraImage = page.locator('img[alt="Sudarshan Chakra"]');
+    const chakraImage = page.locator('img[alt="Margadeshaka — interactive chakra animation"]');
     await expect(chakraImage).toBeVisible({ timeout: 10000 });
-    
+
     const cosmicBackground = page.locator('canvas');
     await expect(cosmicBackground).toBeVisible({ timeout: 10000 });
     
@@ -40,7 +40,7 @@ test.describe('Smoke Tests - Critical Functionality', () => {
       await helper.waitForPageReady();
       
       // Critical elements should remain visible
-      const chakraImage = page.locator('img[alt="Sudarshan Chakra"]');
+      const chakraImage = page.locator('img[alt="Margadeshaka — interactive chakra animation"]');
       await expect(chakraImage).toBeVisible();
       
       // No horizontal overflow
@@ -94,7 +94,7 @@ test.describe('Smoke Tests - Critical Functionality', () => {
     await helper.waitForPageReady();
     
     // Basic accessibility checks
-    const chakraImage = page.locator('img[alt="Sudarshan Chakra"]');
+    const chakraImage = page.locator('img[alt="Margadeshaka — interactive chakra animation"]');
     await expect(chakraImage).toHaveAttribute('alt');
     
     // Page should have a title

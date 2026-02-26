@@ -1,7 +1,7 @@
 {
-  "name": "Margadeshaka AI - Your Conscious AI Companion",
-  "short_name": "Margadeshaka AI",
-  "description": "Your conscious companion designed to listen deeply, reflect wisely, and guide you toward clarity. Experience human-like conversations with AI that understands context, emotions, and your unique journey.",
+  "name": "Margadeshaka — AI for Guidance & Learning",
+  "short_name": "Margadeshaka",
+  "description": "Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform. Navigate life decisions and master new skills with AI.",
   "start_url": "/?utm_source=pwa",
   "display": "standalone",
   "background_color": "#000000",
@@ -22,7 +22,7 @@
       "purpose": "maskable"
     }
   ],
-  "categories": ["health", "lifestyle", "wellness", "productivity", "education"],
+  "categories": ["education", "lifestyle", "productivity"],
   "screenshots": [
     {
       "src": "/images/chakra.png",
@@ -33,10 +33,10 @@
   ],
   "shortcuts": [
     {
-      "name": "Start Conversation",
-      "short_name": "Chat",
-      "description": "Begin a conversation with Margadeshaka AI",
-      "url": "/?action=chat",
+      "name": "Explore Sakha",
+      "short_name": "Sakha",
+      "description": "Visit Sakha — your AI Vedic astrology companion",
+      "url": "https://sakha.live",
       "icons": [{
         "src": "/images/chakra.png",
         "sizes": "96x96"

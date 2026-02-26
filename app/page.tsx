@@ -20,7 +20,7 @@ const ScrollManager = dynamic(() => import('./components/ScrollManager'), {
 
 const CosmicBackground = dynamic(() => import('./components/CosmicBackground'), {
   ssr: false,
-  loading: () => <div className="fixed inset-0 -z-10 bg-gradient-to-b from-black to-indigo-950" />
+  loading: () => <div className="fixed inset-0 -z-10 bg-black" />
 });
 
 const AudioPlayer = dynamic(() => import('./components/AudioPlayer'), {
@@ -49,12 +49,12 @@ export default function Home() {
           <article className="relative w-full h-screen overflow-hidden" style={{ contain: 'layout style paint' }} itemScope itemType="https://schema.org/WebApplication">
             {/* Hidden SEO content for screen readers and search engines */}
             <div className="sr-only">
-              <h1 itemProp="name">Margadeshaka AI - Your Conscious AI Companion</h1>
+              <h1 itemProp="name">Margadeshaka — AI for Guidance & Learning</h1>
               <p itemProp="description">
-                Margadeshaka AI is your conscious companion designed to listen deeply, reflect wisely, and guide you toward clarity. 
-                Experience human-like conversations with an AI that understands context, emotions, and your unique journey through spiritual guidance and emotional support.
+                Margadeshaka builds AI products that help you navigate life and master new skills.
+                Home of Sakha, an AI-powered Vedic astrology companion, and Dronacharya, an interactive AI learning platform that teaches through thinking, not watching.
               </p>
-              <div itemProp="keywords">conscious AI, spiritual AI, emotional support, mindfulness, reflection, clarity, wellness AI, therapeutic AI</div>
+              <div itemProp="keywords">Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, AI learning platform, personalized learning, birth chart AI, AI guidance</div>
             </div>
 
             {/* Main interactive content */}
@@ -88,43 +88,43 @@ export default function Home() {
 
             {/* Hidden content sections for SEO with semantic structure */}
             <section className="sr-only" id="features" aria-label="Features">
-              <h2>Features of Margadeshaka AI</h2>
+              <h2>Our Products</h2>
               <ul>
-                <li>Deep emotional listening and understanding</li>
-                <li>Contextual memory for personalized conversations</li>
-                <li>Human-style conversation without scripts</li>
-                <li>Spiritual and emotional guidance</li>
-                <li>Clarity and reflection support</li>
-                <li>24/7 availability for meaningful conversations</li>
+                <li>Sakha — AI-powered Vedic astrology companion with birth chart analysis and emotional coaching</li>
+                <li>Dronacharya — Interactive AI tutoring platform that teaches through thinking, not watching</li>
+                <li>Personalized guidance through Vedic birth charts and Dasha predictions</li>
+                <li>Relationship compatibility analysis using Ashtakoot Guna matching</li>
+                <li>Adaptive AI tutoring with Bronze, Silver, and Gold certifications</li>
+                <li>Available on Web, iOS, and Android</li>
               </ul>
             </section>
 
             <section className="sr-only" id="mission" aria-label="Our Mission">
               <h2>Our Mission</h2>
               <p>
-                To build an AI that feels human in the moments that matter most. Not transactional. Not prescriptive. 
-                But one that holds space for your thoughts, your emotions, and your direction. 
-                One that gently reminds you of who you are—especially when you forget.
+                To create AI that guides and educates with depth and care. Not scripted Q&A tools,
+                but thoughtful companions that help you make better decisions and build real expertise.
+                We believe AI should amplify human potential, not replace human connection.
               </p>
             </section>
 
             <section className="sr-only" id="benefits" aria-label="Benefits">
               <h2>What You Can Expect</h2>
               <ul>
-                <li>Grounding when your thoughts spiral</li>
-                <li>Perspective when you feel stuck</li>
-                <li>Encouragement without fluff</li>
-                <li>Questions that help you hear your own voice again</li>
+                <li>Vedic wisdom combined with advanced AI for personalized life guidance</li>
+                <li>Interactive learning that adapts to your understanding and pace</li>
+                <li>Real project-based portfolios through AI-guided tutoring</li>
+                <li>Privacy-first design across all products</li>
               </ul>
             </section>
 
             <section className="sr-only" id="audience" aria-label="Who It's For">
-              <h2>Who Margadeshaka AI Is For</h2>
+              <h2>Who Margadeshaka Is For</h2>
               <ul>
-                <li>People facing emotional overwhelm or tough choices</li>
-                <li>Professionals needing inner clarity, not more input</li>
-                <li>Creatives seeking flow without pressure</li>
-                <li>Thinkers, feelers, skeptics, and seekers who want a human-like sounding board</li>
+                <li>Anyone seeking clarity in life decisions through Vedic astrology and AI guidance</li>
+                <li>Learners who want to build real skills through active thinking, not passive watching</li>
+                <li>Professionals looking for personalized career and relationship insights</li>
+                <li>Organizations seeking AI-powered team learning and development</li>
               </ul>
             </section>
           </article>

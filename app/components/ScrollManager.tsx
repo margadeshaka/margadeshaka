@@ -167,10 +167,10 @@ export default function ScrollManager() {
         {chakraPoints.map((point, index) => (
           <button
             key={point.id}
-            className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-black ${
+            className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-black ${
               activePointId === point.id
-                ? 'bg-indigo-400 scale-125'
-                : 'bg-gray-500/50 hover:bg-gray-400/70'
+                ? 'bg-amber-400 scale-125'
+                : 'bg-gray-500/50 hover:bg-amber-400/40'
             }`}
             onClick={() => setActivePointId(point.id)}
             aria-label={`Go to section ${index + 1}: ${point.title}`}
@@ -181,7 +181,7 @@ export default function ScrollManager() {
 
       {/* Keyboard navigation hint */}
       <div className="fixed top-8 left-1/2 transform -translate-x-1/2 text-center z-30">
-        <div className="bg-black/30 backdrop-blur-sm rounded-lg px-4 py-2 text-sm text-gray-300">
+        <div className="bg-black/30 backdrop-blur-sm rounded-lg px-4 py-2 text-sm text-amber-200/60">
           <span className="hidden sm:inline">Use ↑↓ keys or scroll to navigate</span>
           <span className="sm:hidden">Swipe to navigate</span>
         </div>

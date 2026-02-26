@@ -21,7 +21,7 @@ export default function Skeleton({
   height,
   animation = 'pulse'
 }: SkeletonProps): React.JSX.Element {
-  const baseClasses = 'bg-indigo-900/30';
+  const baseClasses = 'bg-amber-900/20';
 
   const variantClasses = {
     text: 'rounded',
@@ -59,8 +59,8 @@ export function DialogSkeleton({ position = 'left' }: { position?: 'left' | 'rig
       className={`
         absolute ${position === 'left' ? 'sm:left-0' : 'sm:right-0'}
         max-w-full sm:max-w-sm md:max-w-md w-auto sm:w-full
-        backdrop-blur-sm bg-indigo-950/30 rounded-lg p-5 mx-2
-        border border-indigo-500/20
+        backdrop-blur-sm bg-black/40 rounded-lg p-5 mx-2
+        border border-amber-700/20
       `}
     >
       {/* Title skeleton */}

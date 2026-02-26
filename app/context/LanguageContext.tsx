@@ -26,7 +26,7 @@ export const useLanguage = () => useContext(LanguageContext);
 const translations: Record<Language, Record<string, string>> = {
   en: {
     'app.title': 'MARGADESHAKA',
-    'app.subtitle': 'AI',
+    'app.subtitle': 'AI for Guidance & Learning',
     'language.english': 'English',
     'language.sanskrit': 'Sanskrit',
     'language.hindi': 'Hindi',
@@ -36,8 +36,8 @@ const translations: Record<Language, Record<string, string>> = {
     'logout.button': 'Logout',
   },
   sa: {
-    'app.title': 'चक्रदर्शन',
-    'app.subtitle': 'सुदर्शन चक्र का अन्वेषण करने के लिए स्क्रॉल करें',
+    'app.title': 'मार्गदेशक',
+    'app.subtitle': 'मार्गदर्शन एवं शिक्षा हेतु कृत्रिम बुद्धि',
     'language.english': 'आंग्ल',
     'language.sanskrit': 'संस्कृत',
     'language.hindi': 'हिंदी',
@@ -47,8 +47,8 @@ const translations: Record<Language, Record<string, string>> = {
     'logout.button': 'निर्गमन',
   },
   hi: {
-    'app.title': 'चक्रदर्शन',
-    'app.subtitle': 'सुदर्शन चक्र का अन्वेषण करने के लिए स्क्रॉल करें',
+    'app.title': 'मार्गदेशक',
+    'app.subtitle': 'मार्गदर्शन और सीखने के लिए AI',
     'language.english': 'अंग्रेज़ी',
     'language.sanskrit': 'संस्कृत',
     'language.hindi': 'हिंदी',

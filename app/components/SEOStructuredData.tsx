@@ -14,9 +14,9 @@ export default function SEOStructuredData() {
       name: point.title.replace(/[✨💡🌿🔮👤❤️🌱🚀]/g, '').trim(),
       acceptedAnswer: {
         '@type': 'Answer',
-        text: typeof point.description === 'string' 
+        text: typeof point.description === 'string'
           ? point.description.replace(/\n/g, ' ').slice(0, 300)
-          : 'Learn about Margadeshaka AI features and benefits.'
+          : 'Learn about Margadeshaka AI products and services.'
       }
     }))
   };
@@ -25,8 +25,8 @@ export default function SEOStructuredData() {
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Margadeshaka AI',
-    alternateName: 'Conscious AI Companion',
+    name: 'Margadeshaka',
+    alternateName: 'AI for Guidance & Learning',
     url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai',
     logo: {
       '@type': 'ImageObject',
@@ -34,32 +34,41 @@ export default function SEOStructuredData() {
       width: '400',
       height: '400'
     },
-    description: 'Margadeshaka AI is your conscious companion designed to listen deeply, reflect wisely, and guide you toward clarity.',
+    description: 'Margadeshaka builds AI products that help you navigate life and master new skills. Home of Sakha (AI Vedic astrology companion) and Dronacharya (AI learning platform).',
     foundingDate: '2025',
-    keywords: 'conscious AI, spiritual AI, emotional support, mindfulness, reflection, clarity, wellness AI',
+    keywords: 'Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, AI learning platform, personalized learning',
     sameAs: [
-      // Add social media URLs when available
+      'https://twitter.com/MargadeshakaAI'
     ]
   };
 
-  // Service structured data
-  const serviceData = {
+  // Sakha product structured data
+  const sakhaData = {
     '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Conscious AI Companion',
-    description: 'Deep listening, emotional understanding, and wise reflection through AI technology',
+    '@type': 'SoftwareApplication',
+    name: 'Sakha',
+    description: 'AI-powered Vedic astrology companion offering birth chart analysis, relationship compatibility, auspicious timing, and emotional coaching.',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web, iOS, Android',
     provider: {
       '@type': 'Organization',
-      name: 'Margadeshaka AI'
+      name: 'Margadeshaka'
     },
-    serviceType: 'AI Companion Service',
-    category: 'Wellness Technology',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock'
-    }
+    url: 'https://sakha.live'
+  };
+
+  // Dronacharya product structured data
+  const dronacharyaData = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Dronacharya',
+    description: 'Interactive AI learning platform with specialized AI tutors, adaptive difficulty, and project-based certifications. Learn by thinking, not watching.',
+    applicationCategory: 'EducationalApplication',
+    provider: {
+      '@type': 'Organization',
+      name: 'Margadeshaka'
+    },
+    url: 'https://margadeshaka.ai'
   };
 
   return (
@@ -79,7 +88,13 @@ export default function SEOStructuredData() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceData)
+          __html: JSON.stringify(sakhaData)
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(dronacharyaData)
         }}
       />
     </>

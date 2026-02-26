@@ -5,7 +5,7 @@
 :root {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 25, 25, 50;
+  --background-end-rgb: 0, 0, 0;
   
   /* Performance optimizations */
   color-scheme: dark;
@@ -48,18 +48,161 @@ canvas {
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.dialog-box {
-  backdrop-filter: blur(8px);
-  background-color: rgba(30, 30, 60, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(100, 100, 255, 0.3);
-  
-  /* Performance optimizations */
+/* ============================
+   SCROLL CARD DESIGN
+   ============================ */
+
+/* Scroll roll — the cylindrical wooden rod at top/bottom */
+.scroll-roll {
+  position: relative;
+  height: 18px;
+  margin: 0 -4px;
+  border-radius: 9px;
+  background: linear-gradient(
+    180deg,
+    #6b4c2a 0%,
+    #8b6914 15%,
+    #c9a84c 30%,
+    #f5d778 45%,
+    #c9a84c 55%,
+    #8b6914 70%,
+    #6b4c2a 85%,
+    #4a3218 100%
+  );
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 220, 120, 0.3);
+  z-index: 2;
+}
+
+.scroll-roll-top {
+  margin-bottom: -2px;
+}
+
+.scroll-roll-bottom {
+  margin-top: -2px;
+}
+
+/* Specular highlight band across the roll */
+.scroll-roll-highlight {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  right: 8px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 230, 150, 0.5) 20%,
+    rgba(255, 240, 180, 0.7) 50%,
+    rgba(255, 230, 150, 0.5) 80%,
+    transparent 100%
+  );
+}
+
+/* Decorative endcaps on the scroll rods */
+.scroll-endcap {
+  position: absolute;
+  top: -3px;
+  width: 12px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(
+    180deg,
+    #c9a84c 0%,
+    #f5d778 35%,
+    #c9a84c 65%,
+    #7a5a20 100%
+  );
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 230, 150, 0.4);
+}
+
+.scroll-endcap-left { left: -4px; }
+.scroll-endcap-right { right: -4px; }
+
+/* Scroll body — the parchment area */
+.scroll-body {
+  position: relative;
+  padding: 24px 24px 20px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28, 18, 8, 0.92) 0%,
+      rgba(22, 14, 6, 0.95) 50%,
+      rgba(28, 18, 8, 0.92) 100%
+    );
+  border-left: 2px solid rgba(140, 105, 40, 0.35);
+  border-right: 2px solid rgba(140, 105, 40, 0.35);
+  box-shadow:
+    inset 4px 0 12px rgba(0, 0, 0, 0.4),
+    inset -4px 0 12px rgba(0, 0, 0, 0.4),
+    inset 0 8px 16px rgba(0, 0, 0, 0.3),
+    inset 0 -8px 16px rgba(0, 0, 0, 0.3);
+
+  /* Performance */
   contain: layout style paint;
   will-change: transform, opacity;
   transform: translateZ(0);
+}
+
+/* Ornamental dividers inside the scroll */
+.scroll-ornament {
+  height: 1px;
+  margin: 0 8px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(180, 140, 50, 0.15) 15%,
+    rgba(200, 160, 70, 0.3) 50%,
+    rgba(180, 140, 50, 0.15) 85%,
+    transparent 100%
+  );
+}
+
+/* Title text */
+.scroll-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 12px 0 8px;
+  background: linear-gradient(135deg, #d4a54a, #f5d778, #d4a54a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media (min-width: 640px) {
+  .scroll-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Body text */
+.scroll-content {
+  color: #d4c4a0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 640px) {
+  .scroll-content {
+    font-size: 1.05rem;
+  }
+}
+
+/* Ambient glow around the entire scroll */
+@keyframes scrollGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(180, 140, 50, 0.12));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(200, 160, 70, 0.22));
+  }
 }
 
 /* Performance-optimized animation keyframes */
@@ -98,10 +241,10 @@ canvas {
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(100, 100, 255, 0.3);
+    filter: drop-shadow(0 0 12px rgba(180, 140, 50, 0.12));
   }
   50% {
-    box-shadow: 0 0 25px rgba(120, 120, 255, 0.5);
+    filter: drop-shadow(0 0 22px rgba(200, 160, 70, 0.22));
   }
 }
 
@@ -154,13 +297,13 @@ canvas {
 
 /* Accessibility: Focus states for keyboard navigation */
 *:focus-visible {
-  outline: 2px solid #818cf8;
+  outline: 2px solid #d4a54a;
   outline-offset: 2px;
 }
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #a5b4fc;
+  outline: 2px solid #d4a54a;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -171,8 +314,8 @@ a:focus-visible {
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #4f46e5;
-  color: white;
+  background: #92600a;
+  color: #fff;
   padding: 12px 24px;
   border-radius: 0 0 8px 8px;
   z-index: 9999;
@@ -183,7 +326,7 @@ a:focus-visible {
 
 .skip-to-content:focus {
   top: 0;
-  outline: 2px solid white;
+  outline: 2px solid #d4a54a;
   outline-offset: 2px;
 }
 
@@ -193,26 +336,40 @@ a:focus-visible {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Dialog box improved contrast */
-.dialog-box p {
-  color: #e0e7ff;
-  line-height: 1.7;
+/* Scroll parchment text */
+.scroll-content p,
+.scroll-content div {
+  color: #d4c4a0;
+  line-height: 1.75;
+}
+
+/* Content links within scroll */
+.scroll-content .content-link {
+  color: #e0b44a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(224, 180, 74, 0.35);
+}
+
+.scroll-content .content-link:hover {
+  color: #f5d778;
+  text-decoration-color: rgba(245, 215, 120, 0.5);
 }
 
 /* Link styles within content */
 .content-link {
-  color: #a5b4fc;
+  color: #e0b44a;
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color 0.2s ease;
 }
 
 .content-link:hover {
-  color: #c7d2fe;
+  color: #f5d778;
 }
 
 .content-link:focus-visible {
-  outline: 2px solid #a5b4fc;
+  outline: 2px solid #d4a54a;
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -230,9 +387,9 @@ a:focus-visible {
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(99, 102, 241, 0.1) 25%,
-    rgba(99, 102, 241, 0.2) 50%,
-    rgba(99, 102, 241, 0.1) 75%
+    rgba(180, 140, 50, 0.08) 25%,
+    rgba(180, 140, 50, 0.15) 50%,
+    rgba(180, 140, 50, 0.08) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;

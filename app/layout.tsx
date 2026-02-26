@@ -9,24 +9,20 @@ export const metadata: Metadata = {
     default: 'Margadeshaka - AI for Guidance & Learning',
     template: '%s | Margadeshaka'
   },
-  description: 'Building AI products that guide your journey and accelerate your learning. Home of Sakha (AI astrology companion) and Dronacharya (AI learning platform).',
+  description: 'Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform. Navigate life decisions and master new skills with AI.',
   keywords: [
     'AI startup',
     'Sakha',
     'Dronacharya',
-    'LearnFlow AI',
     'AI astrology',
     'Vedic astrology AI',
     'AI learning platform',
     'AI tutoring',
-    'multi-agent AI',
     'AI education',
     'AI guidance',
     'birth chart AI',
     'personalized learning',
     'AI companion',
-    'ancient wisdom AI',
-    'GPT-4 astrology',
     'AI certification',
     'interactive learning'
   ],
@@ -44,7 +40,7 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'Margadeshaka',
     title: 'Margadeshaka - AI for Guidance & Learning',
-    description: 'Building AI products that guide your journey and accelerate your learning. Home of Sakha (AI astrology) and Dronacharya (AI learning).',
+    description: 'Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform.',
     images: [
       {
         url: '/images/chakra.png',
@@ -60,7 +56,7 @@ export const metadata: Metadata = {
     site: '@MargadeshakaAI',
     creator: '@hiteshgupta3012',
     title: 'Margadeshaka - AI for Guidance & Learning',
-    description: 'Building Sakha (AI astrology) and Dronacharya (AI learning) - products that guide your journey and accelerate your learning.',
+    description: 'Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform.',
     images: ['/images/chakra.png'],
   },
   robots: {
@@ -104,7 +100,7 @@ export default function RootLayout({
     '@type': 'Organization',
     name: 'Margadeshaka',
     alternateName: 'AI for Guidance & Learning',
-    description: 'Building AI products that guide your journey and accelerate your learning. Home of Sakha (AI astrology companion) and Dronacharya (AI learning platform).',
+    description: 'Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform. Navigate life decisions and master new skills with AI.',
     url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai',
     founder: {
       '@type': 'Person',
@@ -140,9 +136,7 @@ export default function RootLayout({
     ],
     keywords: 'AI startup, Sakha, Dronacharya, AI astrology, AI learning, multi-agent AI, EdTech',
     sameAs: [
-      'https://linkedin.com/in/hiteshgupta3012',
-      'https://twitter.com/hiteshgupta3012',
-      'https://github.com/hiteshgupta3012'
+      'https://twitter.com/MargadeshakaAI'
     ]
   };
 
@@ -185,20 +179,20 @@ export default function RootLayout({
           <Analytics />
           <PerformanceMonitor />
         </div>
-        <footer className="w-full py-6 text-center text-gray-400 bg-black/80 backdrop-blur-sm border-t border-indigo-900/30" role="contentinfo" aria-label="Footer">
+        <footer className="w-full py-6 text-center text-amber-200/50 bg-black/80 backdrop-blur-sm border-t border-amber-800/20" role="contentinfo" aria-label="Footer">
           <div className="container mx-auto">
             <nav aria-label="Footer navigation" className="mb-4">
               <ul className="flex justify-center space-x-6 text-sm">
-                <li><a href="#features" className="hover:text-white transition-colors" aria-label="Learn about our features">Features</a></li>
-                <li><a href="#mission" className="hover:text-white transition-colors" aria-label="Our mission and values">Mission</a></li>
-                <li><a href="#contact" className="hover:text-white transition-colors" aria-label="Contact information">Contact</a></li>
-                <li><a href="#privacy" className="hover:text-white transition-colors" aria-label="Privacy policy">Privacy</a></li>
+                <li><a href="https://sakha.live" target="_blank" rel="noopener noreferrer" className="hover:text-amber-300 transition-colors" aria-label="Visit Sakha app">Sakha</a></li>
+                <li><span className="text-amber-200/30 cursor-default" aria-label="Dronacharya — Coming Soon">Dronacharya</span></li>
+                <li><a href="#mission" className="hover:text-amber-300 transition-colors" aria-label="Our mission and values">Mission</a></li>
+                <li><a href="#features" className="hover:text-amber-300 transition-colors" aria-label="Learn about our products">Products</a></li>
               </ul>
             </nav>
             <div className="text-center">
-              <p className="mb-2 cosmic-text">© 2025 — Margadeshaka</p>
-              <p className="text-sm italic opacity-80 mb-2">&quot;AI that guides your journey and accelerates your learning.&quot;</p>
-              <p className="text-xs opacity-60">Home of Sakha & Dronacharya • Built with ❤️ in India</p>
+              <p className="mb-2 text-amber-200/60">&copy; 2026 Margadeshaka</p>
+              <p className="text-sm italic text-amber-200/40 mb-2">&quot;Navigate life decisions. Master new skills.&quot;</p>
+              <p className="text-xs text-amber-200/30">Home of Sakha & Dronacharya &bull; Built in India</p>
             </div>
           </div>
         </footer>

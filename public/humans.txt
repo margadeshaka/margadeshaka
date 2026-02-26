@@ -2,14 +2,14 @@
 # The humans responsible & technology colophon
 
 # TEAM
-    Developer & AI Specialist -- Margadeshaka AI Team
+    Developer & AI Specialist — Margadeshaka Team
     Contact: contact [at] margadeshaka.ai
-    From: Global
+    From: India
 
 # THANKS
-    To all the users who seek clarity and reflection
+    To all the users who seek guidance and growth
     To the open-source community
-    To the seekers and thinkers who inspired this project
+    To the learners and seekers who inspired this project
 
 # TECHNOLOGY COLOPHON
     HTML5, CSS3, JavaScript
@@ -19,8 +19,8 @@
     Vercel, Azure Static Web Apps
 
 # SITE
-    Last update: 2025/01/22
+    Last update: 2026/02/26
     Language: English
     Doctype: HTML5
     IDE: Various
-    Components: Conscious AI, Spiritual Guidance, Emotional Support
+    Products: Sakha (AI Vedic Astrology), Dronacharya (AI Tutoring)
