@@ -13,6 +13,6 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_BASE_URL": "https://margadeshaka.ai"
+    "NEXT_PUBLIC_BASE_URL": "https://margadeshaka.com"
   }
 }

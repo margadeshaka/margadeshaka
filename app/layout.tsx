@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import PerformanceMonitor from './components/PerformanceMonitor';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'),
   title: {
     default: 'Margadeshaka - AI for Guidance & Learning',
     template: '%s | Margadeshaka'
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     'AI certification',
     'interactive learning'
   ],
-  authors: [{ name: 'Hitesh Gupta', url: 'https://margadeshaka.ai' }],
+  authors: [{ name: 'Hitesh Gupta', url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com' }],
   creator: 'Margadeshaka',
   publisher: 'Margadeshaka',
   formatDetection: {
@@ -101,7 +101,7 @@ export default function RootLayout({
     name: 'Margadeshaka',
     alternateName: 'AI for Guidance & Learning',
     description: 'Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform. Navigate life decisions and master new skills with AI.',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai',
+    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com',
     founder: {
       '@type': 'Person',
       name: 'Hitesh Gupta',
@@ -143,7 +143,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai'} />
+        <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'} />
         
         {/* Favicon links */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />

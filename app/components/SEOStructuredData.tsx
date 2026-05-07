@@ -27,10 +27,10 @@ export default function SEOStructuredData() {
     '@type': 'Organization',
     name: 'Margadeshaka',
     alternateName: 'AI for Guidance & Learning',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai',
+    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com',
     logo: {
       '@type': 'ImageObject',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.ai'}/images/chakra.png`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'}/images/chakra.png`,
       width: '400',
       height: '400'
     },
@@ -68,7 +68,7 @@ export default function SEOStructuredData() {
       '@type': 'Organization',
       name: 'Margadeshaka'
     },
-    url: 'https://margadeshaka.ai'
+    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'
   };
 
   return (
