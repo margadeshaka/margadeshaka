@@ -1,8 +1,11 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Inter, Poppins, Noto_Serif_Devanagari } from 'next/font/google';
 import PerformanceMonitor from './components/PerformanceMonitor';
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
 const inter = Inter({
   subsets: ['latin'],
@@ -91,6 +94,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   category: 'Technology',
   classification: 'AI Products, EdTech, AI Guidance, AI Learning',
+  verification: {
+    // Add Search Console / Bing Webmaster verification tokens here when issued.
+    // google: 'paste-token-from-search-console-here',
+    // other: { 'msvalidate.01': 'paste-token-from-bing-webmaster' },
+  },
 };
 
 export const viewport: Viewport = {
@@ -122,6 +130,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <PerformanceMonitor />
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
