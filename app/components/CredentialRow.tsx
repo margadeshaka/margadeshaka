@@ -51,7 +51,7 @@ export default function CredentialRow({ label, value, mono, note }: CredentialRo
         >
           {value}
         </span>
-        {note && <span className="text-[11px] text-white/35">· {note}</span>}
+        {note && <span className="text-[11px] text-white/55">· {note}</span>}
         {mono && (
           <button
             type="button"

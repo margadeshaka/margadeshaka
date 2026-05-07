@@ -35,17 +35,13 @@ export default function Navbar() {
       >
         <Link href="/" className="inline-flex items-center gap-2.5 group" aria-label="Margadeshaka home">
           <span
-            className="w-8 h-8 rounded-full grid place-items-center font-devanagari font-bold flex-none"
+            className="w-8 h-8 rounded-full flex-none"
             style={{
               background: 'linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFD280 100%)',
               boxShadow: '0 0 20px rgba(255, 200, 100, 0.45)',
-              fontSize: 13,
-              color: '#1A1224',
             }}
             aria-hidden="true"
-          >
-            मा
-          </span>
+          />
           <span
             className="font-display text-white"
             style={{ fontSize: 17, fontWeight: 600, letterSpacing: '-0.01em' }}

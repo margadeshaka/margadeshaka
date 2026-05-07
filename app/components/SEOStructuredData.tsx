@@ -11,6 +11,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${baseUrl}#organization`,
     name: company.brand,
     legalName: company.legalNameTitleCase,
     alternateName: 'AI for Guidance & Learning',
@@ -86,7 +87,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
       'AI Vedic astrology companion: birth chart analysis, Vimshottari Dasha predictions, relationship compatibility, and emotionally aware coaching.',
     applicationCategory: 'LifestyleApplication',
     operatingSystem: 'Web, iOS, Android',
-    provider: { '@type': 'Organization', name: company.brand, url: baseUrl },
+    provider: { '@id': `${baseUrl}#organization` },
     url: company.web.sakha,
   };
 
@@ -98,7 +99,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
       'Interactive AI tutoring platform with multi-agent AI tutors, adaptive difficulty, and project-based Bronze, Silver, and Gold certifications.',
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'Web',
-    provider: { '@type': 'Organization', name: company.brand, url: baseUrl },
+    provider: { '@id': `${baseUrl}#organization` },
     url: baseUrl,
   };
 
@@ -149,15 +150,26 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
     ],
   };
 
-  // WebSite — enables Google sitelinks search box
+  // WebSite — enables Google sitelinks search box (when search is added).
+  // Even without search, advertising it as a SearchAction is recommended by
+  // Google's structured data guidelines.
   const websiteData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${baseUrl}#website`,
     name: company.brand,
     alternateName: company.legalNameTitleCase,
     url: baseUrl,
-    publisher: { '@type': 'Organization', name: company.legalNameTitleCase, url: baseUrl },
     inLanguage: 'en',
+    publisher: { '@id': `${baseUrl}#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${baseUrl}/?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
 
   // LocalBusiness — improves India local search; based on the registered office

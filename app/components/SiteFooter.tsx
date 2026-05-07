@@ -32,7 +32,7 @@ export default function SiteFooter() {
           <p className="text-white/50 leading-relaxed mb-4">
             AI for guidance &amp; learning. Building Sakha and Dronacharya from India.
           </p>
-          <p className="text-xs text-white/40 leading-relaxed">
+          <p className="text-xs text-white/55 leading-relaxed">
             <strong className="text-white/60 font-medium block mb-1">{company.legalNameTitleCase}</strong>
             CIN: <span className="font-mono">{company.cin}</span>
           </p>
@@ -113,13 +113,13 @@ export default function SiteFooter() {
               View credentials →
             </Link>
           </div>
-          <address className="not-italic text-white/40">
+          <address className="not-italic text-white/55">
             {company.registeredOffice.city}, {company.registeredOffice.state}, {company.registeredOffice.country}
           </address>
         </div>
       </div>
 
-      <div className="border-t border-white/5 px-6 py-6 text-center text-xs text-white/40">
+      <div className="border-t border-white/5 px-6 py-6 text-center text-xs text-white/55">
         <p className="mb-1">
           &copy; {new Date().getFullYear()} {company.legalNameTitleCase}. All rights reserved.
           {company.brand}{company.trademark.symbol} is a trademark of {company.legalNameTitleCase}.

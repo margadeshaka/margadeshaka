@@ -154,7 +154,7 @@ function ProductCard({ product }: { product: Product }) {
               Visit <ArrowRight />
             </span>
           ) : (
-            <span className="text-[13px] text-white/35">In development</span>
+            <span className="text-[13px] text-white/55">In development</span>
           )}
         </div>
       </div>
