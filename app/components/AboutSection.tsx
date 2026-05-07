@@ -10,15 +10,22 @@ export default function AboutSection() {
 
       <div className="space-y-6 text-lg text-white/75 leading-relaxed max-w-3xl mx-auto">
         <p>
-          Margadeshaka (Sanskrit for &quot;guide&quot;) is a young India-based AI company building products
-          that combine ancient wisdom with modern multi-agent AI. We are not building scripted
-          Q&amp;A tools — we build thoughtful companions that help people make better decisions and
-          build real expertise.
+          <strong className="text-white">Margadeshaka</strong> (Sanskrit for &quot;guide&quot;) is an
+          India-based AI company building products that combine ancient wisdom with modern multi-agent AI.
+          We are not building scripted Q&amp;A tools — we build thoughtful companions that help people make
+          better decisions and build real expertise.
         </p>
         <p>
           We believe AI should amplify human potential, not replace human connection. Our products
           are designed to be private, considered, and to respect the depth of the traditions they
           draw from.
+        </p>
+        <p className="text-base text-white/55 pt-2">
+          Margadeshaka AI Private Limited is incorporated under the Companies Act, 2013 and is a{' '}
+          <a href="/compliance" className="text-brand-gold underline underline-offset-2 hover:text-brand-gold-light">
+            DPIIT-recognised startup
+          </a>{' '}
+          under the Government of India&apos;s Startup India initiative.
         </p>
       </div>
 

@@ -7,11 +7,18 @@ export default function HeroBanner() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-cosmic-purple-600/[0.08] blur-[120px] pointer-events-none" aria-hidden="true" />
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-gold/20 bg-brand-gold/5 mb-8">
-          <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" aria-hidden="true" />
-          <span className="text-sm text-brand-gold font-medium tracking-wide">
-            Building in India
-          </span>
+        <div className="inline-flex flex-wrap items-center justify-center gap-2 mb-8">
+          <a
+            href="/compliance"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-gold/20 bg-brand-gold/5 hover:bg-brand-gold/10 hover:border-brand-gold/40 transition-colors"
+            aria-label="View DPIIT recognition certificate"
+          >
+            <span className="w-2 h-2 rounded-full bg-aurora-500 animate-pulse" aria-hidden="true" />
+            <span className="text-sm text-brand-gold font-medium tracking-wide">
+              DPIIT Recognized Startup
+            </span>
+            <span className="text-xs font-mono text-brand-gold/60">DIPP215241</span>
+          </a>
         </div>
 
         <div className="flex justify-center mb-10">

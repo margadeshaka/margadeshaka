@@ -1,10 +1,13 @@
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com';
+import { company } from '../lib/company';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || company.web.site;
 
 export default function SEOStructuredData() {
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Margadeshaka',
+    name: company.brand,
+    legalName: company.legalNameTitleCase,
     alternateName: 'AI for Guidance & Learning',
     url: baseUrl,
     logo: {
@@ -14,27 +17,50 @@ export default function SEOStructuredData() {
       height: '400',
     },
     description:
-      'Margadeshaka builds AI products that combine Indian wisdom traditions with modern multi-agent AI. Home of Sakha (Vedic astrology companion) and Dronacharya (AI tutoring platform).',
-    foundingDate: '2025',
+      'Margadeshaka AI Private Limited — DPIIT-recognised AI startup building products that combine Indian wisdom traditions with modern multi-agent AI. Home of Sakha (Vedic astrology companion) and Dronacharya (AI tutoring platform).',
+    foundingDate: company.incorporationDate,
     foundingLocation: {
       '@type': 'Place',
-      address: { '@type': 'PostalAddress', addressCountry: 'IN' },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: company.registeredOffice.city,
+        addressRegion: company.registeredOffice.state,
+        addressCountry: company.registeredOffice.countryCode,
+      },
     },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${company.registeredOffice.line1}, ${company.registeredOffice.line2}`,
+      addressLocality: company.registeredOffice.city,
+      addressRegion: company.registeredOffice.state,
+      postalCode: company.registeredOffice.postalCode,
+      addressCountry: company.registeredOffice.countryCode,
+    },
+    identifier: [
+      { '@type': 'PropertyValue', propertyID: 'CIN', value: company.cin },
+      { '@type': 'PropertyValue', propertyID: 'PAN', value: company.pan },
+      { '@type': 'PropertyValue', propertyID: 'DPIIT', value: company.dpiit.number },
+    ],
+    taxID: company.pan,
     founder: {
       '@type': 'Person',
-      name: 'Hitesh Gupta',
-      jobTitle: 'Founder & CEO',
-      sameAs: [
-        'https://www.linkedin.com/in/hiteshgupta3012/',
-        'https://github.com/ihiteshgupta',
-      ],
+      name: company.founder.name,
+      jobTitle: company.founder.role,
+      sameAs: [company.founder.linkedin, company.founder.github],
     },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer support',
-      email: 'founder@margadeshaka.com',
-      availableLanguage: ['English', 'Hindi'],
-    },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        email: company.contact.email,
+        availableLanguage: ['English', 'Hindi'],
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'security',
+        email: company.contact.securityEmail,
+      },
+    ],
     knowsAbout: [
       'Artificial Intelligence',
       'Multi-Agent AI Systems',
@@ -43,12 +69,8 @@ export default function SEOStructuredData() {
       'Conversational AI',
     ],
     keywords:
-      'Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, multi-agent AI, India AI startup',
-    sameAs: [
-      'https://sakha.live',
-      'https://twitter.com/MargadeshakaAI',
-      'https://github.com/margadeshaka',
-    ],
+      'Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, multi-agent AI, India AI startup, DPIIT recognised startup',
+    sameAs: [company.web.sakha, company.web.twitter, company.web.githubOrg],
   };
 
   const sakhaData = {
@@ -59,8 +81,8 @@ export default function SEOStructuredData() {
       'AI Vedic astrology companion: birth chart analysis, Vimshottari Dasha predictions, relationship compatibility, and emotionally aware coaching.',
     applicationCategory: 'LifestyleApplication',
     operatingSystem: 'Web, iOS, Android',
-    provider: { '@type': 'Organization', name: 'Margadeshaka', url: baseUrl },
-    url: 'https://sakha.live',
+    provider: { '@type': 'Organization', name: company.brand, url: baseUrl },
+    url: company.web.sakha,
   };
 
   const dronacharyaData = {
@@ -71,7 +93,7 @@ export default function SEOStructuredData() {
       'Interactive AI tutoring platform with multi-agent AI tutors, adaptive difficulty, and project-based Bronze, Silver, and Gold certifications.',
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'Web',
-    provider: { '@type': 'Organization', name: 'Margadeshaka', url: baseUrl },
+    provider: { '@type': 'Organization', name: company.brand, url: baseUrl },
     url: baseUrl,
   };
 
@@ -84,7 +106,15 @@ export default function SEOStructuredData() {
         name: 'What does Margadeshaka do?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Margadeshaka builds AI products that combine Indian wisdom traditions with modern multi-agent AI systems. We ship Sakha (Vedic astrology companion) on iOS, Android, and Web, and are developing Dronacharya (AI learning platform).',
+          text: 'Margadeshaka AI Private Limited is a DPIIT-recognised Indian AI startup (DIPP215241) building AI products that combine Indian wisdom traditions with modern multi-agent AI systems. Our products include Sakha (Vedic astrology companion) and Dronacharya (AI learning platform).',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'When was Margadeshaka incorporated?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `Margadeshaka AI Private Limited was incorporated on ${company.incorporationDateHuman} under the Companies Act, 2013. CIN: ${company.cin}.`,
         },
       },
       {
@@ -97,18 +127,10 @@ export default function SEOStructuredData() {
       },
       {
         '@type': 'Question',
-        name: 'What is Dronacharya?',
+        name: 'Where is Margadeshaka registered?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Dronacharya is an interactive AI tutoring platform in development. It uses multi-agent AI tutors and adaptive difficulty to teach by active thinking, with project-based certifications.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Where is Margadeshaka based?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Margadeshaka is based in India and operates as a remote-first team.',
+          text: `Registered office: ${company.registeredOffice.full}.`,
         },
       },
       {
@@ -116,7 +138,7 @@ export default function SEOStructuredData() {
         name: 'How do I contact Margadeshaka?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Email founder@margadeshaka.com for product, partnership, press, or hiring inquiries.',
+          text: `Email ${company.contact.email} for product, partnership, press, or hiring inquiries.`,
         },
       },
     ],
@@ -124,30 +146,10 @@ export default function SEOStructuredData() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqData)
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationData)
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(sakhaData)
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(dronacharyaData)
-        }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(sakhaData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dronacharyaData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
     </>
   );
 }
