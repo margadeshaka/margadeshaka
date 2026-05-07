@@ -24,7 +24,7 @@ const notoDevanagari = Noto_Serif_Devanagari({
   display: 'swap',
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com';
+const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com').trim();
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

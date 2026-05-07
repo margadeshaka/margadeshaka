@@ -1,6 +1,8 @@
 import { company } from '../lib/company';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || company.web.site;
+// Defensive trim — env vars set via `echo "..." | vercel env add` carry a
+// trailing newline which silently corrupts every URL/@id derived from baseUrl.
+const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || company.web.site).trim();
 
 interface SEOStructuredDataProps {
   /** Optional breadcrumb trail. Pass on subpages. */
