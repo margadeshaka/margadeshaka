@@ -1,74 +1,125 @@
-'use client';
-
-import { useChakra } from '../context/ChakraContext';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com';
 
 export default function SEOStructuredData() {
-  const { chakraPoints } = useChakra();
-
-  // Create FAQ structured data from chakra points
-  const faqData = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: chakraPoints.map(point => ({
-      '@type': 'Question',
-      name: point.title.replace(/[✨💡🌿🔮👤❤️🌱🚀]/g, '').trim(),
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: typeof point.description === 'string'
-          ? point.description.replace(/\n/g, ' ').slice(0, 300)
-          : 'Learn about Margadeshaka AI products and services.'
-      }
-    }))
-  };
-
-  // Organization structured data
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Margadeshaka',
     alternateName: 'AI for Guidance & Learning',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com',
+    url: baseUrl,
     logo: {
       '@type': 'ImageObject',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'}/images/chakra.png`,
+      url: `${baseUrl}/images/chakra.png`,
       width: '400',
-      height: '400'
+      height: '400',
     },
-    description: 'Margadeshaka builds AI products that help you navigate life and master new skills. Home of Sakha (AI Vedic astrology companion) and Dronacharya (AI learning platform).',
+    description:
+      'Margadeshaka builds AI products that combine Indian wisdom traditions with modern multi-agent AI. Home of Sakha (Vedic astrology companion) and Dronacharya (AI tutoring platform).',
     foundingDate: '2025',
-    keywords: 'Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, AI learning platform, personalized learning',
+    foundingLocation: {
+      '@type': 'Place',
+      address: { '@type': 'PostalAddress', addressCountry: 'IN' },
+    },
+    founder: {
+      '@type': 'Person',
+      name: 'Hitesh Gupta',
+      jobTitle: 'Founder & CEO',
+      sameAs: [
+        'https://www.linkedin.com/in/hiteshgupta3012/',
+        'https://github.com/ihiteshgupta',
+      ],
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email: 'founder@margadeshaka.com',
+      availableLanguage: ['English', 'Hindi'],
+    },
+    knowsAbout: [
+      'Artificial Intelligence',
+      'Multi-Agent AI Systems',
+      'Vedic Astrology',
+      'EdTech',
+      'Conversational AI',
+    ],
+    keywords:
+      'Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, multi-agent AI, India AI startup',
     sameAs: [
-      'https://twitter.com/MargadeshakaAI'
-    ]
+      'https://sakha.live',
+      'https://twitter.com/MargadeshakaAI',
+      'https://github.com/margadeshaka',
+    ],
   };
 
-  // Sakha product structured data
   const sakhaData = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: 'Sakha',
-    description: 'AI-powered Vedic astrology companion offering birth chart analysis, relationship compatibility, auspicious timing, and emotional coaching.',
+    description:
+      'AI Vedic astrology companion: birth chart analysis, Vimshottari Dasha predictions, relationship compatibility, and emotionally aware coaching.',
     applicationCategory: 'LifestyleApplication',
     operatingSystem: 'Web, iOS, Android',
-    provider: {
-      '@type': 'Organization',
-      name: 'Margadeshaka'
-    },
-    url: 'https://sakha.live'
+    provider: { '@type': 'Organization', name: 'Margadeshaka', url: baseUrl },
+    url: 'https://sakha.live',
   };
 
-  // Dronacharya product structured data
   const dronacharyaData = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: 'Dronacharya',
-    description: 'Interactive AI learning platform with specialized AI tutors, adaptive difficulty, and project-based certifications. Learn by thinking, not watching.',
+    description:
+      'Interactive AI tutoring platform with multi-agent AI tutors, adaptive difficulty, and project-based Bronze, Silver, and Gold certifications.',
     applicationCategory: 'EducationalApplication',
-    provider: {
-      '@type': 'Organization',
-      name: 'Margadeshaka'
-    },
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'
+    operatingSystem: 'Web',
+    provider: { '@type': 'Organization', name: 'Margadeshaka', url: baseUrl },
+    url: baseUrl,
+  };
+
+  const faqData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What does Margadeshaka do?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Margadeshaka builds AI products that combine Indian wisdom traditions with modern multi-agent AI systems. We ship Sakha (Vedic astrology companion) on iOS, Android, and Web, and are developing Dronacharya (AI learning platform).',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is Sakha?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Sakha is an AI Vedic astrology companion. It generates birth charts using Swiss Ephemeris with Lahiri Ayanamsa, computes Dasha periods and transits, and provides emotionally aware coaching. Available in beta on iOS, Android, and at sakha.live.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is Dronacharya?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Dronacharya is an interactive AI tutoring platform in development. It uses multi-agent AI tutors and adaptive difficulty to teach by active thinking, with project-based certifications.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Where is Margadeshaka based?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Margadeshaka is based in India and operates as a remote-first team.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I contact Margadeshaka?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Email founder@margadeshaka.com for product, partnership, press, or hiring inquiries.',
+        },
+      },
+    ],
   };
 
   return (
