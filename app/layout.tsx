@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'en_IN',
     url: '/',
     siteName: 'Margadeshaka',
     title: 'Margadeshaka — AI for Guidance & Learning',
@@ -91,7 +91,16 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    languages: {
+      // Explicit India targeting helps Google rank us in google.co.in.
+      // x-default is the fallback for unmatched locales.
+      'en-IN': '/',
+      'en': '/',
+      'x-default': '/',
+    },
+  },
   category: 'Technology',
   classification: 'AI Products, EdTech, AI Guidance, AI Learning',
   verification: {
@@ -115,7 +124,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`dark ${inter.variable} ${poppins.variable} ${notoDevanagari.variable}`}
       suppressHydrationWarning
     >
