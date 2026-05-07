@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: '%s | Margadeshaka',
   },
   description:
-    'Margadeshaka builds AI products that combine Indian wisdom traditions with modern multi-agent systems. Home of Sakha (Vedic astrology companion) and Dronacharya (AI tutoring platform).',
+    'DPIIT-recognised AI startup from India building Sakha (Vedic astrology AI) and Dronacharya (AI tutoring). Multi-agent AI rooted in Indian wisdom traditions.',
   keywords: [
     'AI startup',
     'Sakha',
@@ -106,7 +106,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${poppins.variable} ${notoDevanagari.variable}`}>
+    <html
+      lang="en"
+      className={`dark ${inter.variable} ${poppins.variable} ${notoDevanagari.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

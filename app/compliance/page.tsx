@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import CosmicLayer from '../components/CosmicLayer';
 import SiteFooter from '../components/SiteFooter';
 import CredentialRow from '../components/CredentialRow';
+import SEOStructuredData from '../components/SEOStructuredData';
 import { company } from '../lib/company';
 
 export const metadata: Metadata = {
@@ -189,12 +190,12 @@ export default function CompliancePage() {
                 <DownloadIcon /> View DPIIT Certificate
               </a>
               <a
-                href="https://www.startupindia.gov.in/content/sih/en/recognised-startup.html"
+                href={c.dpiit.verifyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-ghost btn-sm"
               >
-                Verify on startupindia.gov.in <ExternalIcon />
+                Verify on {c.dpiit.verifyLabel} <ExternalIcon />
               </a>
             </div>
           </div>
@@ -305,6 +306,12 @@ export default function CompliancePage() {
       </main>
 
       <SiteFooter />
+      <SEOStructuredData
+        breadcrumbs={[
+          { name: 'Home', href: '/' },
+          { name: 'Compliance', href: '/compliance' },
+        ]}
+      />
     </>
   );
 }

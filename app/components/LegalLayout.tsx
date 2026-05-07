@@ -3,14 +3,17 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import CosmicLayer from './CosmicLayer';
 import SiteFooter from './SiteFooter';
+import SEOStructuredData from './SEOStructuredData';
 
 interface LegalLayoutProps {
   title: string;
   lastUpdated: string;
+  /** Slug used for the breadcrumb item (e.g. 'privacy', 'terms'). */
+  slug: string;
   children: ReactNode;
 }
 
-export default function LegalLayout({ title, lastUpdated, children }: LegalLayoutProps) {
+export default function LegalLayout({ title, lastUpdated, slug, children }: LegalLayoutProps) {
   return (
     <>
       <CosmicLayer />
@@ -47,6 +50,12 @@ export default function LegalLayout({ title, lastUpdated, children }: LegalLayou
         </div>
       </main>
       <SiteFooter />
+      <SEOStructuredData
+        breadcrumbs={[
+          { name: 'Home', href: '/' },
+          { name: title, href: `/${slug}` },
+        ]}
+      />
     </>
   );
 }

@@ -2,7 +2,12 @@ import { company } from '../lib/company';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || company.web.site;
 
-export default function SEOStructuredData() {
+interface SEOStructuredDataProps {
+  /** Optional breadcrumb trail. Pass on subpages. */
+  breadcrumbs?: Array<{ name: string; href: string }>;
+}
+
+export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProps = {}) {
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -144,12 +149,73 @@ export default function SEOStructuredData() {
     ],
   };
 
+  // WebSite — enables Google sitelinks search box
+  const websiteData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: company.brand,
+    alternateName: company.legalNameTitleCase,
+    url: baseUrl,
+    publisher: { '@type': 'Organization', name: company.legalNameTitleCase, url: baseUrl },
+    inLanguage: 'en',
+  };
+
+  // LocalBusiness — improves India local search; based on the registered office
+  const localBusinessData = {
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'ProfessionalService'],
+    '@id': `${baseUrl}#business`,
+    name: company.legalNameTitleCase,
+    image: `${baseUrl}/images/chakra.png`,
+    url: baseUrl,
+    email: company.contact.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${company.registeredOffice.line1}, ${company.registeredOffice.line2}`,
+      addressLocality: company.registeredOffice.city,
+      addressRegion: company.registeredOffice.state,
+      postalCode: company.registeredOffice.postalCode,
+      addressCountry: company.registeredOffice.countryCode,
+    },
+    priceRange: '₹₹',
+    foundingDate: company.incorporationDate,
+  };
+
+  // Brand
+  const brandData = {
+    '@context': 'https://schema.org',
+    '@type': 'Brand',
+    name: company.brand,
+    logo: `${baseUrl}/images/chakra.png`,
+    description: 'AI for guidance and learning. The Margadeshaka brand family includes Sakha and Dronacharya.',
+  };
+
+  // BreadcrumbList — only when caller provides
+  const breadcrumbData = breadcrumbs
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: b.name,
+          item: b.href.startsWith('http') ? b.href : `${baseUrl}${b.href}`,
+        })),
+      }
+    : null;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(brandData) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(sakhaData) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dronacharyaData) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
+      {breadcrumbData && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+      )}
     </>
   );
 }

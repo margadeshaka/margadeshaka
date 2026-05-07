@@ -49,22 +49,15 @@ export default function ChakraOrb() {
         <circle cx="110" cy="110" r="56" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2 6" />
       </svg>
 
-      {/* Gold core with मार्ग glyph */}
+      {/* Gold core (clean — no inner glyph) */}
       <div
-        className="absolute inset-9 rounded-full grid place-items-center"
+        className="absolute inset-9 rounded-full"
         style={{
           background: 'radial-gradient(circle at 35% 30%, #FFE4B5 0%, #FFC864 45%, #EAB308 100%)',
           boxShadow: '0 0 60px rgba(255,200,100,0.55), inset 0 0 30px rgba(255,255,255,0.4)',
         }}
-      >
-        <span
-          className="font-devanagari font-bold"
-          style={{ fontSize: 44, color: '#1A1224', textShadow: '0 1px 2px rgba(255,255,255,0.4)' }}
-          aria-hidden="true"
-        >
-          मार्ग
-        </span>
-      </div>
+        aria-hidden="true"
+      />
     </div>
   );
 }

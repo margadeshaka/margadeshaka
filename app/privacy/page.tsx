@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalLayout title="Privacy Policy" lastUpdated="May 7, 2026">
+    <LegalLayout title="Privacy Policy" slug="privacy" lastUpdated="May 7, 2026">
       <p>
         Margadeshaka (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) respects your privacy. This policy describes
         what information we collect when you visit <a href="https://margadeshaka.com">margadeshaka.com</a> or
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
         <li>Opt out of non-essential communications.</li>
       </ul>
       <p>
-        To exercise any of these rights, email <a href="mailto:founder@margadeshaka.com">founder@margadeshaka.com</a>.
+        To exercise any of these rights, email <a href="mailto:contact@margadeshaka.com">contact@margadeshaka.com</a>.
       </p>
 
       <h2>6. Data Retention</h2>
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
 
       <h2>10. Contact</h2>
       <p>
-        Questions or requests: <a href="mailto:founder@margadeshaka.com">founder@margadeshaka.com</a>
+        Questions or requests: <a href="mailto:contact@margadeshaka.com">contact@margadeshaka.com</a>
       </p>
       <p>Margadeshaka, India.</p>
     </LegalLayout>

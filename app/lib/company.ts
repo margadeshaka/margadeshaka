@@ -23,7 +23,8 @@ export const company = {
   incorporationDate: '2025-03-04',
   incorporationDateHuman: '4 March 2025',
   incorporationCertUrl: '/certificates/incorporation-certificate.pdf',
-  mcaVerifyUrl: 'https://www.mca.gov.in/mcafoportal/viewCompanyMasterData.do',
+  mcaVerifyUrl: 'https://www.mca.gov.in/',
+  mcaVerifyLabel: 'mca.gov.in (search by CIN)',
 
   // DPIIT / Startup India recognition
   dpiit: {
@@ -35,7 +36,8 @@ export const company = {
     industry: 'AI',
     sector: 'Others',
     certUrl: '/certificates/dpiit-recognition-certificate.pdf',
-    verifyUrl: 'https://www.startupindia.gov.in/content/sih/en/recognised-startup.html',
+    verifyUrl: 'https://www.startupindia.gov.in/',
+    verifyLabel: 'startupindia.gov.in',
   },
 
   // Trademark
@@ -58,11 +60,11 @@ export const company = {
     full: 'Flat 1403, T-7, Sushma Grande, Zirakpur, Rajpura, Mohali — 140603, Punjab, India',
   },
 
-  // Contact
+  // Contact — single inbox for all roles
   contact: {
-    email: 'founder@margadeshaka.com',
-    supportEmail: 'support@margadeshaka.com',
-    securityEmail: 'security@margadeshaka.com',
+    email: 'contact@margadeshaka.com',
+    supportEmail: 'contact@margadeshaka.com',
+    securityEmail: 'contact@margadeshaka.com',
   },
 
   // Founder

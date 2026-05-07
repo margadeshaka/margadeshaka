@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalLayout title="Terms of Service" lastUpdated="May 7, 2026">
+    <LegalLayout title="Terms of Service" slug="terms" lastUpdated="May 7, 2026">
       <p>
         These terms govern your use of <a href="https://margadeshaka.com">margadeshaka.com</a> and our
         products (Sakha and Dronacharya). By using any of these services, you agree to these terms.
@@ -32,7 +32,7 @@ export default function TermsPage() {
       <ul>
         <li>You are responsible for maintaining the security of your account credentials.</li>
         <li>You are responsible for all activity under your account.</li>
-        <li>Notify us immediately at <a href="mailto:founder@margadeshaka.com">founder@margadeshaka.com</a> of any unauthorized use.</li>
+        <li>Notify us immediately at <a href="mailto:contact@margadeshaka.com">contact@margadeshaka.com</a> of any unauthorized use.</li>
       </ul>
 
       <h2>4. Acceptable Use</h2>
@@ -109,7 +109,7 @@ export default function TermsPage() {
 
       <h2>14. Contact</h2>
       <p>
-        Questions: <a href="mailto:founder@margadeshaka.com">founder@margadeshaka.com</a>
+        Questions: <a href="mailto:contact@margadeshaka.com">contact@margadeshaka.com</a>
       </p>
     </LegalLayout>
   );
