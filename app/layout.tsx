@@ -1,7 +1,28 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Analytics } from "@vercel/analytics/next"
+import { Inter, Poppins, Noto_Serif_Devanagari } from 'next/font/google';
 import PerformanceMonitor from './components/PerformanceMonitor';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
+
+const notoDevanagari = Noto_Serif_Devanagari({
+  subsets: ['devanagari'],
+  weight: ['400', '700'],
+  variable: '--font-noto-devanagari',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'),
@@ -141,7 +162,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={`dark ${inter.variable} ${poppins.variable} ${notoDevanagari.variable}`}>
       <head>
         <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com'} />
         
