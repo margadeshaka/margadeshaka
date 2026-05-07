@@ -4,7 +4,7 @@
 
 /*
  * Margadeshaka design tokens — aligned with Sakha brand family.
- * Source of truth: Sakha/docs/DESIGN_TOKENS.md
+ * Source of truth: Sakha/docs/DESIGN_TOKENS.md + design bundle from claude.ai/design.
  */
 :root {
   color-scheme: dark;
@@ -14,11 +14,16 @@
   --brand-gold-light: #FFD280;
   --brand-gold-amber: #FFB830;
   --brand-gold-core: #FFE4B5;
+  --cosmic-purple: #7E4DD4;
+  --cosmic-purple-deep: #4C1F9F;
+  --aurora: #00E6AA;
+  --rose: #E01F3D;
 
   /* Backgrounds */
   --bg-primary: #06050F;     /* navy 950 — cosmic void */
   --bg-secondary: #0C0A1D;   /* navy 900 */
-  --bg-elevated: #1A1729;    /* surface container high */
+  --bg-elevated: #14112B;    /* navy 800 */
+  --indigo-950: #1E1B4B;
   --bg-card: rgba(255, 255, 255, 0.06);
   --border-card: rgba(255, 255, 255, 0.08);
 
@@ -32,11 +37,27 @@
   --error: #E01F3D;
   --warning: #EAB308;
 
-  /* Legacy compat for existing 3D chakra section (keep parchment scroll hues) */
+  /* Tunable (used by future Tweaks panel; safe defaults) */
+  --gold-intensity: 1;
+  --star-density: 1;
+  --section-density: 1;
+
+  /* Radii */
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Legacy compat */
   --foreground-rgb: 232, 230, 240;
   --background-start-rgb: 6, 5, 15;
   --background-end-rgb: 12, 10, 29;
 }
+
+::selection { background: rgba(255, 200, 100, 0.30); color: #fff; }
 
 html {
   scroll-behavior: smooth;
@@ -491,13 +512,14 @@ a:focus-visible {
 }
 
 /* Skip to content link for accessibility */
-.skip-to-content {
+.skip-to-content,
+.skip-link {
   position: absolute;
-  top: -100%;
+  top: -200%;
   left: 50%;
   transform: translateX(-50%);
-  background: #92600a;
-  color: #fff;
+  background: var(--brand-gold);
+  color: #1A1224;
   padding: 12px 24px;
   border-radius: 0 0 8px 8px;
   z-index: 9999;
@@ -506,10 +528,17 @@ a:focus-visible {
   transition: top 0.3s ease;
 }
 
-.skip-to-content:focus {
+.skip-to-content:focus,
+.skip-link:focus {
   top: 0;
-  outline: 2px solid #d4a54a;
+  outline: 2px solid var(--brand-gold);
   outline-offset: 2px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--brand-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Improved contrast for better readability */
@@ -575,4 +604,181 @@ a:focus-visible {
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ============================
+   DESIGN-BUNDLE UTILITIES
+   (ported from claude.ai/design Margadeshaka.html)
+   ============================ */
+
+/* Eyebrow label */
+.eyebrow {
+  font-family: var(--font-poppins, system-ui, sans-serif);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  color: var(--brand-gold);
+  font-weight: 600;
+}
+.eyebrow-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Gold-on-gold gradient text (for headlines) */
+.gold-text {
+  background: linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFE4B5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Pill badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 200, 100, 0.22);
+  background: rgba(255, 200, 100, 0.06);
+  color: var(--brand-gold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.badge-ghost {
+  border-color: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+}
+.badge-aurora {
+  border-color: rgba(0, 230, 170, 0.30);
+  background: rgba(0, 230, 170, 0.08);
+  color: #4FE9C0;
+}
+
+/* Saffron divider (horizontal hairline) */
+.saffron-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 200, 100, 0.30), transparent);
+  margin: 24px 0;
+}
+
+/* Section padding */
+.section { padding: calc(96px * var(--section-density)) 24px; }
+.section-tight { padding: calc(64px * var(--section-density)) 24px; }
+
+/* Layout containers */
+.container-full { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.container-narrow { max-width: 1024px; margin: 0 auto; padding: 0 24px; }
+.container-prose { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+/* Fade-up entrance animation (staggered with delays) */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.fade-up { animation: fadeUp 0.7s var(--ease-out) both; }
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Slow pulse (for halos / breathing avatars) */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.04); }
+}
+.pulse-slow { animation: pulseSlow 4s var(--ease-std) infinite; }
+
+/* Float (gentle vertical drift) */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.float { animation: floatGentle 6s var(--ease-std) infinite; }
+
+/* 360deg slow spin (for chakra rings) */
+@keyframes spin360 {
+  to { transform: rotate(360deg); }
+}
+.spin-slow { animation: spin360 80s linear infinite; }
+
+/* Pulsing gold dot indicator */
+@keyframes goldDotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 200, 100, 0.6); opacity: 1; }
+  50% { box-shadow: 0 0 0 6px rgba(255, 200, 100, 0); opacity: 0.6; }
+}
+.gold-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--brand-gold);
+  animation: goldDotPulse 2.4s var(--ease-std) infinite;
+  flex: none;
+  display: inline-block;
+}
+
+/* Aurora blob — large soft radial gradient blob for cosmic background */
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+  opacity: var(--gold-intensity);
+}
+
+/* Page enter transition */
+.page-enter { animation: fadeUp 0.5s var(--ease-out); }
+
+/* Glass alias names (matches design bundle) */
+.glass { background: rgba(255, 255, 255, 0.06); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 18px; transition: all 300ms var(--ease-std); }
+.glass-elevated { background: rgba(255, 255, 255, 0.08); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.10); border-radius: 24px; box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4); }
+.glass-interactive { background: rgba(255, 255, 255, 0.06); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px; transition: all 300ms var(--ease-std); cursor: pointer; }
+.glass-interactive:hover { background: rgba(255, 255, 255, 0.10); border-color: rgba(255, 200, 100, 0.30); transform: translateY(-2px); }
+.glass-accent { position: relative; }
+.glass-accent::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 200, 100, calc(0.7 * var(--gold-intensity))), transparent);
+}
+
+/* Buttons (matches design bundle .btn-* classes) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: var(--r-md);
+  font-family: var(--font-poppins, system-ui, sans-serif);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), background 200ms var(--ease-out), border-color 200ms var(--ease-out);
+  white-space: nowrap;
+}
+.btn-sm { padding: 10px 18px; font-size: 13px; }
+
+/* Legal-prose styling for /privacy and /terms pages */
+.legal-prose { color: rgba(255,255,255,0.78); line-height: 1.75; font-size: 16px; }
+.legal-prose h2 { font-size: 22px; color: #fff; margin: 40px 0 14px; font-weight: 600; letter-spacing: -0.01em; font-family: var(--font-poppins, sans-serif); }
+.legal-prose h2:first-child { margin-top: 0; }
+.legal-prose h3 { font-size: 16px; color: var(--brand-gold); margin: 24px 0 10px; font-weight: 600; font-family: var(--font-poppins, sans-serif); }
+.legal-prose p { margin: 0 0 16px; }
+.legal-prose ul { margin: 0 0 18px; padding-left: 20px; }
+.legal-prose li { margin-bottom: 8px; }
+.legal-prose a { color: var(--brand-gold); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(255,200,100,0.4); }
+.legal-prose a:hover { text-decoration-color: var(--brand-gold); }
+.legal-prose strong { color: #fff; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-slow, .float, .spin-slow, .gold-dot, .stars::before, .stars::after {
+    animation: none !important;
+  }
 }

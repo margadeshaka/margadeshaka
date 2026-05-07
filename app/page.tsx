@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar';
+import CosmicLayer from './components/CosmicLayer';
 import HeroBanner from './components/HeroBanner';
 import AboutSection from './components/AboutSection';
 import ProductsSection from './components/ProductsSection';
@@ -10,22 +11,22 @@ import SEOStructuredData from './components/SEOStructuredData';
 export default function Home() {
   return (
     <>
-      <a href="#main-content" className="skip-to-content">
+      <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
+      <CosmicLayer />
       <Navbar />
 
-      <main id="main-content" className="relative">
+      <main id="main-content" className="relative z-[1]">
         <HeroBanner />
-        <AboutSection />
         <ProductsSection />
+        <AboutSection />
         <FounderSection />
         <ContactSection />
       </main>
 
       <SiteFooter />
-
       <SEOStructuredData />
     </>
   );
