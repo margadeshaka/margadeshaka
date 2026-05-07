@@ -1,6 +1,6 @@
-Contact: mailto:security@margadeshaka.ai
-Contact: https://margadeshaka.ai/security
+Contact: mailto:security@margadeshaka.com
+Contact: https://margadeshaka.com/security
 Expires: 2026-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://margadeshaka.ai/.well-known/security.txt
-Policy: https://margadeshaka.ai/security-policy
+Canonical: https://margadeshaka.com/.well-known/security.txt
+Policy: https://margadeshaka.com/security-policy

@@ -36,7 +36,7 @@ npm run test:ci            # Run tests with GitHub Actions reporter
 
 ## Project Architecture
 
-This repo is the **Margadeshaka corporate website** (`margadeshaka.ai`) — a marketing/landing page promoting the Sakha and Dronacharya AI products. The UI experience is built around a "ChakraVision" scroll-driven 2D chakra animation with spiritual aesthetics.
+This repo is the **Margadeshaka corporate website** (`margadeshaka.com`) — a marketing/landing page promoting the Sakha and Dronacharya AI products. The UI experience is built around a "ChakraVision" scroll-driven 2D chakra animation with spiritual aesthetics.
 
 ### Core Technology Stack
 - **Next.js 15** with App Router, TypeScript, and `output: 'export'` (static HTML export)
@@ -191,7 +191,7 @@ Chakra points are defined in `app/data/chakraPoints.json` with this structure:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_BASE_URL` | Yes | Canonical URL, e.g. `https://margadeshaka.ai` |
+| `NEXT_PUBLIC_BASE_URL` | Yes | Canonical URL, e.g. `https://margadeshaka.com` |
 | `NEXT_PUBLIC_ANALYTICS_ID` | Yes | Application Insights instrumentation key |
 
 Both are set via `vercel.json` for Vercel and via Terraform `app_settings` for Azure Static Web Apps.

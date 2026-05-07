@@ -1,5 +1,5 @@
 # Robots.txt for Margadeshaka AI
-# https://margadeshaka.ai/robots.txt
+# https://margadeshaka.com/robots.txt
 
 User-agent: *
 Allow: /
@@ -34,7 +34,7 @@ Allow: /*.css
 Allow: /*.js
 
 # Sitemap location
-Sitemap: https://margadeshaka.ai/sitemap.xml
+Sitemap: https://margadeshaka.com/sitemap.xml
 
 # Crawl delay (optional - remove if you want faster crawling)
 Crawl-delay: 1
