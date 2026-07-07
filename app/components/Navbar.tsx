@@ -34,12 +34,12 @@ export default function Navbar() {
         aria-label="Primary"
       >
         <Link href="/" className="inline-flex items-center gap-2.5 group" aria-label="Margadeshaka home">
-          <span
-            className="w-8 h-8 rounded-full flex-none"
-            style={{
-              background: 'linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFD280 100%)',
-              boxShadow: '0 0 20px rgba(255, 200, 100, 0.45)',
-            }}
+          <img
+            src="/images/margadeshaka-logo.svg"
+            alt=""
+            width={32}
+            height={32}
+            className="w-8 h-8 flex-none"
             aria-hidden="true"
           />
           <span
