@@ -2,8 +2,8 @@ import SectionHeading from './SectionHeading';
 
 const valueCards = [
   {
-    title: 'Vedic + modern AI',
-    body: 'Sidereal astrology computed via Swiss Ephemeris, paired with Azure OpenAI for emotionally aware guidance.',
+    title: 'Emotionally aware AI',
+    body: 'A companion that listens with context and care, built on leading large language models, for guidance that feels genuinely personal.',
   },
   {
     title: 'Active learning',

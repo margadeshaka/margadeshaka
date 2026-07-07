@@ -48,14 +48,14 @@ const products: Product[] = [
     meaning: 'friend',
     tagline: 'AI companion for emotional clarity',
     description:
-      'Sakha is the friend you turn to when things feel heavy or unclear. It reads your birth chart and Dasha periods — not to predict your fate, but to understand who you are — then gives you personalized guidance on relationships, decisions, and everything in between.',
+      'Sakha is the friend you turn to when things feel heavy or unclear. It gets to know who you are — your patterns, your moods, what matters to you — then gives you personalized guidance on relationships, decisions, and everything in between.',
     status: 'In Beta',
     statusVariant: 'gold',
     platforms: ['iOS', 'Android', 'Web'],
     href: 'https://sakha.live',
     accent: 'rgba(255, 200, 100, 0.25)',
     icon: <SparklesIcon />,
-    features: ['120-year Dasha timeline', 'Relationship synastry', 'Crisis-aware support'],
+    features: ['Daily check-ins & reflection', 'Relationship guidance', 'Crisis-aware support'],
   },
   {
     name: 'Dronacharya',
@@ -124,7 +124,7 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         <p className="text-brand-gold text-[14px] font-medium mb-3.5">{product.tagline}</p>
-        <p className="text-white/[0.72] leading-[1.65] mb-6">{product.description}</p>
+        <p className="text-white/[0.72] leading-[1.65] mb-6 grow">{product.description}</p>
 
         <ul className="list-none p-0 m-0 mb-7 flex flex-col gap-2.5">
           {product.features.map((f) => (
@@ -137,7 +137,7 @@ function ProductCard({ product }: { product: Product }) {
           ))}
         </ul>
 
-        <div className="mt-auto flex justify-between items-center gap-4 pt-5 border-t border-white/[0.06]">
+        <div className="flex justify-between items-center gap-4 pt-5 border-t border-white/[0.06]">
           <ul className="flex flex-wrap gap-1.5 list-none p-0 m-0">
             {product.platforms.map((p) => (
               <li
