@@ -23,4 +23,4 @@
     Language: English
     Doctype: HTML5
     IDE: Various
-    Products: Sakha (AI Vedic Astrology), Dronacharya (AI Tutoring)
+    Products: Sakha (AI companion for emotional clarity), Dronacharya (AI Tutoring)

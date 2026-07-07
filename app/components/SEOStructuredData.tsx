@@ -25,7 +25,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
       height: '400',
     },
     description:
-      'Margadeshaka AI Private Limited — DPIIT-recognised AI startup building products that combine Indian wisdom traditions with modern multi-agent AI. Home of Sakha (Vedic astrology companion) and Dronacharya (AI tutoring platform).',
+      'Margadeshaka AI Private Limited — DPIIT-recognised AI startup building products that combine Indian wisdom traditions with modern multi-agent AI. Home of Sakha (AI companion for emotional clarity) and Dronacharya (AI tutoring platform).',
     foundingDate: company.incorporationDate,
     foundingLocation: {
       '@type': 'Place',
@@ -72,12 +72,13 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
     knowsAbout: [
       'Artificial Intelligence',
       'Multi-Agent AI Systems',
+      'Emotional Wellness',
       'Vedic Astrology',
       'EdTech',
       'Conversational AI',
     ],
     keywords:
-      'Sakha, Dronacharya, AI astrology, Vedic astrology AI, AI tutoring, multi-agent AI, India AI startup, DPIIT recognised startup',
+      'Sakha, Dronacharya, AI wellness companion, emotional support AI, AI astrology, Vedic astrology AI, AI tutoring, multi-agent AI, India AI startup, DPIIT recognised startup',
     sameAs: [company.web.sakha, company.web.twitter, company.web.githubOrg],
   };
 
@@ -86,7 +87,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
     '@type': 'SoftwareApplication',
     name: 'Sakha',
     description:
-      'AI Vedic astrology companion: birth chart analysis, Vimshottari Dasha predictions, relationship compatibility, and emotionally aware coaching.',
+      'AI companion for emotional clarity: daily check-ins and reflection, relationship guidance, and emotionally aware coaching.',
     applicationCategory: 'LifestyleApplication',
     operatingSystem: 'Web, iOS, Android',
     provider: { '@id': `${baseUrl}#organization` },
@@ -114,7 +115,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
         name: 'What does Margadeshaka do?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Margadeshaka AI Private Limited is a DPIIT-recognised Indian AI startup (DIPP215241) building AI products that combine Indian wisdom traditions with modern multi-agent AI systems. Our products include Sakha (Vedic astrology companion) and Dronacharya (AI learning platform).',
+          text: 'Margadeshaka AI Private Limited is a DPIIT-recognised Indian AI startup (DIPP215241) building AI products that combine Indian wisdom traditions with modern multi-agent AI systems. Our products include Sakha (AI companion for emotional clarity) and Dronacharya (AI learning platform).',
         },
       },
       {
@@ -130,7 +131,7 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
         name: 'What is Sakha?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Sakha is an AI Vedic astrology companion. It generates birth charts using Swiss Ephemeris with Lahiri Ayanamsa, computes Dasha periods and transits, and provides emotionally aware coaching. Available in beta on iOS, Android, and at sakha.live.',
+          text: 'Sakha is an AI companion for emotional clarity. It gets to know who you are and provides emotionally aware coaching and personalized guidance on relationships and decisions. Available in beta on iOS, Android, and at sakha.live.',
         },
       },
       {

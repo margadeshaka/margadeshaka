@@ -1,7 +1,7 @@
 {
   "name": "Margadeshaka — AI for Guidance & Learning",
   "short_name": "Margadeshaka",
-  "description": "Home of Sakha, your AI Vedic astrology companion, and Dronacharya, the AI tutoring platform. Navigate life decisions and master new skills with AI.",
+  "description": "Home of Sakha, your AI companion for emotional clarity, and Dronacharya, the AI tutoring platform. Navigate life decisions and master new skills with AI.",
   "start_url": "/?utm_source=pwa",
   "display": "standalone",
   "background_color": "#000000",
@@ -35,7 +35,7 @@
     {
       "name": "Explore Sakha",
       "short_name": "Sakha",
-      "description": "Visit Sakha — your AI Vedic astrology companion",
+      "description": "Visit Sakha — your AI companion for emotional clarity",
       "url": "https://sakha.live",
       "icons": [{
         "src": "/images/chakra.png",
