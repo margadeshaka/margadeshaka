@@ -26,7 +26,7 @@ export default function SiteFooter() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10 text-sm">
         <div className="col-span-2 md:col-span-1">
           <Link href="/" className="flex items-center gap-2 mb-4">
-            <img src="/images/margadeshaka-logo.svg" alt="" width={32} height={32} className="w-8 h-8 flex-none" aria-hidden="true" />
+            <img src="/images/margadeshaka-logo.svg" alt="" width={32} height={32} className="w-8 h-8 flex-none" style={{ filter: 'drop-shadow(0 0 6px rgba(255,200,100,0.9)) drop-shadow(0 0 14px rgba(255,200,100,0.55))' }} aria-hidden="true" />
             <span className="font-display text-lg font-semibold text-white">{company.brand}</span>
           </Link>
           <p className="text-white/50 leading-relaxed mb-4">

@@ -101,7 +101,7 @@ function ProductCard({ product }: { product: Product }) {
         }}
         aria-hidden="true"
       />
-      <div className="relative">
+      <div className="relative flex flex-col h-full">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div className="flex items-center gap-3.5">
             <div
@@ -137,7 +137,7 @@ function ProductCard({ product }: { product: Product }) {
           ))}
         </ul>
 
-        <div className="flex justify-between items-center gap-4 pt-5 border-t border-white/[0.06]">
+        <div className="mt-auto flex justify-between items-center gap-4 pt-5 border-t border-white/[0.06]">
           <ul className="flex flex-wrap gap-1.5 list-none p-0 m-0">
             {product.platforms.map((p) => (
               <li

@@ -40,6 +40,7 @@ export default function Navbar() {
             width={32}
             height={32}
             className="w-8 h-8 flex-none"
+            style={{ filter: 'drop-shadow(0 0 6px rgba(255,200,100,0.9)) drop-shadow(0 0 14px rgba(255,200,100,0.55))' }}
             aria-hidden="true"
           />
           <span
