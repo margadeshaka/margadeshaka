@@ -46,9 +46,9 @@ const products: Product[] = [
     name: 'Sakha',
     sanskrit: 'सखा',
     meaning: 'friend',
-    tagline: 'AI Vedic astrology companion',
+    tagline: 'AI companion for emotional clarity',
     description:
-      'Birth chart analysis, Vimshottari Dasha predictions, relationship compatibility, and emotionally aware coaching — built on Swiss Ephemeris and Azure OpenAI.',
+      'Sakha is the friend you turn to when things feel heavy or unclear. It reads your birth chart and Dasha periods — not to predict your fate, but to understand who you are — then gives you personalized guidance on relationships, decisions, and everything in between.',
     status: 'In Beta',
     statusVariant: 'gold',
     platforms: ['iOS', 'Android', 'Web'],

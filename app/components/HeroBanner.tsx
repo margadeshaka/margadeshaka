@@ -52,7 +52,7 @@ export default function HeroBanner() {
           style={{ fontSize: 19, lineHeight: 1.6, marginBottom: 40 }}
         >
           Margadeshaka builds AI products that help you navigate life and master new skills.
-          Home of <span className="text-brand-gold">Sakha</span>, an AI Vedic astrology companion,
+          Home of <span className="text-brand-gold">Sakha</span>, an AI companion for emotional clarity,
           and <span className="text-brand-gold">Dronacharya</span>, an interactive AI learning platform.
         </p>
 

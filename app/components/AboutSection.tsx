@@ -29,7 +29,7 @@ const milestones = [
   {
     date: 'Late 2025',
     title: 'Sakha enters beta',
-    body: 'AI Vedic astrology companion ships on iOS, Android, and Web.',
+    body: 'AI companion for clarity ships on iOS, Android, and Web.',
   },
   {
     date: '2026 →',

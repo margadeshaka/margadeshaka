@@ -20,7 +20,7 @@ export default function WaitlistButton({ visible }: WaitlistButtonProps) {
             border border-amber-400/30
           "
           onClick={() => window.open('https://sakha.live', '_blank')}
-          aria-label="Explore Sakha — AI Vedic astrology companion"
+          aria-label="Explore Sakha — AI companion for emotional clarity"
         >
           Explore Sakha
         </button>
