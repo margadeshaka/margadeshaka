@@ -51,8 +51,8 @@
 
 ## Target Keywords
 - Primary: "Sakha", "Dronacharya", "Margadeshaka"
-- Secondary: "AI astrology", "Vedic astrology AI", "AI tutoring", "AI learning platform"
-- Long-tail: "AI Vedic astrology companion", "learn by thinking AI tutor"
+- Secondary: "AI wellness companion", "emotional support AI", "AI tutoring", "AI learning platform"
+- Long-tail: "AI companion for emotional clarity", "learn by thinking AI tutor"
 - Brand: "Margadeshaka AI" (brand name)
 
 ## Next Steps for Maximum SEO Impact
@@ -62,12 +62,12 @@
    - Bing Webmaster Tools submission
 
 2. **Content Marketing**
-   - Blog posts about Vedic astrology and AI
+   - Blog posts about emotional wellness and AI
    - Blog posts about AI-powered education
    - Social media presence establishment
 
 3. **Link Building**
-   - Partnerships with astrology and education websites
+   - Partnerships with wellness and education websites
    - AI technology directories submissions
    - Quality backlinks from relevant sources
 

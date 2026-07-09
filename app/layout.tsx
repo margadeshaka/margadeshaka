@@ -44,8 +44,6 @@ export const metadata: Metadata = {
     'Margadeshaka',
     'AI wellness companion',
     'emotional support AI',
-    'AI astrology',
-    'Vedic astrology AI',
     'AI learning platform',
     'AI tutoring',
     'multi-agent AI',

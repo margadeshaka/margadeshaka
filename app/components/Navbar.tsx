@@ -7,6 +7,7 @@ const navItems = [
   { href: '/', label: 'Home', anchor: false },
   { href: '/compliance', label: 'Compliance', anchor: false },
   { href: '/#products', label: 'Products', anchor: true },
+  { href: '/blog', label: 'Blog', anchor: false },
   { href: '/#founder', label: 'Founder', anchor: true },
   { href: '/#contact', label: 'Contact', anchor: true },
 ];

@@ -4,12 +4,25 @@ import { company } from '../lib/company';
 // trailing newline which silently corrupts every URL/@id derived from baseUrl.
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || company.web.site).trim();
 
+interface BlogPostMeta {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category?: string;
+  author?: string;
+}
+
 interface SEOStructuredDataProps {
   /** Optional breadcrumb trail. Pass on subpages. */
   breadcrumbs?: Array<{ name: string; href: string }>;
+  /** Emit BlogPosting JSON-LD for a single article page. */
+  article?: BlogPostMeta;
+  /** Emit a Blog collection node for the /blog listing page. */
+  blog?: { posts: BlogPostMeta[] };
 }
 
-export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProps = {}) {
+export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStructuredDataProps = {}) {
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -73,12 +86,11 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
       'Artificial Intelligence',
       'Multi-Agent AI Systems',
       'Emotional Wellness',
-      'Vedic Astrology',
       'EdTech',
       'Conversational AI',
     ],
     keywords:
-      'Sakha, Dronacharya, AI wellness companion, emotional support AI, AI astrology, Vedic astrology AI, AI tutoring, multi-agent AI, India AI startup, DPIIT recognised startup',
+      'Sakha, Dronacharya, AI wellness companion, emotional support AI, AI tutoring, multi-agent AI, India AI startup, DPIIT recognised startup',
     sameAs: [company.web.sakha, company.web.twitter, company.web.githubOrg],
   };
 
@@ -219,6 +231,52 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
       }
     : null;
 
+  // Blog — collection node for the /blog listing
+  const blogData = blog
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Blog',
+        '@id': `${baseUrl}/blog#blog`,
+        name: 'The Margadeshaka Blog',
+        description:
+          'Engineering, philosophy, and the occasional wrong turn — how Margadeshaka builds AI that guides without deciding for you.',
+        url: `${baseUrl}/blog`,
+        inLanguage: 'en',
+        publisher: { '@id': `${baseUrl}#organization` },
+        blogPost: blog.posts.map((p) => ({
+          '@type': 'BlogPosting',
+          headline: p.title,
+          description: p.excerpt,
+          datePublished: new Date(p.date).toISOString(),
+          url: `${baseUrl}/blog/${p.slug}`,
+        })),
+      }
+    : null;
+
+  // BlogPosting — single article
+  const articleData = article
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${baseUrl}/blog/${article.slug}#article`,
+        headline: article.title,
+        description: article.excerpt,
+        datePublished: new Date(article.date).toISOString(),
+        dateModified: new Date(article.date).toISOString(),
+        ...(article.category ? { articleSection: article.category } : {}),
+        author: {
+          '@type': 'Person',
+          name: article.author || company.founder.name,
+          jobTitle: company.founder.role,
+          sameAs: [company.founder.linkedin, company.founder.github],
+        },
+        publisher: { '@id': `${baseUrl}#organization` },
+        mainEntityOfPage: `${baseUrl}/blog/${article.slug}`,
+        isPartOf: { '@id': `${baseUrl}/blog#blog` },
+        inLanguage: 'en',
+      }
+    : null;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }} />
@@ -230,6 +288,12 @@ export default function SEOStructuredData({ breadcrumbs }: SEOStructuredDataProp
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
       {breadcrumbData && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+      )}
+      {blogData && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogData) }} />
+      )}
+      {articleData && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleData) }} />
       )}
     </>
   );
