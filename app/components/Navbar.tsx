@@ -1,18 +1,30 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const navItems = [
   { href: '/', label: 'Home', anchor: false },
-  { href: '/compliance', label: 'Compliance', anchor: false },
   { href: '/#products', label: 'Products', anchor: true },
+  { href: '/blog', label: 'Blog', anchor: false },
+  { href: '/compliance', label: 'Compliance', anchor: false },
   { href: '/#founder', label: 'Founder', anchor: true },
   { href: '/#contact', label: 'Contact', anchor: true },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // Active state for page (non-anchor) links; Blog stays active on articles too.
+  // Normalize the trailing slash first — under next.config `trailingSlash: true`
+  // usePathname() returns e.g. '/compliance/', so an exact compare would miss.
+  const isActive = (href: string) => {
+    const path = pathname.replace(/\/+$/, '') || '/';
+    if (href === '/blog') return path === '/blog' || path.startsWith('/blog/');
+    return path === href;
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -51,19 +63,23 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden md:flex items-center gap-8 text-sm m-0 p-0 list-none">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              {item.anchor ? (
-                <a href={item.href} className="text-white/70 hover:text-brand-gold transition-colors">
-                  {item.label}
-                </a>
-              ) : (
-                <Link href={item.href} className="text-white/70 hover:text-brand-gold transition-colors">
-                  {item.label}
-                </Link>
-              )}
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const active = !item.anchor && isActive(item.href);
+            const cls = `transition-colors ${active ? 'text-brand-gold' : 'text-white/70 hover:text-brand-gold'}`;
+            return (
+              <li key={item.href}>
+                {item.anchor ? (
+                  <a href={item.href} className={cls}>
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link href={item.href} className={cls} aria-current={active ? 'page' : undefined}>
+                    {item.label}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <a
