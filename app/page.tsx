@@ -11,10 +11,6 @@ import SEOStructuredData from './components/SEOStructuredData';
 export default function Home() {
   return (
     <>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-
       <CosmicLayer />
       <Navbar />
 

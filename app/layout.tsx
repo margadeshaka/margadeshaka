@@ -5,6 +5,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { Inter, Poppins, Noto_Serif_Devanagari } from 'next/font/google';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import CosmicEffects from './components/CosmicEffects';
+import ScrollToTop from './components/ScrollToTop';
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
@@ -139,6 +140,7 @@ export default function RootLayout({
       <body className="antialiased">
         <CosmicEffects />
         {children}
+        <ScrollToTop />
         <Analytics />
         <PerformanceMonitor />
         {gaId && <GoogleAnalytics gaId={gaId} />}

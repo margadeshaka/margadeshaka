@@ -98,29 +98,6 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      {/* Compliance bar — visible across the whole site */}
-      <div className="border-t border-white/5 px-6 py-6 bg-navy-950/60">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/50">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
-            <span className="inline-flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-aurora-500" aria-hidden="true" />
-              <span>DPIIT Recognized Startup</span>
-              <span className="font-mono text-white/70">{company.dpiit.number}</span>
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5">
-              <span>CIN</span>
-              <span className="font-mono text-white/70">{company.cin}</span>
-            </span>
-            <Link href="/compliance" className="text-brand-gold hover:text-brand-gold-light underline-offset-2 hover:underline">
-              View credentials →
-            </Link>
-          </div>
-          <address className="not-italic text-white/55">
-            {company.registeredOffice.city}, {company.registeredOffice.state}, {company.registeredOffice.country}
-          </address>
-        </div>
-      </div>
-
       <div className="border-t border-white/5 px-6 py-6 text-center text-xs text-white/55">
         <p className="mb-1">
           &copy; {new Date().getFullYear()} {company.legalNameTitleCase}. All rights reserved.
