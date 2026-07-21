@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { company } from '../lib/company';
+import LogoMark from './LogoMark';
 
 const productLinks = [
   { href: 'https://sakha.live', label: 'Sakha', external: true },
@@ -27,7 +28,7 @@ export default function SiteFooter() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10 text-sm">
         <div className="col-span-2 md:col-span-1">
           <Link href="/" className="flex items-center gap-2 mb-4">
-            <span className="w-8 h-8 rounded-full bg-saffron-gradient shadow-[0_0_20px_rgba(255,200,100,0.4)]" aria-hidden="true" />
+            <LogoMark size={34} />
             <span className="font-display text-lg font-semibold text-white">{company.brand}</span>
           </Link>
           <p className="text-white/50 leading-relaxed mb-4">

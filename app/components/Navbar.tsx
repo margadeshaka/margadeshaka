@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import LogoMark from './LogoMark';
 
 const navItems = [
   { href: '/', label: 'Home', anchor: false },
@@ -46,14 +47,7 @@ export default function Navbar() {
         aria-label="Primary"
       >
         <Link href="/" className="inline-flex items-center gap-2.5 group" aria-label="Margadeshaka home">
-          <span
-            className="w-8 h-8 rounded-full flex-none"
-            style={{
-              background: 'linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFD280 100%)',
-              boxShadow: '0 0 20px rgba(255, 200, 100, 0.45)',
-            }}
-            aria-hidden="true"
-          />
+          <LogoMark size={34} />
           <span
             className="font-display text-white"
             style={{ fontSize: 17, fontWeight: 600, letterSpacing: '-0.01em' }}
@@ -62,10 +56,11 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <ul className="hidden md:flex items-center gap-8 text-sm m-0 p-0 list-none">
+        <ul className="hidden min-[880px]:flex items-center gap-8 text-sm m-0 p-0 list-none">
           {navItems.map((item) => {
             const active = !item.anchor && isActive(item.href);
-            const cls = `transition-colors ${active ? 'text-brand-gold' : 'text-white/70 hover:text-brand-gold'}`;
+            const cls = `relative transition-colors ${active ? 'text-brand-gold' : 'text-white/70 hover:text-brand-gold'}`;
+            const dot = active ? <span className="nav-active-dot" aria-hidden="true" /> : null;
             return (
               <li key={item.href}>
                 {item.anchor ? (
@@ -75,6 +70,7 @@ export default function Navbar() {
                 ) : (
                   <Link href={item.href} className={cls} aria-current={active ? 'page' : undefined}>
                     {item.label}
+                    {dot}
                   </Link>
                 )}
               </li>
@@ -86,7 +82,7 @@ export default function Navbar() {
           href="https://sakha.live"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:inline-flex btn btn-ghost btn-sm"
+          className="inline-flex btn btn-ghost btn-sm"
         >
           Try Sakha
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
