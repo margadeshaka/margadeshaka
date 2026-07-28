@@ -1,9 +1,19 @@
+import LogoMark from './LogoMark';
+
 /**
  * Home hero, ported from the handoff (home.jsx: Hero + HeroLogo).
  *
  * The redesign strips the hero right back: brand emblem, one headline, one
- * paragraph, no buttons. The emblem is a bare mark with a book-shaped
- * breathing glow (`.logo-orb--hero`) rather than a disc or orbit ring.
+ * paragraph, no buttons.
+ *
+ * The emblem is the real book mark, not a disc. The handoff's HeroLogo renders
+ * `<span className="logo-orb logo-orb--hero">`, and its own comment says that
+ * should be "a bare logo mark with a book-shaped breathing glow ... no circular
+ * halo" — but the `.logo-orb` rule it points at is a plain gold radial-gradient
+ * circle. So the handoff's markup contradicts its comment and puts an anonymous
+ * orange ball above the fold. Develop's bf656af and this repo's own ca0e65f had
+ * each already replaced that placeholder with the logo; rendering LogoMark here
+ * keeps that decision instead of silently reverting it.
  */
 export default function Hero() {
   return (
@@ -36,7 +46,7 @@ export default function Hero() {
               justifyContent: 'center',
             }}
           >
-            <span className="logo-orb logo-orb--hero" aria-hidden="true" />
+            <LogoMark size={150} className="logo-mark--hero" />
           </div>
         </div>
 

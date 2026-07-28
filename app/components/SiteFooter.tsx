@@ -50,8 +50,12 @@ export default function SiteFooter() {
             <li>
               <SakhaCta>Sakha</SakhaCta>
             </li>
+            {/* Points at the article, not #products: the redesigned products
+                section is entirely Sakha, so the old anchor promised
+                Dronacharya content that isn't there. This post is the only
+                page on the site with real Dronacharya detail. */}
             <li>
-              <SectionLink id="products">Dronacharya</SectionLink>
+              <Link href="/blog/dronacharya-active-learning">Dronacharya</Link>
             </li>
           </ul>
         </div>
@@ -101,6 +105,28 @@ export default function SiteFooter() {
           color: 'rgba(255,255,255,0.4)',
         }}
       >
+        {/* Compliance bar — registered address plus government recognition IDs
+            on every page. The handoff's footer drops this; it is the India
+            disclosure pattern the site deliberately adopted, and DPIIT is the
+            company's strongest trust marker. */}
+        <p style={{ marginBottom: 6 }}>
+          DPIIT Recognised Startup{' '}
+          <span className="font-mono" style={{ color: 'rgba(255,255,255,0.7)' }}>
+            {company.dpiit.number}
+          </span>
+          {' · '}CIN{' '}
+          <span className="font-mono" style={{ color: 'rgba(255,255,255,0.7)' }}>
+            {company.cin}
+          </span>
+          {' · '}
+          <Link href="/compliance" style={{ color: 'var(--brand-gold)' }}>
+            View credentials →
+          </Link>
+        </p>
+        <address style={{ fontStyle: 'normal', marginBottom: 6, color: 'rgba(255,255,255,0.55)' }}>
+          {company.registeredOffice.city}, {company.registeredOffice.state},{' '}
+          {company.registeredOffice.country}
+        </address>
         <p style={{ marginBottom: 4 }}>
           &copy; {new Date().getFullYear()} {company.legalNameTitleCase}. All rights reserved.{' '}
           {company.brand}

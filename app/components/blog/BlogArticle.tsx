@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
 import SakhaCta from '../SakhaCta';
+import { company } from '../../lib/company';
 
 const endPathVar = (d: number) => ({ ['--d']: String(d) }) as CSSProperties;
 
@@ -123,7 +124,13 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
             </span>
             <div>
               <div className="text-white text-sm font-semibold">{post.author}</div>
-              <div className="text-white/50 text-[13px]">Founder &amp; CEO, Margadeshaka</div>
+              {/* Read from company.ts rather than hardcoding: the same title is
+                  also emitted into Organization JSON-LD, so a hardcoded string
+                  here drifts silently. Note company.team[0] separately lists
+                  Hitesh as "Director" — see the PR for that open question. */}
+              <div className="text-white/50 text-[13px]">
+                {company.founder.role}, {company.brand}
+              </div>
             </div>
           </div>
         </header>

@@ -238,6 +238,26 @@ export default function ProductsSection() {
               ))}
             </div>
           </article>
+          {/* SUPPORT and PRIVACY carry two claims forward that the redesign
+              would otherwise drop. 'Crisis-aware support' is the product's only
+              duty-of-care claim and Develop kept it deliberately while
+              replacing the two astrology bullets beside it. The privacy promise
+              is the last unhedged "we don't sell your data" statement on any
+              rendered page — it came from the AboutSection this redesign
+              deletes, and it matters more now that the product invites people
+              to talk about feeling heavy or unclear. */}
+          <article className="reflect-card">
+            <span className="reflect-label">SUPPORT</span>
+            <p className="reflect-q reflect-q--sm">
+              Crisis-aware support, for when the conversation gets heavy.
+            </p>
+          </article>
+          <article className="reflect-card">
+            <span className="reflect-label">PRIVACY</span>
+            <p className="reflect-q reflect-q--sm">
+              Personal data stays personal. We do not sell, rent, or share your information.
+            </p>
+          </article>
           <article className="reflect-card reflect-card--seed">
             <span className="reflect-label">GROWTH</span>
             <p className="reflect-q reflect-q--sm">

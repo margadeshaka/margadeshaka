@@ -1,6 +1,6 @@
 import { company } from '../lib/company';
 import SakhaCta from './SakhaCta';
-import { ArrowRight, Instagram, LinkedIn, Mail } from './icons';
+import { ArrowRight, GitHub, Instagram, LinkedIn, Mail } from './icons';
 
 /**
  * Contact section, ported from the handoff (home.jsx: ContactSection).
@@ -70,6 +70,20 @@ export default function ContactSection() {
               <Instagram />
             </span>
             <span className="orb-link-name">Instagram</span>
+          </a>
+          {/* GitHub: the deleted FounderSection held the site's only clickable
+              GitHub link. Without this the org appears in JSON-LD `sameAs` and
+              nowhere a visitor can actually click. */}
+          <a
+            className="orb-link"
+            href={company.web.githubOrg}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="orb-link-icon">
+              <GitHub />
+            </span>
+            <span className="orb-link-name">GitHub</span>
           </a>
         </div>
       </div>
