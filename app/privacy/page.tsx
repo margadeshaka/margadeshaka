@@ -29,7 +29,7 @@ export default function PrivacyPage() {
       <ul>
         <li><strong>Usage data:</strong> pages visited, features used, approximate location (city-level).</li>
         <li><strong>Device data:</strong> browser, operating system, IP address.</li>
-        <li><strong>Cookies and analytics:</strong> we use Vercel Analytics (privacy-friendly, no cross-site tracking) and Microsoft Application Insights for service health monitoring.</li>
+        <li><strong>Cookies and analytics:</strong> we use Google Analytics to understand aggregate site usage. We do not use advertising or cross-site tracking cookies.</li>
       </ul>
 
       <h2>2. How We Use Information</h2>
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
       <h2>3. How We Share Information</h2>
       <p>We do not sell or rent your personal information. We share data only with:</p>
       <ul>
-        <li><strong>Service providers</strong> who run our infrastructure: Microsoft Azure (cloud hosting, OpenAI), MongoDB Atlas / Azure Cosmos DB (database), Vercel (web hosting), Resend (transactional email).</li>
+        <li><strong>Service providers</strong> who run our infrastructure: Google Cloud / Firebase (website hosting and analytics), Microsoft Azure (cloud hosting, OpenAI), MongoDB Atlas / Azure Cosmos DB (database), Resend (transactional email).</li>
         <li><strong>Legal authorities</strong> when required by law or to protect rights and safety.</li>
       </ul>
 

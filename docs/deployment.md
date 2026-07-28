@@ -1,108 +1,74 @@
-# Deployment Guide for ChakraVision
+# Deployment
 
-This guide provides instructions for deploying the ChakraVision application to either Vercel or Azure Static Web Apps, including setting up custom domains and SSL.
+The site deploys to **Firebase Hosting** only. Vercel and Azure Static Web Apps
+were both removed — if you found this file expecting either, that path is gone.
 
-## Deploying to Vercel
+## How it happens
 
-### Prerequisites
-- A [Vercel](https://vercel.com) account
-- Your project pushed to a Git repository (GitHub, GitLab, or Bitbucket)
+Pushing to a branch deploys it. `.github/workflows/deploy.yml` does the work.
 
-### Steps
+| Branch | Environment | Site | URL |
+|--------|-------------|------|-----|
+| `main` | production | `margadeshaka-af4de` | margadeshaka-af4de.web.app → margadeshaka.com once DNS moves |
+| `Develop` | staging | `margadeshaka-staging` | margadeshaka-staging.web.app |
 
-1. **Connect your repository to Vercel**
-   - Go to the [Vercel dashboard](https://vercel.com/dashboard)
-   - Click "New Project"
-   - Import your Git repository
-   - Select the repository containing your ChakraVision project
+Staging sends `X-Robots-Tag: noindex, nofollow`. It serves the same content on a
+different origin, so without that header Google can index it and treat it as
+duplicate content competing with the real site. Don't remove it —
+`npm run verify:hosting` fails the build if you do.
 
-2. **Configure project settings**
-   - Framework Preset: Next.js
-   - Build Command: `npm run build`
-   - Output Directory: `.next`
-   - Environment Variables: Add the variables from `.env.example` with appropriate values
+The workflow can also be run manually from the Actions tab with an environment
+choice, which is the way to redeploy without pushing a commit.
 
-3. **Deploy**
-   - Click "Deploy"
-   - Vercel will build and deploy your application
+## Environment variables
 
-### Setting up a Custom Domain
+Baked in at **build** time, because the site is a static export — setting them
+on the host afterwards does nothing.
 
-1. **Add a custom domain**
-   - Go to your project in the Vercel dashboard
-   - Navigate to "Settings" > "Domains"
-   - Click "Add Domain"
-   - Enter your domain name (e.g., chakra-vision.com)
-   - Follow the instructions to configure your DNS settings
+| Variable | production | staging |
+|----------|-----------|---------|
+| `NEXT_PUBLIC_BASE_URL` | `https://margadeshaka.com` | `https://margadeshaka-staging.web.app` |
+| `NEXT_PUBLIC_GA_ID` | from repo secret | unset, so analytics never mounts |
 
-2. **SSL Configuration**
-   - Vercel automatically provisions SSL certificates for custom domains
-   - No additional configuration is required
+`NEXT_PUBLIC_BASE_URL` drives canonicals, the sitemap and JSON-LD, which is why
+staging must not advertise the production domain.
 
-## Deploying to Azure Static Web Apps
+## Authentication
 
-### Prerequisites
-- An Azure account
-- Your project pushed to a GitHub repository
+CI authenticates with the `FIREBASE_SERVICE_ACCOUNT` repo secret — a dedicated
+`github-actions-deploy@margadeshaka-af4de.iam.gserviceaccount.com` service
+account holding only `roles/firebasehosting.admin` and `roles/firebase.viewer`.
+Rotate it by creating a new key and updating the secret; nothing else changes.
 
-### Steps
+## Deploying by hand
 
-1. **Create an Azure Static Web App**
-   - Go to the [Azure Portal](https://portal.azure.com)
-   - Search for "Static Web Apps" and select it
-   - Click "Create"
-   - Fill in the required details:
-     - Subscription: Select your subscription
-     - Resource Group: Create new or select existing
-     - Name: Enter a name for your app (e.g., chakra-vision)
-     - Region: Select a region close to your users
-     - SKU: Select the appropriate tier (Free for development)
-     - Source: GitHub
-     - Organization: Select your GitHub organization
-     - Repository: Select your repository
-     - Branch: main (or your default branch)
-     - Build Presets: Next.js
-     - App location: /
-     - Api location: (leave empty)
-     - Output location: .next
+```bash
+npm i -g firebase-tools
+firebase login
 
-2. **Configure GitHub Actions**
-   - Azure will automatically create a GitHub Actions workflow file in your repository
-   - The workflow file will be similar to the one in `.github/workflows/azure-static-web-apps.yml`
-   - Add the `AZURE_STATIC_WEB_APPS_API_TOKEN` secret to your GitHub repository
+npm run deploy          # production
+npm run deploy:staging  # staging
+npm run deploy:preview  # throwaway preview URL on the staging site, 7-day expiry
+```
 
-3. **Environment Variables**
-   - Go to your Static Web App in the Azure Portal
-   - Navigate to "Configuration" > "Application settings"
-   - Add the environment variables from `.env.example` with appropriate values
+## Why firebase.json is duplicated
 
-### Setting up a Custom Domain
+Firebase cannot share one hosting block across two sites, so `firebase.json`
+carries the same config twice, once per target. That duplication is the risk —
+someone tunes a cache header on production and forgets staging, and staging
+quietly stops representing what production will do.
+`scripts/verify-hosting-config.mjs` (`npm run verify:hosting`, run in CI) fails
+if the two targets diverge, if staging loses its noindex header, or if
+`trailingSlash` stops mirroring `next.config.js`.
 
-1. **Add a custom domain**
-   - Go to your Static Web App in the Azure Portal
-   - Navigate to "Custom domains"
-   - Click "Add"
-   - Enter your domain name (e.g., chakra-vision.com)
-   - Follow the instructions to validate domain ownership and configure DNS settings
+## Custom domain
 
-2. **SSL Configuration**
-   - Azure Static Web Apps automatically provisions SSL certificates for custom domains
-   - No additional configuration is required
+`margadeshaka.com` does not point here yet — it still resolves to a
+decommissioned load balancer. To move it: add the domain in the Firebase console
+under Hosting for the production site, then replace the apex A records with the
+ones Firebase provides. The certificate is issued automatically.
 
-## Monitoring User Engagement
-
-To monitor user engagement, you can integrate analytics tools like Google Analytics or Azure Application Insights.
-
-### Google Analytics
-
-1. Create a Google Analytics account and property
-2. Get your Measurement ID (starts with "G-")
-3. Add the Measurement ID as the `NEXT_PUBLIC_ANALYTICS_ID` environment variable
-4. The analytics script is already integrated in the application
-
-### Azure Application Insights
-
-1. Create an Application Insights resource in Azure
-2. Get the Instrumentation Key
-3. Add the Instrumentation Key as the `NEXT_PUBLIC_ANALYTICS_ID` environment variable
-4. The analytics script is already integrated in the application
+Note Firebase serves `Strict-Transport-Security: max-age=31556926;
+includeSubDomains; preload`. Once the apex is attached, that HSTS policy applies
+to **every** subdomain, so make sure nothing under `margadeshaka.com` is still
+served over plain HTTP first.

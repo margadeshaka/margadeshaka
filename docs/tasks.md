@@ -72,7 +72,7 @@ This document contains a phase-wise task list for developing a Next.js Sudarshan
 **Objective**: Deploy app and ensure stable release flow
 
 - [x] Prepare build (npm run build)
-- [x] Set up Azure Static Web App or Vercel
+- [x] Set up hosting — now Firebase Hosting (Azure Static Web Apps and Vercel both removed)
 - [x] Set environment variables if any
 - [x] Add custom domain & SSL
 - [x] Optional: Terraform scripts for Azure resource automation
