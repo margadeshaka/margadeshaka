@@ -1,6 +1,5 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Analytics } from '@vercel/analytics/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Newsreader, Geist, Geist_Mono, Noto_Serif_Devanagari } from 'next/font/google';
 import PerformanceMonitor from './components/PerformanceMonitor';
@@ -164,7 +163,6 @@ export default function RootLayout({
         <SiteFooter />
         <SakhaStoreModal />
         <ScrollToTop />
-        <Analytics />
         <PerformanceMonitor />
         {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>

@@ -1,5 +1,13 @@
 {
   "projects": {
     "default": "margadeshaka-af4de"
+  },
+  "targets": {
+    "margadeshaka-af4de": {
+      "hosting": {
+        "production": ["margadeshaka-af4de"],
+        "staging": ["margadeshaka-staging"]
+      }
+    }
   }
 }

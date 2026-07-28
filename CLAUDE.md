@@ -44,8 +44,7 @@ This repo is the **Margadeshaka corporate website** (`margadeshaka.com`) — a m
 - **Three.js** via `@react-three/fiber` and `@react-three/drei` for 3D rendering (available but primary animation is 2D)
 - **GSAP** for scroll-triggered animations
 - **Tailwind CSS** with custom cosmic theme
-- **Vercel Analytics** (`@vercel/analytics`) — primary analytics
-- **Microsoft Application Insights** — secondary analytics (instrumentation key from env var)
+- **Google Analytics** via `@next/third-parties` — the only analytics; mounts only when `NEXT_PUBLIC_GA_ID` is set
 - **Playwright** for E2E testing (cross-browser: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari)
 - **Node.js ≥ 20** required
 
@@ -80,7 +79,6 @@ All components live in `app/components/`. All heavy/interactive components are l
 - `Skeleton.tsx` - Exports `ChakraSkeleton` and `DialogSkeleton` for lazy-load placeholders
 - `LazyWrapper.tsx` - Wrapper for deferred rendering
 - `PerformanceMonitor.tsx` - Dev-only FPS/frame-time monitor using `PerformanceObserver` (auto-disabled in prod)
-- `Analytics.tsx` - Application Insights initialization
 - `SEOStructuredData.tsx` - JSON-LD structured data injection
 - `LanguageSelector.tsx` - Language switching UI
 
@@ -155,8 +153,6 @@ app/
 tests/
 ├── utils/            # Shared test helpers
 └── *.spec.ts         # Playwright test suites
-terraform/
-└── main.tf           # Azure Static Web App + Application Insights IaC
 public/
 ├── audio/            # Om mantra audio file
 ├── images/           # Chakra PNG/WebP assets
@@ -191,13 +187,34 @@ Chakra points are defined in `app/data/chakraPoints.json` with this structure:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_BASE_URL` | Yes | Canonical URL, e.g. `https://margadeshaka.com` |
-| `NEXT_PUBLIC_ANALYTICS_ID` | Yes | Application Insights instrumentation key |
+| `NEXT_PUBLIC_BASE_URL` | Yes | Canonical URL. Drives metadata, sitemap and JSON-LD, so it must differ per environment: `https://margadeshaka.com` on production, `https://margadeshaka-staging.web.app` on staging. |
+| `NEXT_PUBLIC_GA_ID` | No | Google Analytics measurement ID. Unset (as on staging) means `GoogleAnalytics` never mounts. |
 
-Both are set via `vercel.json` for Vercel and via Terraform `app_settings` for Azure Static Web Apps.
+Both are baked in at **build** time, not read at runtime — the site is a static
+export. CI sets them per branch in `.github/workflows/deploy.yml`; set
+`NEXT_PUBLIC_GA_ID` as a repo secret or production analytics silently no-ops.
 
 ## Infrastructure
 
-- **Vercel** (primary): `vercel.json` — uses `@vercel/next` builder, routes `/*` passthrough
-- **Azure Static Web Apps** (alternative): Terraform in `terraform/main.tf` provisions `azurerm_static_site` + `azurerm_application_insights` in resource group `chakra-vision-rg`
-- No CI/CD GitHub Actions workflow currently in repo (`.github/` directory absent)
+**Firebase Hosting only.** Vercel and Azure have been removed entirely — no
+`vercel.json`, no Terraform, no Application Insights.
+
+Two Hosting sites in one Firebase project (`margadeshaka-af4de`):
+
+| Branch | Target | Site | URL |
+|--------|--------|------|-----|
+| `main` | `production` | `margadeshaka-af4de` | margadeshaka-af4de.web.app (→ margadeshaka.com once DNS moves) |
+| `Develop` | `staging` | `margadeshaka-staging` | margadeshaka-staging.web.app (`X-Robots-Tag: noindex`) |
+
+- **CI/CD**: `.github/workflows/deploy.yml` deploys on push to either branch, and
+  can be run manually with an environment choice. It authenticates with the
+  `FIREBASE_SERVICE_ACCOUNT` repo secret (a dedicated
+  `github-actions-deploy@` service account holding only
+  `roles/firebasehosting.admin` + `roles/firebase.viewer`).
+- **`firebase.json` carries the config twice**, once per target, because Firebase
+  cannot share one hosting block across two sites. `npm run verify:hosting`
+  (`scripts/verify-hosting-config.mjs`) fails CI if the two drift apart, if
+  staging loses its noindex header, or if `trailingSlash` stops mirroring
+  `next.config.js`. Keep it that way — silent divergence between staging and
+  production is the whole risk.
+- **Local deploys**: `npm run deploy` (production), `npm run deploy:staging`.
