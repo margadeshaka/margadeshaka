@@ -11,7 +11,7 @@ A beautiful interactive web application built with **Next.js** and **Three.js**,
 - **3D Model Loader**: `@react-three/drei` (`useGLTF`)
 - **Scroll-based Animation**: `GSAP` + `ScrollTrigger` or `react-intersection-observer`
 - **Styling**: Tailwind CSS
-- **Deployment**: Vercel / Azure Static Web App
+- **Deployment**: Firebase Hosting (static export, Fastly-backed CDN) — see [Deployment](#-deployment)
 - **Authentication (optional)**: Azure AD B2C / MSAL.js
 
 ## 🌀 Core Features
@@ -64,6 +64,70 @@ npm run dev
 ```bash
 npm run build
 ```
+
+`next.config.js` sets `output: 'export'`, so this writes a fully static site to `out/`.
+
+## 🚀 Deployment
+
+Hosted on **Firebase Hosting**, which serves from a Fastly-backed CDN and purges the
+entire edge cache automatically on every deploy — no manual invalidation step.
+
+### One-time setup
+
+```bash
+npm i -g firebase-tools
+firebase login
+firebase use --add        # select the Firebase project, alias it "default"
+```
+
+### Deploy
+
+```bash
+npm run deploy            # next build && firebase deploy --only hosting
+```
+
+Preview a change on a temporary URL without touching production:
+
+```bash
+npm run deploy:preview    # expires after 7 days
+```
+
+Roll back from the Firebase console (Hosting → release history) — every deploy is
+atomic and previous releases stay available.
+
+### Caching
+
+`firebase.json` sets `Cache-Control` per asset class, because Firebase's own default is
+`max-age=3600` for everything — which would keep a deploy out of returning visitors'
+browsers for up to an hour.
+
+| Path | Policy |
+| --- | --- |
+| `**` (default — HTML pages land here) | `max-age=0, must-revalidate` so deploys are visible immediately |
+| `/_next/static/**` | 1 year, `immutable` (content-hashed) |
+| fonts, audio, `.glb`/textures | 30 days |
+| images, PDFs | 1 day + `stale-while-revalidate` (names aren't hashed) |
+| `sitemap.xml`, `robots.txt`, manifests | 1 hour |
+
+**Two ordering rules matter when editing these — both verified against the Hosting emulator:**
+
+1. **The last matching `headers` entry wins** for a given header key. So the broad `**`
+   default must come *first* and the specific asset rules *after* it. Putting a catch-all
+   `**` last silently clobbers the `immutable` policy on hashed assets.
+2. **`source` globs match the request path, not the resolved file.** A rule on
+   `**/*.html` never fires for `/` or `/blog/`, because those paths carry no `.html`
+   suffix even though they resolve to `out/blog/index.html`. Page caching therefore has
+   to come from the `**` default rather than an `*.html` pattern.
+
+Verify any change locally without credentials:
+
+```bash
+firebase emulators:start --only hosting --project demo-margadeshaka
+curl -sSI http://127.0.0.1:5000/blog/ | grep -i cache-control
+```
+
+`trailingSlash: true` in `firebase.json` mirrors the same setting in `next.config.js`,
+so `/blog` redirects to `/blog/` and resolves to `out/blog/index.html`.
 
 ## 🧠 Chakra Model Reference
 
