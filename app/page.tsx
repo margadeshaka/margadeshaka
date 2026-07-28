@@ -1,32 +1,29 @@
-import Navbar from './components/Navbar';
-import CosmicLayer from './components/CosmicLayer';
-import HeroBanner from './components/HeroBanner';
-import AboutSection from './components/AboutSection';
+import Hero from './components/Hero';
 import ProductsSection from './components/ProductsSection';
-import FounderSection from './components/FounderSection';
+import TeamSection from './components/TeamSection';
 import ContactSection from './components/ContactSection';
-import SiteFooter from './components/SiteFooter';
 import SEOStructuredData from './components/SEOStructuredData';
+import HomeSectionScroll from './components/HomeSectionScroll';
 
+/**
+ * Home page — section order comes from the handoff (home.jsx: HomePage):
+ * Hero → Products → Team → Contact.
+ *
+ * The navbar, footer and download modal live in the root layout so every route
+ * shares them, matching the handoff's app shell (app.jsx).
+ *
+ * Note: the handoff also defines an AboutSection but does not render it, so the
+ * mission copy that used to sit between Products and Team is intentionally
+ * absent here.
+ */
 export default function Home() {
   return (
     <>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-
-      <CosmicLayer />
-      <Navbar />
-
-      <main id="main-content" className="relative z-[1]">
-        <HeroBanner />
-        <ProductsSection />
-        <AboutSection />
-        <FounderSection />
-        <ContactSection />
-      </main>
-
-      <SiteFooter />
+      <HomeSectionScroll />
+      <Hero />
+      <ProductsSection />
+      <TeamSection />
+      <ContactSection />
       <SEOStructuredData />
     </>
   );

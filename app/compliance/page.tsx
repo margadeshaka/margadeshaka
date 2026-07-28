@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
-import CosmicLayer from '../components/CosmicLayer';
-import SiteFooter from '../components/SiteFooter';
 import CredentialRow from '../components/CredentialRow';
 import SEOStructuredData from '../components/SEOStructuredData';
 import { company } from '../lib/company';
@@ -74,10 +71,8 @@ export default function CompliancePage() {
 
   return (
     <>
-      <CosmicLayer />
-      <Navbar />
 
-      <main className="relative pt-32 pb-20 cosmic-bg min-h-screen">
+      <div className="relative pt-32 pb-20 cosmic-bg min-h-screen">
         <div className="container-narrow">
           <Link
             href="/"
@@ -303,9 +298,8 @@ export default function CompliancePage() {
             {c.dpiit.issuedDateHuman}.
           </p>
         </div>
-      </main>
+      </div>
 
-      <SiteFooter />
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },
