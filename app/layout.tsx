@@ -2,30 +2,43 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { Inter, Poppins, Noto_Serif_Devanagari } from 'next/font/google';
+import { Newsreader, Geist, Geist_Mono, Noto_Serif_Devanagari } from 'next/font/google';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import CosmicEffects from './components/CosmicEffects';
 import ScrollToTop from './components/ScrollToTop';
+import Navbar from './components/Navbar';
+import SiteFooter from './components/SiteFooter';
+import SakhaStoreModal from './components/SakhaStoreModal';
+import CosmicLayer from './components/CosmicLayer';
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
-const inter = Inter({
+// Type stack from the claude.ai/design handoff: Newsreader for display,
+// Geist for body/UI, Noto Serif Devanagari for Sanskrit, Geist Mono for
+// registration numbers. Self-hosted by next/font so there is no blocking
+// request to fonts.googleapis.com like the prototype had.
+const newsreader = Newsreader({
   subsets: ['latin'],
-  variable: '--font-inter',
+  style: ['normal', 'italic'],
+  variable: '--font-display-src',
   display: 'swap',
 });
 
-const poppins = Poppins({
+const geist = Geist({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-poppins',
+  variable: '--font-body-src',
+  display: 'swap',
+});
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono-src',
   display: 'swap',
 });
 
 const notoDevanagari = Noto_Serif_Devanagari({
   subsets: ['devanagari'],
-  weight: ['400', '700'],
-  variable: '--font-noto-devanagari',
+  variable: '--font-devanagari-src',
   display: 'swap',
 });
 
@@ -127,7 +140,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`dark ${inter.variable} ${poppins.variable} ${notoDevanagari.variable}`}
+      className={`dark ${newsreader.variable} ${geist.variable} ${geistMono.variable} ${notoDevanagari.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -138,8 +151,17 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="antialiased">
+        <a href="#main" className="skip-link">
+          Skip to main content
+        </a>
+        <CosmicLayer />
         <CosmicEffects />
-        {children}
+        <Navbar />
+        <main id="main" style={{ position: 'relative', zIndex: 1 }}>
+          {children}
+        </main>
+        <SiteFooter />
+        <SakhaStoreModal />
         <ScrollToTop />
         <Analytics />
         <PerformanceMonitor />

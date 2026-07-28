@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Navbar from '../../components/Navbar';
-import CosmicLayer from '../../components/CosmicLayer';
-import SiteFooter from '../../components/SiteFooter';
 import SEOStructuredData from '../../components/SEOStructuredData';
 import BlogArticle from '../../components/blog/BlogArticle';
 import { getAllSlugs, getPostBySlug } from '../../data/blogPosts';
@@ -77,16 +74,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <CosmicLayer />
-      <Navbar />
 
-      <main className="relative pt-32 pb-20 cosmic-bg min-h-screen overflow-x-hidden">
+      <div className="relative pt-32 pb-20 cosmic-bg min-h-screen overflow-x-hidden">
         {/* key per slug forces a fresh mount on article→article navigation so
             scroll/progress/ended state doesn't leak from the previous post. */}
         <BlogArticle key={post.slug} post={post} />
-      </main>
+      </div>
 
-      <SiteFooter />
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },

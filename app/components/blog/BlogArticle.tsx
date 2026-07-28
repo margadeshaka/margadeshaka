@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
+import SakhaCta from '../SakhaCta';
 
 const endPathVar = (d: number) => ({ ['--d']: String(d) }) as CSSProperties;
 
@@ -176,18 +177,14 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
                 Continue Reading <ArrowRight width={15} height={15} />
               </span>
             </Link>
-            <a
-              href="https://sakha.live"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass glass-interactive blog-end-path"
-              style={endPathVar(2)}
-            >
+            {/* Routes to the App Store / Play Store per platform once those
+                listings are live, otherwise opens the download modal. */}
+            <SakhaCta className="glass glass-interactive blog-end-path" style={endPathVar(2)}>
               <span className="blog-end-line" aria-hidden="true" />
               <span className="blog-end-label">
                 Talk to Sakha <ArrowRight width={15} height={15} />
               </span>
-            </a>
+            </SakhaCta>
             <Link href="/" className="glass glass-interactive blog-end-path" style={endPathVar(3)}>
               <span className="blog-end-line" aria-hidden="true" />
               <span className="blog-end-label">

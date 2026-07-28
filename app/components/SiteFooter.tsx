@@ -1,96 +1,90 @@
 import Link from 'next/link';
 import { company } from '../lib/company';
 import LogoMark from './LogoMark';
+import SakhaCta from './SakhaCta';
+import SectionLink from './SectionLink';
 
-const productLinks = [
-  { href: 'https://sakha.live', label: 'Sakha', external: true },
-  { href: '/#products', label: 'Dronacharya', external: false },
-];
-
-const companyLinks = [
-  { href: '/#about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/#founder', label: 'Founder' },
-  { href: '/#contact', label: 'Contact' },
-  { href: '/compliance', label: 'Compliance' },
-];
-
-const legalLinks = [
-  { href: '/privacy', label: 'Privacy' },
-  { href: '/terms', label: 'Terms' },
-  { href: '/refund', label: 'Refunds' },
-  { href: '/disclaimer', label: 'Disclaimer' },
-];
-
+/**
+ * Site footer, ported from the handoff (shared.jsx: Footer) onto the design's
+ * own `.footer` / `.footer-grid` / `.footer-col` classes.
+ *
+ * Three deliberate deviations from the prototype, all noted in the PR:
+ *  - No "About" link. The handoff's footer links to #about, but its HomePage
+ *    no longer renders AboutSection, so the anchor would go nowhere.
+ *  - No "Refunds" / "Disclaimer" links. The handoff lists both (as did the
+ *    previous footer), but /refund and /disclaimer have never existed — they
+ *    404. Restore them here once those pages are written.
+ *  - "Founder" became "Team", matching the new constellation section.
+ */
 export default function SiteFooter() {
   return (
-    <footer className="relative border-t border-white/5 bg-navy-950/80 backdrop-blur-glass mt-20" role="contentinfo">
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10 text-sm">
-        <div className="col-span-2 md:col-span-1">
-          <Link href="/" className="flex items-center gap-2 mb-4">
+    <footer className="footer" role="contentinfo">
+      <div className="footer-grid">
+        <div>
+          <Link href="/" className="navbar-brand" style={{ marginBottom: 16, display: 'inline-flex' }}>
             <LogoMark size={34} />
-            <span className="font-display text-lg font-semibold text-white">{company.brand}</span>
+            <span className="navbar-wordmark">{company.brand}</span>
           </Link>
-          <p className="text-white/50 leading-relaxed mb-4">
+          <p
+            style={{
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: 14,
+              lineHeight: 1.6,
+              marginTop: 12,
+              marginBottom: 14,
+            }}
+          >
             AI for guidance &amp; learning. Building Sakha and Dronacharya from India.
           </p>
-          <p className="text-xs text-white/55 leading-relaxed">
-            <strong className="text-white/60 font-medium block mb-1">{company.legalNameTitleCase}</strong>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>
+            <strong style={{ color: 'rgba(255,255,255,0.7)', display: 'block', marginBottom: 4 }}>
+              {company.legalNameTitleCase}
+            </strong>
             CIN: <span className="font-mono">{company.cin}</span>
           </p>
         </div>
 
-        <div>
-          <h3 className="text-white font-semibold mb-4 uppercase text-xs tracking-wider">Products</h3>
-          <ul className="space-y-2">
-            {productLinks.map((link) =>
-              link.external ? (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/60 hover:text-brand-gold transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ) : (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-white/60 hover:text-brand-gold transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              )
-            )}
+        <div className="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li>
+              <SakhaCta>Sakha</SakhaCta>
+            </li>
+            <li>
+              <SectionLink id="products">Dronacharya</SectionLink>
+            </li>
           </ul>
         </div>
 
-        <div>
-          <h3 className="text-white font-semibold mb-4 uppercase text-xs tracking-wider">Company</h3>
-          <ul className="space-y-2">
-            {companyLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} className="text-white/60 hover:text-brand-gold transition-colors">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+        <div className="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li>
+              <Link href="/blog">Blog</Link>
+            </li>
+            <li>
+              <SectionLink id="team">Team</SectionLink>
+            </li>
+            <li>
+              <SectionLink id="contact">Contact</SectionLink>
+            </li>
+            <li>
+              <Link href="/compliance">Compliance</Link>
+            </li>
           </ul>
         </div>
 
-        <div>
-          <h3 className="text-white font-semibold mb-4 uppercase text-xs tracking-wider">Legal</h3>
-          <ul className="space-y-2">
-            {legalLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} className="text-white/60 hover:text-brand-gold transition-colors">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            <li className="pt-2">
-              <a href={`mailto:${company.contact.email}`} className="text-white/60 hover:text-brand-gold transition-colors break-all">
+        <div className="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li>
+              <Link href="/privacy">Privacy</Link>
+            </li>
+            <li>
+              <Link href="/terms">Terms</Link>
+            </li>
+            <li style={{ paddingTop: 6 }}>
+              <a href={`mailto:${company.contact.email}`} style={{ wordBreak: 'break-all' }}>
                 {company.contact.email}
               </a>
             </li>
@@ -98,12 +92,20 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/5 px-6 py-6 text-center text-xs text-white/55">
-        <p className="mb-1">
-          &copy; {new Date().getFullYear()} {company.legalNameTitleCase}. All rights reserved.
-          {company.brand}{company.trademark.symbol} is a trademark of {company.legalNameTitleCase}.
+      <div
+        style={{
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          padding: '20px 24px',
+          textAlign: 'center',
+          fontSize: 12,
+          color: 'rgba(255,255,255,0.4)',
+        }}
+      >
+        <p style={{ marginBottom: 4 }}>
+          &copy; {new Date().getFullYear()} {company.legalNameTitleCase}. All rights reserved.{' '}
+          {company.brand}
+          {company.trademark.symbol} is a trademark of {company.legalNameTitleCase}.
         </p>
-        <p className="italic">&quot;Navigate life decisions. Master new skills.&quot; · Built in India</p>
       </div>
     </footer>
   );

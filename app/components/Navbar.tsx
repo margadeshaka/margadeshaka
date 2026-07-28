@@ -4,91 +4,106 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LogoMark from './LogoMark';
+import SakhaCta from './SakhaCta';
+import { ArrowRight } from './icons';
+import { NAV_SECTIONS, goToSection } from '../lib/scroll';
 
-const navItems = [
-  { href: '/', label: 'Home', anchor: false },
-  { href: '/#products', label: 'Products', anchor: true },
-  { href: '/blog', label: 'Blog', anchor: false },
-  { href: '/compliance', label: 'Compliance', anchor: false },
-  { href: '/#founder', label: 'Founder', anchor: true },
-  { href: '/#contact', label: 'Contact', anchor: true },
-];
-
+/**
+ * Primary navigation, ported from the handoff (shared.jsx: Navbar).
+ *
+ * Uses the design's own `.navbar` / `.navbar-inner` / `.navbar-links` classes
+ * from globals.css rather than Tailwind utilities, so the styling stays in one
+ * place with the rest of the handoff CSS.
+ *
+ * Section links (Home / Products / Team / Contact) point at home-page sections;
+ * the handoff tracked which one is in view to highlight it, which is
+ * reproduced here but only while we're actually on `/`.
+ */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('hero');
   const pathname = usePathname();
 
-  // Active state for page (non-anchor) links; Blog stays active on articles too.
-  // Normalize the trailing slash first — under next.config `trailingSlash: true`
-  // usePathname() returns e.g. '/compliance/', so an exact compare would miss.
-  const isActive = (href: string) => {
-    const path = pathname.replace(/\/+$/, '') || '/';
-    if (href === '/blog') return path === '/blog' || path.startsWith('/blog/');
-    return path === href;
-  };
+  // trailingSlash: true means usePathname() yields '/compliance/', so strip it.
+  const path = (pathname || '/').replace(/\/+$/, '') || '/';
+  const onHome = path === '/';
+  const blogActive = path === '/blog' || path.startsWith('/blog/');
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      if (!onHome) return;
+      const mid = window.scrollY + window.innerHeight * 0.35;
+      let current: string = 'hero';
+      for (const id of NAV_SECTIONS) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= mid) current = id;
+      }
+      setActiveSection(current);
+    };
     onScroll();
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [onHome]);
+
+  const secActive = (id: string) => onHome && activeSection === id;
+
+  const section = (id: string, label: string) => (
+    <li key={id}>
+      <a
+        href={`/#${id}`}
+        className={secActive(id) ? 'active' : ''}
+        onClick={(e) => {
+          e.preventDefault();
+          goToSection(id, onHome);
+        }}
+      >
+        {label}
+      </a>
+    </li>
+  );
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-glass border-b transition-colors ${
-        scrolled
-          ? 'bg-navy-950/85 border-white/[0.08]'
-          : 'bg-navy-950/55 border-white/[0.05]'
-      }`}
-    >
-      <nav
-        className="max-w-[1280px] mx-auto h-16 px-6 flex items-center justify-between gap-6"
-        aria-label="Primary"
-      >
-        <Link href="/" className="inline-flex items-center gap-2.5 group" aria-label="Margadeshaka home">
-          <LogoMark size={34} />
-          <span
-            className="font-display text-white"
-            style={{ fontSize: 17, fontWeight: 600, letterSpacing: '-0.01em' }}
-          >
-            Margadeshaka
-          </span>
-        </Link>
+    <header className={'navbar' + (scrolled ? ' scrolled' : '')}>
+      <nav className="navbar-inner" aria-label="Primary">
+        <a
+          href="/"
+          className="navbar-brand"
+          aria-label="Margadeshaka home"
+          onClick={(e) => {
+            if (!onHome) return; // let it navigate home normally
+            e.preventDefault();
+            goToSection('hero', true);
+          }}
+        >
+          <LogoMark size={26} />
+          <span className="navbar-wordmark">Margadeshaka</span>
+        </a>
 
-        <ul className="hidden min-[880px]:flex items-center gap-8 text-sm m-0 p-0 list-none">
-          {navItems.map((item) => {
-            const active = !item.anchor && isActive(item.href);
-            const cls = `relative transition-colors ${active ? 'text-brand-gold' : 'text-white/70 hover:text-brand-gold'}`;
-            const dot = active ? <span className="nav-active-dot" aria-hidden="true" /> : null;
-            return (
-              <li key={item.href}>
-                {item.anchor ? (
-                  <a href={item.href} className={cls}>
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link href={item.href} className={cls} aria-current={active ? 'page' : undefined}>
-                    {item.label}
-                    {dot}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
+        <ul className="navbar-links">
+          {section('hero', 'Home')}
+          {section('products', 'Products')}
+          <li>
+            <Link href="/blog" className={blogActive ? 'active' : ''}>
+              Blog
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/compliance"
+              className={path === '/compliance' ? 'active' : ''}
+              aria-current={path === '/compliance' ? 'page' : undefined}
+            >
+              Compliance
+            </Link>
+          </li>
+          {section('team', 'Team')}
+          {section('contact', 'Contact')}
         </ul>
 
-        <a
-          href="https://sakha.live"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex btn btn-ghost btn-sm"
-        >
-          Try Sakha
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+        <SakhaCta className="btn btn-ghost btn-sm" style={{ display: 'inline-flex' }}>
+          Try Sakha <ArrowRight />
+        </SakhaCta>
       </nav>
     </header>
   );

@@ -1,207 +1,275 @@
-import { ReactNode } from 'react';
-import SectionHeading from './SectionHeading';
+'use client';
 
-type Product = {
-  name: string;
-  sanskrit: string;
-  meaning: string;
-  tagline: string;
-  description: string;
-  status: 'Live' | 'In Beta' | 'Coming Soon';
-  statusVariant: 'gold' | 'aurora' | 'ghost';
-  platforms: string[];
-  href: string | null;
-  accent: string;
-  features: string[];
-  icon: ReactNode;
-};
+import { useEffect, useRef } from 'react';
+import SakhaCta from './SakhaCta';
+import { ArrowRight } from './icons';
 
-const SparklesIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="m12 3-1.5 4.5L6 9l4.5 1.5L12 15l1.5-4.5L18 9l-4.5-1.5L12 3z" />
-    <path d="M19 14l-.7 2.1L16 17l2.3.7L19 20l.7-2.3L22 17l-2.3-.9L19 14z" />
-  </svg>
-);
+/**
+ * Products section, ported from the handoff (home.jsx: ProductsSection).
+ *
+ * Four movements:
+ *   1. Sakha editorial — orb + copy; the orb scales up once scrolled into view.
+ *   2. Phone showcase — a device mock replaying a conversation, ringed by
+ *      floating snippets of other conversations.
+ *   3. Reflection deck — the in-app card surfaces.
+ *   4. Closing line + the primary Sakha call to action.
+ *
+ * Client-side because the orb's grow-in is driven by IntersectionObserver. The
+ * chat bubbles and particles animate purely in CSS, staggered off `--d` / `--i`.
+ */
 
-const BookIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M20 6 9 17l-5-5" />
-  </svg>
-);
-
-const ArrowRight = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-);
-
-const products: Product[] = [
+const CONVOS = [
   {
-    name: 'Sakha',
-    sanskrit: 'सखा',
-    meaning: 'friend',
-    tagline: 'AI Vedic astrology companion',
-    description:
-      'Birth chart analysis, Vimshottari Dasha predictions, relationship compatibility, and emotionally aware coaching — built on Swiss Ephemeris and Azure OpenAI.',
-    status: 'In Beta',
-    statusVariant: 'gold',
-    platforms: ['iOS', 'Android', 'Web'],
-    href: 'https://sakha.live',
-    accent: 'rgba(255, 200, 100, 0.25)',
-    icon: <SparklesIcon />,
-    features: ['120-year Dasha timeline', 'Relationship synastry', 'Crisis-aware support'],
+    side: 'l1',
+    user: "I feel like I'm falling behind everyone.",
+    sakha: 'Whose timeline are you comparing yourself to?',
   },
   {
-    name: 'Dronacharya',
-    sanskrit: 'द्रोणाचार्य',
-    meaning: 'the legendary teacher',
-    tagline: 'AI tutor that teaches by thinking',
-    description:
-      'Multi-agent AI tutoring with adaptive difficulty and project-based Bronze, Silver, and Gold certifications. Active learning, not passive video.',
-    status: 'Coming Soon',
-    statusVariant: 'ghost',
-    platforms: ['Web'],
-    href: null,
-    accent: 'rgba(126, 77, 212, 0.30)',
-    icon: <BookIcon />,
-    features: ['Project-based mastery', 'Bronze · Silver · Gold tiers', 'Adaptive multi-agent tutoring'],
+    side: 'l2',
+    user: 'Why do I keep feeling stuck?',
+    sakha: "Sometimes clarity begins by understanding what's holding you back.",
+  },
+  {
+    side: 'r1',
+    user: "I've been overthinking this decision.",
+    sakha: "Let's explore what feels uncertain instead of rushing to an answer.",
+  },
+  { side: 'r2', user: 'I just need someone to listen.', sakha: "I'm here. Take your time." },
+];
+
+const CHAT = [
+  { who: 'user', d: '0s', text: "Lately I feel restless, like I'm chasing something I can't name." },
+  {
+    who: 'sakha',
+    d: '0.9s',
+    text: 'That restlessness is worth listening to. When did you last feel truly at ease?',
+  },
+  { who: 'user', d: '1.9s', text: "Honestly, I'm not sure I remember." },
+  {
+    who: 'sakha',
+    d: '2.8s',
+    text: "Then let's not rush to fix it. What would ease even feel like for you?",
   },
 ];
 
-const statusStyles: Record<Product['statusVariant'], string> = {
-  gold: 'bg-brand-gold/[0.12] border-brand-gold/30 text-brand-gold',
-  aurora: 'bg-aurora-500/10 border-aurora-500/30 text-aurora-400',
-  ghost: 'bg-white/[0.04] border-white/10 text-white/55',
-};
-
-function StatusBadge({ status, variant }: { status: string; variant: Product['statusVariant'] }) {
-  return (
-    <span
-      className={`px-3 py-[5px] rounded-full text-[11px] font-medium uppercase tracking-[0.04em] whitespace-nowrap border ${statusStyles[variant]}`}
-    >
-      {status}
-    </span>
-  );
-}
-
-function ProductCard({ product }: { product: Product }) {
-  const inner = (
-    <>
-      <div
-        className="absolute -top-[100px] -right-[80px] w-[280px] h-[280px] rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${product.accent} 0%, transparent 65%)`,
-          filter: 'blur(40px)',
-        }}
-        aria-hidden="true"
-      />
-      <div className="relative">
-        <div className="flex items-start justify-between gap-4 mb-6">
-          <div className="flex items-center gap-3.5">
-            <div
-              className="w-11 h-11 rounded-xl grid place-items-center text-brand-gold"
-              style={{ background: 'rgba(255, 200, 100, 0.10)', border: '1px solid rgba(255, 200, 100, 0.25)' }}
-            >
-              {product.icon}
-            </div>
-            <div>
-              <h3 className="font-display text-[28px] font-bold text-white leading-none m-0" style={{ letterSpacing: '-0.02em' }}>
-                {product.name}
-              </h3>
-              <div className="flex items-center gap-2 mt-1.5 text-[13px] text-white/55">
-                <span className="font-devanagari text-brand-gold text-base">{product.sanskrit}</span>
-                <span>· {product.meaning}</span>
-              </div>
-            </div>
-          </div>
-          <StatusBadge status={product.status} variant={product.statusVariant} />
-        </div>
-
-        <p className="text-brand-gold text-[14px] font-medium mb-3.5">{product.tagline}</p>
-        <p className="text-white/[0.72] leading-[1.65] mb-6">{product.description}</p>
-
-        <ul className="list-none p-0 m-0 mb-7 flex flex-col gap-2.5">
-          {product.features.map((f) => (
-            <li key={f} className="flex items-center gap-2.5 text-[14px] text-white/70">
-              <span className="text-brand-gold inline-flex">
-                <CheckIcon />
-              </span>
-              {f}
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex justify-between items-center gap-4 pt-5 border-t border-white/[0.06]">
-          <ul className="flex flex-wrap gap-1.5 list-none p-0 m-0">
-            {product.platforms.map((p) => (
-              <li
-                key={p}
-                className="px-2.5 py-[5px] rounded-lg text-xs text-white/65"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)' }}
-              >
-                {p}
-              </li>
-            ))}
-          </ul>
-          {product.href ? (
-            <span className="inline-flex items-center gap-1.5 text-[14px] text-brand-gold font-medium">
-              Visit <ArrowRight />
-            </span>
-          ) : (
-            <span className="text-[13px] text-white/55">In development</span>
-          )}
-        </div>
-      </div>
-    </>
-  );
-
-  if (product.href) {
-    return (
-      <a
-        href={product.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="glass glass-accent glass-interactive relative overflow-hidden block no-underline text-inherit"
-        style={{ padding: '36px 32px' }}
-      >
-        {inner}
-      </a>
-    );
-  }
-  return (
-    <div className="glass glass-accent relative overflow-hidden" style={{ padding: '36px 32px' }}>
-      {inner}
-    </div>
-  );
-}
+const MOODS = ['Calm', 'Hopeful', 'Overwhelmed', 'Curious', 'Lost'];
 
 export default function ProductsSection() {
+  const visualRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = visualRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('grown');
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section id="products" className="section">
-      <div className="container-full">
-        <SectionHeading
-          eyebrow="Our Products"
-          title={
-            <>
-              Two AI products. <span className="gold-text">One philosophy.</span>
-            </>
-          }
-          subtitle="Different domains, same belief: AI should help you think more clearly, not less."
-        />
+      <div className="container sakha-editorial">
+        <div className="sakha-editorial-visual" ref={visualRef}>
+          <span className="sakha-editorial-glow" aria-hidden="true" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/sakha-orb.png" alt="Sakha" className="sakha-editorial-img" />
+        </div>
+        <div className="sakha-editorial-copy">
+          <span className="sakha-editorial-label fade-up">MEET SAKHA</span>
+          <h2 className="sakha-editorial-heading fade-up delay-100">Clarity begins here.</h2>
+          <p className="sakha-editorial-lead fade-up delay-200">
+            Sakha is your thoughtful AI companion for reflection, self-discovery, and meaningful
+            conversations. Instead of rushing to give answers, it helps you understand yourself,
+            think clearly, and move forward with confidence.
+          </p>
+        </div>
+      </div>
 
-        <div
-          className="grid gap-6 mt-14"
-          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))' }}
-        >
-          {products.map((p) => (
-            <ProductCard key={p.name} product={p} />
+      <div className="container">
+        <div style={{ textAlign: 'center', maxWidth: 700, margin: '0 auto' }}>
+          <h2
+            style={{
+              fontSize: 'clamp(30px, 4.2vw, 46px)',
+              fontWeight: 500,
+              color: '#fff',
+              marginTop: 12,
+              lineHeight: 1.14,
+              letterSpacing: '-0.008em',
+            }}
+          >
+            See how Sakha <span className="gold-text">thinks with you.</span>
+          </h2>
+        </div>
+
+        <div className="sakha-showcase">
+          <div className="sakha-phone-glow" aria-hidden="true" />
+          <div className="sakha-phone-particles" aria-hidden="true">
+            {Array.from({ length: 14 }).map((_, i) => (
+              <span key={i} style={{ '--i': i } as React.CSSProperties} />
+            ))}
+          </div>
+
+          <div className="sakha-phone" aria-hidden="true">
+            <span className="sakha-phone-btn sakha-phone-btn--mute" />
+            <span className="sakha-phone-btn sakha-phone-btn--vup" />
+            <span className="sakha-phone-btn sakha-phone-btn--vdn" />
+            <span className="sakha-phone-btn sakha-phone-btn--power" />
+            <div className="sakha-phone-screen">
+              <div className="sakha-phone-island" />
+              <div className="sakha-phone-statusbar">
+                <span className="sakha-phone-time">9:41</span>
+                <span className="sakha-phone-sysicons">
+                  <svg viewBox="0 0 18 12" width="17" height="11">
+                    <rect x="0" y="7.5" width="3" height="4.5" rx="0.8" />
+                    <rect x="4.5" y="5" width="3" height="7" rx="0.8" />
+                    <rect x="9" y="2.5" width="3" height="9.5" rx="0.8" />
+                    <rect x="13.5" y="0" width="3" height="12" rx="0.8" />
+                  </svg>
+                  <svg viewBox="0 0 16 12" width="16" height="11">
+                    <path
+                      d="M8 11.2 1.2 4.6a9.6 9.6 0 0 1 13.6 0L8 11.2Z"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.1"
+                      opacity="0.35"
+                    />
+                    <path d="M8 11.2 4 7.3a5.6 5.6 0 0 1 8 0L8 11.2Z" />
+                  </svg>
+                  <span className="sakha-phone-batt">
+                    <i />
+                  </span>
+                </span>
+              </div>
+              <div className="sakha-phone-head">
+                <span className="sakha-phone-avatar" />
+                <div>
+                  <div className="sakha-phone-name">Sakha</div>
+                  <div className="sakha-phone-status">
+                    <i />
+                    thinking with you
+                  </div>
+                </div>
+              </div>
+              <div className="sakha-phone-body">
+                <div className="chat-day">Today</div>
+                {CHAT.map((c, i) => (
+                  <div
+                    key={i}
+                    className={`chat-b chat-${c.who}`}
+                    style={{ '--d': c.d } as React.CSSProperties}
+                  >
+                    {c.text}
+                  </div>
+                ))}
+                <div className="chat-typing" style={{ '--d': '3.7s' } as React.CSSProperties}>
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <div className="sakha-phone-inputbar">
+                <div className="sakha-phone-input">
+                  <span>Message Sakha…</span>
+                </div>
+                <span className="sakha-phone-send">
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path
+                      d="M4 12h13M11 6l6 6-6 6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div className="sakha-phone-home" />
+            </div>
+          </div>
+
+          {CONVOS.map((c) => (
+            <div key={c.side} className={`convo-card convo-${c.side}`}>
+              <p className="convo-user">
+                <span>You</span>
+                {c.user}
+              </p>
+              <p className="convo-sakha">
+                <span>Sakha</span>
+                {c.sakha}
+              </p>
+            </div>
           ))}
+        </div>
+      </div>
+
+      <div className="reflect-deck-wrap">
+        <div className="reflect-deck">
+          <article className="reflect-card">
+            <span className="reflect-label">TODAY&rsquo;S REFLECTION</span>
+            <p className="reflect-q">
+              What have you been carrying that you haven&rsquo;t said out loud?
+            </p>
+          </article>
+          <article className="reflect-card">
+            <span className="reflect-label">INSIGHT</span>
+            <p className="reflect-q reflect-q--sm">
+              Sometimes clarity doesn&rsquo;t come from finding the answer. It comes from asking a
+              better question.
+            </p>
+          </article>
+          <article className="reflect-card">
+            <span className="reflect-label">CHECK-IN</span>
+            <p className="reflect-q reflect-q--sm">How are you feeling right now?</p>
+            <div className="reflect-chips">
+              {MOODS.map((m) => (
+                <span key={m} className="reflect-chip">
+                  {m}
+                </span>
+              ))}
+            </div>
+          </article>
+          <article className="reflect-card reflect-card--seed">
+            <span className="reflect-label">GROWTH</span>
+            <p className="reflect-q reflect-q--sm">
+              Every conversation is a small step toward understanding yourself.
+            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/sakha-orb.png" alt="" className="reflect-seed" aria-hidden="true" />
+          </article>
+        </div>
+      </div>
+
+      <div className="container-narrow" style={{ textAlign: 'center' }}>
+        <p
+          className="fade-up"
+          style={{
+            marginTop: 20,
+            fontSize: 20,
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.82)',
+            fontStyle: 'italic',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Every meaningful change begins with a single conversation.
+        </p>
+        <div
+          className="fade-up"
+          style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}
+        >
+          <SakhaCta className="btn btn-primary">
+            Start Your Journey with Sakha <ArrowRight />
+          </SakhaCta>
         </div>
       </div>
     </section>

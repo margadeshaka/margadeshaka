@@ -1,7 +1,4 @@
 import type { Metadata } from 'next';
-import Navbar from '../components/Navbar';
-import CosmicLayer from '../components/CosmicLayer';
-import SiteFooter from '../components/SiteFooter';
 import SEOStructuredData from '../components/SEOStructuredData';
 import BlogListing from '../components/blog/BlogListing';
 
@@ -30,14 +27,10 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
-      <CosmicLayer />
-      <Navbar />
 
-      <main className="relative pt-32 pb-20 cosmic-bg min-h-screen">
-        <BlogListing />
-      </main>
+      {/* BlogListing owns its own padding and cosmic-bg, per the handoff. */}
+      <BlogListing />
 
-      <SiteFooter />
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },

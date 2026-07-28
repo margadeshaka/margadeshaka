@@ -75,13 +75,56 @@ export const company = {
     github: 'https://github.com/ihiteshgupta',
   },
 
+  // Team — rendered as the constellation thread on the home page.
+  // Order matters: it maps to the fixed node positions in TeamSection.
+  team: [
+    {
+      name: 'Hitesh Gupta',
+      role: 'Director',
+      initials: 'HG',
+      bio: "Sets the vision for Margadeshaka — building AI that helps people think more clearly, rooted in Indian wisdom traditions.",
+    },
+    {
+      name: 'Komal Chauhan',
+      role: 'Co Founder',
+      initials: 'KC',
+      bio: "Shapes the product and the company's soul, making sure every experience feels genuinely human and compassionate.",
+    },
+    {
+      name: 'Rohit Kumar',
+      role: 'Software Engineer',
+      initials: 'RK',
+      bio: 'Brings Sakha to life across iOS, Android, and Web — turning thoughtful design into reliable, calm technology.',
+    },
+    {
+      name: 'Vanshika Garg',
+      role: 'Marketing Executive',
+      initials: 'VG',
+      bio: "Tells Margadeshaka's story with clarity and warmth, connecting the product with the people it's meant to serve.",
+    },
+  ],
+
   // External / web presence
   web: {
     site: 'https://margadeshaka.com',
     sakha: 'https://sakha.live',
     twitter: 'https://twitter.com/MargadeshakaAI',
+    instagram: 'https://www.instagram.com/margadeshaka',
     githubOrg: 'https://github.com/margadeshaka',
   },
+} as const;
+
+/**
+ * Sakha app-store routing — single source of truth.
+ *
+ * Leave a URL empty until that listing is actually live. Every "Try Sakha" /
+ * download action reads these: on a matching device with a live URL we deep
+ * link to the store, otherwise we open the download modal, which shows
+ * "Coming soon" for whichever store is still empty.
+ */
+export const sakhaStore = {
+  appStore: '',
+  playStore: '',
 } as const;
 
 export type Company = typeof company;
