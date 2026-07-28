@@ -50,3 +50,6 @@ next-env.d.ts
 # IDE
 .idea
 .vscode
+
+# claude code worktrees (.claude/launch.json itself IS tracked)
+.claude/worktrees/

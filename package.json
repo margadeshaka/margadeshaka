@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "export": "next export",
     "build:static": "next build",
-    "preview": "next build && next start",
+    "preview": "next build && npx serve out -p 3000",
     "deploy": "next build && firebase deploy --only hosting",
     "deploy:preview": "next build && firebase hosting:channel:deploy preview --expires 7d",
     "clean": "rm -rf .next out node_modules/.cache",
