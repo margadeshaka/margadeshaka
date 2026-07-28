@@ -251,7 +251,7 @@
   padding: 14px 28px;
   border-radius: 14px;
   font-weight: 600;
-  font-family: var(--font-poppins, var(--font-inter, system-ui, sans-serif));
+  font-family: var(--font-display);
   border: none;
   cursor: pointer;
   transition: transform 200ms ease-out, box-shadow 200ms ease-out;
@@ -561,13 +561,13 @@ canvas {
 
 /* Accessibility: Focus states for keyboard navigation */
 *:focus-visible {
-  outline: 2px solid #d4a54a;
+  outline: 2px solid var(--brand-gold);
   outline-offset: 2px;
 }
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #d4a54a;
+  outline: 2px solid var(--brand-gold);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -680,7 +680,7 @@ a:focus-visible {
 }
 
 .content-link:focus-visible {
-  outline: 2px solid #d4a54a;
+  outline: 2px solid var(--brand-gold);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -713,7 +713,7 @@ a:focus-visible {
 
 /* Eyebrow label */
 .eyebrow {
-  font-family: var(--font-poppins, system-ui, sans-serif);
+  font-family: var(--font-display);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.20em;
@@ -774,7 +774,7 @@ a:focus-visible {
 
 /* Layout containers */
 .container-full { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-.container-narrow { max-width: 1024px; margin: 0 auto; padding: 0 24px; }
+.container-narrow { max-width: 1024px; margin: 0 auto; } /* no padding: .section supplies the 24px gutter, per the handoff */
 .container-prose { max-width: 760px; margin: 0 auto; padding: 0 24px; }
 
 /* Fade-up entrance animation (staggered with delays) */
@@ -856,7 +856,7 @@ a:focus-visible {
   gap: 8px;
   padding: 14px 24px;
   border-radius: var(--r-md);
-  font-family: var(--font-poppins, system-ui, sans-serif);
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.01em;
@@ -867,9 +867,9 @@ a:focus-visible {
 
 /* Legal-prose styling for /privacy and /terms pages */
 .legal-prose { color: rgba(255,255,255,0.78); line-height: 1.75; font-size: 16px; }
-.legal-prose h2 { font-size: 22px; color: #fff; margin: 40px 0 14px; font-weight: 600; letter-spacing: -0.01em; font-family: var(--font-poppins, sans-serif); }
+.legal-prose h2 { font-size: 22px; color: #fff; margin: 40px 0 14px; font-weight: 600; letter-spacing: -0.01em; }
 .legal-prose h2:first-child { margin-top: 0; }
-.legal-prose h3 { font-size: 16px; color: var(--brand-gold); margin: 24px 0 10px; font-weight: 600; font-family: var(--font-poppins, sans-serif); }
+.legal-prose h3 { font-size: 16px; color: var(--brand-gold); margin: 24px 0 10px; font-weight: 600; }
 .legal-prose p { margin: 0 0 16px; }
 .legal-prose ul { margin: 0 0 18px; padding-left: 20px; }
 .legal-prose li { margin-bottom: 8px; }
@@ -2553,4 +2553,48 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .logo-mark--hero {
   filter: drop-shadow(0 0 36px rgba(255, 190, 60, 0.45))
           drop-shadow(0 0 14px rgba(255, 200, 100, 0.55));
+}
+
+/*
+ * Tailwind Preflight vs the handoff's assumptions.
+ *
+ * `@tailwind base` emits `ol,ul{list-style:none;margin:0;padding:0}`. The
+ * handoff prototype had no reset beyond `* { box-sizing: border-box }`, so its
+ * `.legal-prose ul { margin: 0 0 18px; padding-left: 20px; }` relied on the
+ * browser's default `list-style: disc` — which Preflight removes here, leaving
+ * every bullet list on /privacy and /terms with no markers at all.
+ */
+.legal-prose ul {
+  list-style: disc;
+}
+.legal-prose ol {
+  list-style: decimal;
+}
+
+/*
+ * .team-avatar — centre the initials.
+ *
+ * The handoff put an <image-slot> inside this element and styled the initials
+ * through `.team-avatar image-slot`, whose own shadow CSS centred them in the
+ * display face. We render the initials as plain text instead (the handoff
+ * shipped no photographs), so that rule no longer matches anything and the
+ * initials were falling out of the disc in the body font at inherited size.
+ */
+.team-avatar {
+  display: grid;
+}
+.team-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  /* --slot-bg from the handoff's `.team-avatar image-slot` rule. */
+  background: #171622;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--brand-gold);
 }

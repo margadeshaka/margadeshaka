@@ -40,10 +40,17 @@ module.exports = {
           gold: '#FFC864',     // → brand.gold
         },
       },
+      // Point at the design tokens defined in globals.css LAYER 4, not at raw
+      // next/font variables. The previous values (--font-poppins, --font-inter,
+      // --font-noto-devanagari) were left behind when the type stack moved to
+      // Newsreader/Geist: none of them is defined anywhere any more, so
+      // `font-display` computed to an invalid var() and every heading carrying
+      // it silently fell back to the inherited sans face instead of Newsreader.
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['var(--font-poppins)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
-        devanagari: ['var(--font-noto-devanagari)', 'serif'],
+        sans: ['var(--font-body)', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        devanagari: ['var(--font-devanagari)', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       fontSize: {
         'display-lg': ['56px', { lineHeight: '1.1', fontWeight: '700' }],

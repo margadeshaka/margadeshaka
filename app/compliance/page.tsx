@@ -72,7 +72,10 @@ export default function CompliancePage() {
   return (
     <>
 
-      <div className="relative pt-32 pb-20 cosmic-bg min-h-screen">
+      <div
+        className="page-enter relative pb-20 cosmic-bg min-h-screen"
+        style={{ paddingTop: 120 }}
+      >
         <div className="container-narrow">
           <Link
             href="/"
@@ -221,7 +224,9 @@ export default function CompliancePage() {
                 rel="noopener noreferrer"
                 className="btn btn-ghost btn-sm"
               >
-                Verify on MCA portal <ExternalIcon />
+                {/* Reads the label from company.ts, which already held the
+                    handoff-matching text and was going unused. */}
+                Verify on {c.mcaVerifyLabel} <ExternalIcon />
               </a>
             </div>
           </Section>

@@ -108,7 +108,12 @@ export default function TeamSection() {
             >
               <div className="team-node-inner">
                 <span className="team-node-glow" aria-hidden="true" />
-                <span className="team-avatar">{m.initials}</span>
+                {/* The inner span reproduces what <image-slot> filled in the
+                    handoff: .team-avatar is a 2px gold ring whose interior was
+                    the slot's dark #171622 background. */}
+                <span className="team-avatar">
+                  <span className="team-avatar-inner">{m.initials}</span>
+                </span>
               </div>
               <div className="team-label">
                 <div className="team-name">{m.name}</div>

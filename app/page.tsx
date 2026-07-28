@@ -20,10 +20,15 @@ export default function Home() {
   return (
     <>
       <HomeSectionScroll />
-      <Hero />
-      <ProductsSection />
-      <TeamSection />
-      <ContactSection />
+      {/* page-enter gives the fade-up entrance the handoff wraps every page in
+          (home.jsx:6). Without it the home page appeared instantly while the
+          blog pages animated in. */}
+      <div className="page-enter">
+        <Hero />
+        <ProductsSection />
+        <TeamSection />
+        <ContactSection />
+      </div>
       <SEOStructuredData />
     </>
   );

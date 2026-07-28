@@ -13,7 +13,10 @@ interface LegalLayoutProps {
 export default function LegalLayout({ title, lastUpdated, slug, children }: LegalLayoutProps) {
   return (
     <>
-      <div className="relative pt-32 pb-20 cosmic-bg min-h-screen">
+      <div
+      className="page-enter relative pb-20 cosmic-bg min-h-screen"
+      style={{ paddingTop: 120 }}
+    >
         <div className="container-prose">
           <Link
             href="/"

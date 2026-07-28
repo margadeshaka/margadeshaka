@@ -75,7 +75,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <>
 
-      <div className="relative pt-32 pb-20 cosmic-bg min-h-screen overflow-x-hidden">
+      <div
+        className="page-enter relative pb-20 cosmic-bg min-h-screen overflow-x-hidden"
+        style={{ paddingTop: 120 }}
+      >
         {/* key per slug forces a fresh mount on article→article navigation so
             scroll/progress/ended state doesn't leak from the previous post. */}
         <BlogArticle key={post.slug} post={post} />

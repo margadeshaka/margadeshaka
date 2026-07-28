@@ -13,14 +13,19 @@ const stroke = {
   strokeLinejoin: 'round' as const,
 };
 
+// The arrows deliberately omit strokeLinejoin so the arrowhead vertex keeps the
+// default miter, matching the handoff (shared.jsx: arrowRight/arrowLeft set only
+// strokeLinecap). Rounding the join blunts the tip.
+const strokeNoJoin = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const };
+
 export const ArrowRight = (p: P) => (
-  <svg width="16" height="16" viewBox="0 0 24 24" {...stroke} {...p}>
+  <svg width="16" height="16" viewBox="0 0 24 24" {...strokeNoJoin} {...p}>
     <path d="M5 12h14M12 5l7 7-7 7" />
   </svg>
 );
 
 export const ArrowLeft = (p: P) => (
-  <svg width="16" height="16" viewBox="0 0 24 24" {...stroke} {...p}>
+  <svg width="16" height="16" viewBox="0 0 24 24" {...strokeNoJoin} {...p}>
     <path d="M19 12H5M12 19l-7-7 7-7" />
   </svg>
 );
@@ -33,7 +38,8 @@ export const Search = (p: P) => (
 );
 
 export const External = (p: P) => (
-  <svg width="14" height="14" viewBox="0 0 24 24" {...stroke} {...p}>
+  // Also miter-joined in the handoff (shared.jsx: external).
+  <svg width="14" height="14" viewBox="0 0 24 24" {...strokeNoJoin} {...p}>
     <path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
   </svg>
 );
