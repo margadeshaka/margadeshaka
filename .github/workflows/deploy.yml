@@ -1,0 +1,112 @@
+name: Deploy to Firebase Hosting
+
+# main    → production site (margadeshaka-af4de.web.app, and margadeshaka.com once DNS points here)
+# Develop → staging site    (margadeshaka-staging.web.app, noindex)
+#
+# Both sites live in the same Firebase project and share one firebase.json,
+# selected by the `target` input. scripts/verify-hosting-config.mjs fails the
+# build if the two targets' configs drift apart.
+
+on:
+  push:
+    branches: [main, Develop]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Which environment to deploy
+        required: true
+        default: staging
+        type: choice
+        options: [staging, production]
+
+# One deploy per branch at a time. Superseded runs are cancelled so a slow
+# older commit can never land on top of a newer one.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      # Resolve the environment once: the branch decides on push, the input on
+      # a manual run. Everything below keys off this.
+      TARGET: >-
+        ${{ github.event_name == 'workflow_dispatch'
+            && inputs.environment
+            || (github.ref_name == 'main' && 'production' || 'staging') }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Matches the "node": ">=20" engine in package.json.
+          node-version: 20
+          cache: npm
+
+      - name: Resolve environment
+        id: env
+        run: |
+          if [ "$TARGET" = "production" ]; then
+            echo "site=margadeshaka-af4de"    >> "$GITHUB_OUTPUT"
+            echo "base_url=https://margadeshaka.com" >> "$GITHUB_OUTPUT"
+          else
+            echo "site=margadeshaka-staging"  >> "$GITHUB_OUTPUT"
+            echo "base_url=https://margadeshaka-staging.web.app" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Deploying $TARGET"
+
+      - run: npm ci
+
+      # Gate the deploy on the checks that can actually fail. `npm run lint` is
+      # deliberately not here: the repo has no ESLint config, so `next lint`
+      # would prompt interactively and hang the runner.
+      - run: npm run typecheck
+
+      - name: Verify hosting config
+        run: node scripts/verify-hosting-config.mjs
+
+      - name: Build static export
+        env:
+          # Baked in at build time — they drive canonical URLs, the sitemap and
+          # JSON-LD, so staging must not advertise the production domain.
+          NEXT_PUBLIC_BASE_URL: ${{ steps.env.outputs.base_url }}
+          # Analytics only on production; staging traffic would pollute it.
+          # Optional: if the secret is unset, layout.tsx skips GoogleAnalytics.
+          NEXT_PUBLIC_GA_ID: ${{ env.TARGET == 'production' && secrets.NEXT_PUBLIC_GA_ID || '' }}
+        run: npm run build
+
+      # Cheap guard against shipping an empty or half-built export.
+      - name: Sanity-check the export
+        run: |
+          test -f out/index.html || { echo "::error::out/index.html missing"; exit 1; }
+          test -f out/404.html   || { echo "::error::out/404.html missing";   exit 1; }
+          pages=$(find out -name index.html | wc -l | tr -d ' ')
+          echo "exported $pages pages"
+          [ "$pages" -ge 9 ] || { echo "::error::expected >=9 pages, got $pages"; exit 1; }
+          grep -q 'sakha-editorial' out/index.html || { echo "::error::home page is missing the products section"; exit 1; }
+
+      - name: Deploy
+        id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: margadeshaka-af4de
+          target: ${{ env.TARGET }}
+          channelId: live
+
+      - name: Summary
+        run: |
+          {
+            echo "### Deployed to \`$TARGET\`"
+            echo
+            echo "- site: \`${{ steps.env.outputs.site }}\`"
+            echo "- url: https://${{ steps.env.outputs.site }}.web.app"
+            echo "- commit: \`${{ github.sha }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

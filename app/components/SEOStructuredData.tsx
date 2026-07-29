@@ -1,7 +1,7 @@
 import { company } from '../lib/company';
 
-// Defensive trim — env vars set via `echo "..." | vercel env add` carry a
-// trailing newline which silently corrupts every URL/@id derived from baseUrl.
+// Defensive trim — an env var piped in from a shell or a CI secret can carry a
+// trailing newline, which silently corrupts every URL/@id derived from baseUrl.
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || company.web.site).trim();
 
 interface BlogPostMeta {

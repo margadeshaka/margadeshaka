@@ -35,8 +35,10 @@ yarn-error.log*
 # local env files
 .env*.local
 
-# vercel
-.vercel
+# firebase
+.firebase/
+firebase-debug.log*
+.runtimeconfig.json
 
 # typescript
 *.tsbuildinfo
@@ -45,3 +47,6 @@ next-env.d.ts
 # IDE
 .idea
 .vscode
+
+# claude code worktrees (.claude/launch.json itself IS tracked)
+.claude/worktrees/

@@ -1,8 +1,5 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import Navbar from './Navbar';
-import CosmicLayer from './CosmicLayer';
-import SiteFooter from './SiteFooter';
 import SEOStructuredData from './SEOStructuredData';
 
 interface LegalLayoutProps {
@@ -16,9 +13,10 @@ interface LegalLayoutProps {
 export default function LegalLayout({ title, lastUpdated, slug, children }: LegalLayoutProps) {
   return (
     <>
-      <CosmicLayer />
-      <Navbar />
-      <main className="relative pt-32 pb-20 cosmic-bg min-h-screen">
+      <div
+      className="page-enter relative pb-20 cosmic-bg min-h-screen"
+      style={{ paddingTop: 120 }}
+    >
         <div className="container-prose">
           <Link
             href="/"
@@ -48,8 +46,7 @@ export default function LegalLayout({ title, lastUpdated, slug, children }: Lega
 
           <article className="legal-prose">{children}</article>
         </div>
-      </main>
-      <SiteFooter />
+      </div>
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },

@@ -15,7 +15,9 @@
     "typecheck": "tsc --noEmit",
     "export": "next export",
     "build:static": "next build",
-    "preview": "next build && next start",
+    "preview": "next build && npx serve out -p 3000",
+    "deploy": "next build && firebase deploy --only hosting:production",
+    "deploy:preview": "next build && firebase hosting:channel:deploy preview --only staging --expires 7d",
     "clean": "rm -rf .next out node_modules/.cache",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
@@ -25,14 +27,14 @@
     "test:accessibility": "playwright test accessibility",
     "test:performance": "playwright test performance",
     "test:visual": "playwright test visual-regression",
-    "test:ci": "playwright test --reporter=github"
+    "test:ci": "playwright test --reporter=github",
+    "deploy:staging": "next build && firebase deploy --only hosting:staging",
+    "verify:hosting": "node scripts/verify-hosting-config.mjs"
   },
   "dependencies": {
-    "@microsoft/applicationinsights-web": "^3.0.0",
     "@next/third-parties": "^16.2.5",
     "@react-three/drei": "^9.0.0",
     "@react-three/fiber": "^8.0.0",
-    "@vercel/analytics": "^1.5.0",
     "gsap": "^3.12.0",
     "next": "^15.1.0",
     "react": "^19.2.4",

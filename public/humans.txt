@@ -13,13 +13,12 @@
 
 # TECHNOLOGY COLOPHON
     HTML5, CSS3, JavaScript
-    Next.js 14, React 18, TypeScript
-    Tailwind CSS, GSAP Animation
-    Three.js, React Three Fiber
-    Vercel, Azure Static Web Apps
+    Next.js 15, React 19, TypeScript
+    Tailwind CSS, Newsreader + Geist
+    Firebase Hosting
 
 # SITE
-    Last update: 2026/02/26
+    Last update: 2026/07/28
     Language: English
     Doctype: HTML5
     IDE: Various

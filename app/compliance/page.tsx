@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
-import CosmicLayer from '../components/CosmicLayer';
-import SiteFooter from '../components/SiteFooter';
 import CredentialRow from '../components/CredentialRow';
 import SEOStructuredData from '../components/SEOStructuredData';
 import { company } from '../lib/company';
@@ -74,10 +71,11 @@ export default function CompliancePage() {
 
   return (
     <>
-      <CosmicLayer />
-      <Navbar />
 
-      <main className="relative pt-32 pb-20 cosmic-bg min-h-screen">
+      <div
+        className="page-enter relative pb-20 cosmic-bg min-h-screen"
+        style={{ paddingTop: 120 }}
+      >
         <div className="container-narrow">
           <Link
             href="/"
@@ -226,7 +224,9 @@ export default function CompliancePage() {
                 rel="noopener noreferrer"
                 className="btn btn-ghost btn-sm"
               >
-                Verify on MCA portal <ExternalIcon />
+                {/* Reads the label from company.ts, which already held the
+                    handoff-matching text and was going unused. */}
+                Verify on {c.mcaVerifyLabel} <ExternalIcon />
               </a>
             </div>
           </Section>
@@ -303,9 +303,8 @@ export default function CompliancePage() {
             {c.dpiit.issuedDateHuman}.
           </p>
         </div>
-      </main>
+      </div>
 
-      <SiteFooter />
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },
