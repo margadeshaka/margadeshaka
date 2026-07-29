@@ -1410,6 +1410,100 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 @media (min-width: 880px) {
   .navbar-links { display: flex; }
 }
+
+/*
+ * Mobile menu — 880px is where .navbar-links hides. The handoff shipped no
+ * replacement, so below that width every nav destination was unreachable.
+ *
+ * The panel is toggled by a class rather than mounted/unmounted so it can
+ * animate, and it is kept out of the tab order and the accessibility tree while
+ * closed (visibility: hidden) — a display:none-free hidden panel would
+ * otherwise let keyboard users tab into invisible links.
+ */
+.navbar-actions { display: flex; align-items: center; gap: 10px; }
+
+.navbar-toggle {
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  width: 38px; height: 38px;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+@media (min-width: 880px) {
+  .navbar-toggle { display: none; }
+}
+.navbar-toggle-bar {
+  display: block;
+  width: 17px; height: 1.5px;
+  border-radius: 2px;
+  background: #fff;
+  transition: transform 220ms var(--ease-out), opacity 180ms var(--ease-std);
+}
+/* Bars cross into an X. 3.25px = half the 5px gap plus the 1.5px bar. */
+.navbar-toggle-bar.is-open:first-child { transform: translateY(3.25px) rotate(45deg); }
+.navbar-toggle-bar.is-open:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+.navbar-mobile {
+  overflow: hidden;
+  max-height: 0;
+  visibility: hidden;
+  border-top: 1px solid transparent;
+  background: rgba(10, 9, 22, 0.92);
+  backdrop-filter: blur(18px);
+  transition: max-height 320ms var(--ease-out), visibility 0s linear 320ms;
+}
+.navbar-mobile.is-open {
+  max-height: 60vh;
+  visibility: visible;
+  border-top-color: rgba(255, 255, 255, 0.08);
+  transition: max-height 320ms var(--ease-out), visibility 0s;
+}
+@media (min-width: 880px) {
+  /* Never show the panel on desktop, even if the state is somehow left open
+     after a resize. */
+  .navbar-mobile { display: none; }
+}
+.navbar-mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 8px 24px 18px;
+  display: flex;
+  flex-direction: column;
+}
+.navbar-mobile-links a {
+  display: block;
+  padding: 13px 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.78);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.navbar-mobile-links li:last-child a { border-bottom: none; }
+.navbar-mobile-links a.active { color: var(--brand-gold); }
+/* The desktop underline indicator is absolutely positioned 22px below its
+   link; in a stacked list that lands on top of the next item. */
+.navbar-mobile-links a.active::after { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-mobile, .navbar-toggle-bar { transition: none; }
+}
+
+/*
+ * Narrow phones. The bar now carries logo + wordmark + "Try Sakha" + the new
+ * toggle; at 360px that totals more than the available width and the row
+ * overflows. Tighten the gutters and shrink the wordmark rather than dropping
+ * anything — the brand should not disappear on the smallest screens.
+ */
+@media (max-width: 420px) {
+  .navbar-inner { padding: 0 14px; gap: 10px; }
+  .navbar-wordmark { font-size: 15px; }
+  .navbar-brand { gap: 7px; }
+  .navbar-actions { gap: 7px; }
+  .navbar-mobile-links { padding-left: 14px; padding-right: 14px; }
+}
 .navbar-links a {
   color: rgba(255, 255, 255, 0.72);
   position: relative;
