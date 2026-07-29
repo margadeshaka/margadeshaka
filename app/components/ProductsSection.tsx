@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import SakhaCta from './SakhaCta';
+import ReflectDeck from './ReflectDeck';
 import SakhaSprout from './SakhaSprout';
 import { ArrowRight } from './icons';
 
@@ -82,11 +83,11 @@ const PHONE_STARS = [
   { x: 66, y: 92, r: 1.1, o: 0.45 }, { x: 47, y: 5, r: 1.2, o: 0.4 },
 ];
 
-const MOODS = ['Calm', 'Hopeful', 'Overwhelmed', 'Curious', 'Lost'];
-
 export default function ProductsSection() {
   const visualRef = useRef<HTMLDivElement>(null);
 
+  // Adds `.grown` once the mark scrolls into view, which is what starts the
+  // sprout's stem → leaves → bud sequence and the glow behind it.
   useEffect(() => {
     const el = visualRef.current;
     if (!el) return;
@@ -268,60 +269,7 @@ export default function ProductsSection() {
         </div>
       </div>
 
-      <div className="reflect-deck-wrap">
-        <div className="reflect-deck">
-          <article className="reflect-card">
-            <span className="reflect-label">TODAY&rsquo;S REFLECTION</span>
-            <p className="reflect-q">
-              What have you been carrying that you haven&rsquo;t said out loud?
-            </p>
-          </article>
-          <article className="reflect-card">
-            <span className="reflect-label">INSIGHT</span>
-            <p className="reflect-q reflect-q--sm">
-              Sometimes clarity doesn&rsquo;t come from finding the answer. It comes from asking a
-              better question.
-            </p>
-          </article>
-          <article className="reflect-card">
-            <span className="reflect-label">CHECK-IN</span>
-            <p className="reflect-q reflect-q--sm">How are you feeling right now?</p>
-            <div className="reflect-chips">
-              {MOODS.map((m) => (
-                <span key={m} className="reflect-chip">
-                  {m}
-                </span>
-              ))}
-            </div>
-          </article>
-          {/* SUPPORT and PRIVACY carry two claims forward that the redesign
-              would otherwise drop. 'Crisis-aware support' is the product's only
-              duty-of-care claim and Develop kept it deliberately while
-              replacing the two astrology bullets beside it. The privacy promise
-              is the last unhedged "we don't sell your data" statement on any
-              rendered page — it came from the AboutSection this redesign
-              deletes, and it matters more now that the product invites people
-              to talk about feeling heavy or unclear. */}
-          <article className="reflect-card">
-            <span className="reflect-label">SUPPORT</span>
-            <p className="reflect-q reflect-q--sm">
-              Crisis-aware support, for when the conversation gets heavy.
-            </p>
-          </article>
-          <article className="reflect-card">
-            <span className="reflect-label">PRIVACY</span>
-            <p className="reflect-q reflect-q--sm">
-              Personal data stays personal. We do not sell, rent, or share your information.
-            </p>
-          </article>
-          <article className="reflect-card">
-            <span className="reflect-label">GROWTH</span>
-            <p className="reflect-q reflect-q--sm">
-              Every conversation is a small step toward understanding yourself.
-            </p>
-          </article>
-        </div>
-      </div>
+      <ReflectDeck />
 
       <div className="container-narrow" style={{ textAlign: 'center' }}>
         <p
