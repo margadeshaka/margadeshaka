@@ -22,6 +22,13 @@ import { NAV_SECTIONS, goToSection } from '../lib/scroll';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
+  /**
+   * Mobile menu. `.navbar-links` is display:none below 880px and the handoff
+   * shipped no replacement, so on a phone every nav destination — Home,
+   * Products, Blog, Compliance, Team, Contact — was unreachable; only the logo
+   * and the Try Sakha button rendered. This panel is that missing menu.
+   */
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   // trailingSlash: true means usePathname() yields '/compliance/', so strip it.
@@ -46,6 +53,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [onHome]);
 
+  // Close the menu on Escape, and whenever the route changes — without this a
+  // tap on Blog would navigate with the panel still covering the new page.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
   const secActive = (id: string) => onHome && activeSection === id;
 
   const section = (id: string, label: string) => (
@@ -55,12 +77,38 @@ export default function Navbar() {
         className={secActive(id) ? 'active' : ''}
         onClick={(e) => {
           e.preventDefault();
+          setMenuOpen(false);
           goToSection(id, onHome);
         }}
       >
         {label}
       </a>
     </li>
+  );
+
+  // One definition, rendered twice — the desktop bar and the mobile panel stay
+  // in step instead of drifting as items are added.
+  const navItems = (
+    <>
+      {section('hero', 'Home')}
+      {section('products', 'Products')}
+      <li>
+        <Link href="/blog" className={blogActive ? 'active' : ''}>
+          Blog
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/compliance"
+          className={path === '/compliance' ? 'active' : ''}
+          aria-current={path === '/compliance' ? 'page' : undefined}
+        >
+          Compliance
+        </Link>
+      </li>
+      {section('team', 'Team')}
+      {section('contact', 'Contact')}
+    </>
   );
 
   return (
@@ -80,31 +128,32 @@ export default function Navbar() {
           <span className="navbar-wordmark">Margadeshaka</span>
         </a>
 
-        <ul className="navbar-links">
-          {section('hero', 'Home')}
-          {section('products', 'Products')}
-          <li>
-            <Link href="/blog" className={blogActive ? 'active' : ''}>
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/compliance"
-              className={path === '/compliance' ? 'active' : ''}
-              aria-current={path === '/compliance' ? 'page' : undefined}
-            >
-              Compliance
-            </Link>
-          </li>
-          {section('team', 'Team')}
-          {section('contact', 'Contact')}
-        </ul>
+        <ul className="navbar-links">{navItems}</ul>
 
-        <SakhaCta className="btn btn-ghost btn-sm" style={{ display: 'inline-flex' }}>
-          Try Sakha <ArrowRight />
-        </SakhaCta>
+        <div className="navbar-actions">
+          <SakhaCta className="btn btn-ghost btn-sm" style={{ display: 'inline-flex' }}>
+            Try Sakha <ArrowRight />
+          </SakhaCta>
+
+          <button
+            type="button"
+            className="navbar-toggle"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {/* Two bars that cross into an X — cheaper than swapping icons and
+                it animates the state change for free. */}
+            <span className={'navbar-toggle-bar' + (menuOpen ? ' is-open' : '')} />
+            <span className={'navbar-toggle-bar' + (menuOpen ? ' is-open' : '')} />
+          </button>
+        </div>
       </nav>
+
+      <div id="mobile-menu" className={'navbar-mobile' + (menuOpen ? ' is-open' : '')}>
+        <ul className="navbar-mobile-links">{navItems}</ul>
+      </div>
     </header>
   );
 }

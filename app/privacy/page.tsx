@@ -21,7 +21,7 @@ export default function PrivacyPage() {
       <h3>Information you provide directly</h3>
       <ul>
         <li><strong>Account information:</strong> name, email, and password when you sign up for our products.</li>
-        <li><strong>Birth details</strong> (Sakha only): birth date, time, and place — used to compute your astrological chart. These are required for core functionality.</li>
+        <li><strong>Wellness context</strong> (Sakha only): moods, reflections, and the topics that matter to you — used to personalize your guidance.</li>
         <li><strong>Conversations and feedback</strong> with our AI companions, used to provide the service and improve responses.</li>
       </ul>
 
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
       <h2>2. How We Use Information</h2>
       <ul>
         <li>Provide, maintain, and improve our products.</li>
-        <li>Personalize AI responses based on your birth chart, preferences, and feedback.</li>
+        <li>Personalize AI responses based on your emotional context, preferences, and feedback.</li>
         <li>Send important service notices (security, account, policy changes).</li>
         <li>Detect and prevent fraud, abuse, and crisis situations (Sakha includes crisis-keyword detection that may trigger safety resources).</li>
       </ul>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
 
       <h2>6. Data Retention</h2>
       <p>
-        We retain your account and chart data for as long as your account is active. When you delete your
+        We retain your account and profile data for as long as your account is active. When you delete your
         account, we delete personal data within 30 days, except where retention is required by law.
       </p>
 

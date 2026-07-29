@@ -1,19 +1,18 @@
-import LogoMark from './LogoMark';
-
 /**
  * Home hero, ported from the handoff (home.jsx: Hero + HeroLogo).
  *
  * The redesign strips the hero right back: brand emblem, one headline, one
  * paragraph, no buttons.
  *
- * The emblem is the real book mark, not a disc. The handoff's HeroLogo renders
- * `<span className="logo-orb logo-orb--hero">`, and its own comment says that
- * should be "a bare logo mark with a book-shaped breathing glow ... no circular
- * halo" — but the `.logo-orb` rule it points at is a plain gold radial-gradient
- * circle. So the handoff's markup contradicts its comment and puts an anonymous
- * orange ball above the fold. Develop's bf656af and this repo's own ca0e65f had
- * each already replaced that placeholder with the logo; rendering LogoMark here
- * keeps that decision instead of silently reverting it.
+ * The emblem is the handoff's gold orb: `<span className="logo-orb
+ * logo-orb--hero">`, styled by `.logo-orb` / `.logo-orb--hero` in globals.css.
+ *
+ * History worth knowing before changing this again: bf656af and ca0e65f had
+ * each swapped this orb out for the book LogoMark, on the grounds that the
+ * handoff's own HeroLogo comment asks for "a bare logo mark with a book-shaped
+ * breathing glow ... no circular halo" while the `.logo-orb` rule it points at
+ * is a plain radial-gradient circle. That swap was reverted deliberately — the
+ * orb is the requested hero mark. LogoMark is still used in the navbar/footer.
  */
 export default function Hero() {
   return (
@@ -22,11 +21,20 @@ export default function Hero() {
       className="cosmic-bg"
       style={{
         position: 'relative',
-        minHeight: '100vh',
+        /*
+         * Not 100vh. The content is vertically centred, so every pixel the
+         * hero is taller than its content splits above and below — on a tall
+         * display that left ~230px of dead space under the paragraph before
+         * the section padding even began. 86vh still fills the fold on a
+         * laptop while cutting that trailing gap.
+         */
+        minHeight: '86vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '120px 24px 80px',
+        /* Top clears the fixed navbar; bottom is small because the section
+           below contributes its own 60px. */
+        padding: '104px 24px 32px',
         overflow: 'hidden',
       }}
     >
@@ -46,7 +54,7 @@ export default function Hero() {
               justifyContent: 'center',
             }}
           >
-            <LogoMark size={150} className="logo-mark--hero" />
+            <span className="logo-orb logo-orb--hero" aria-hidden="true" />
           </div>
         </div>
 

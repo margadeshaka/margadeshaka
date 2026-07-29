@@ -1,15 +1,24 @@
 /**
- * Cosmic background layer — the twinkling starfield behind all content.
+ * Cosmic background layer — the starfield and aurora behind all content.
  *
- * From the claude.ai/design handoff (shared.jsx: CosmicLayer), which scatters
- * 60 stars with Math.random(). Random values can't be used directly here: this
- * site is a static export, so the server-rendered HTML and the client's first
- * render must agree or React reports a hydration mismatch. The positions are
- * therefore drawn from a seeded PRNG with a fixed seed — same visual scatter,
- * identical output every render.
+ * Ported from the Sakha app's CosmicBackground, which the Android build states
+ * most precisely (its aurora is explicit radial gradients rather than iOS's
+ * blurred linear ones, so it translates to CSS exactly):
+ *   ~/Projects/sakha/android/app/src/main/java/com/margadeshaka/sakha/ui/components/CosmicBackground.kt
  *
- * Server-rendered, no client JS. The drifting CSS starfield layers and the
- * aurora blobs are additive and stay from the previous design.
+ * Star parameters are that file's, verbatim: 40 stars, x/y within 2–98%, size
+ * 1–2.5px, alpha 0.4–0.8, and a twinkle whose opacity runs alpha×0.15 → alpha.
+ * Stars never move — the app draws them at fixed points and varies only their
+ * opacity, which is why nothing here animates position.
+ *
+ * The app's `time` runs 0→20π over 30s and each star twinkles at sin(time ×
+ * speed + phase) with speed 2–4, so one blink takes 2π ÷ (20π/30 × speed) =
+ * 3/speed seconds — 0.75s to 1.5s. That is the period used below.
+ *
+ * Positions come from a seeded PRNG rather than Math.random(): this site is a
+ * static export, so the server-rendered HTML and the client's first render must
+ * agree or React reports a hydration mismatch. (The app seeds Random(42) for
+ * the same reason — identical stars on every screen.)
  */
 
 // mulberry32 — small, fast, deterministic.
@@ -24,16 +33,21 @@ function seeded(seed: number) {
 }
 
 const STARS = (() => {
-  const rand = seeded(0x5a4b1a);
+  const rand = seeded(42);
   const rng = (min: number, max: number) => min + rand() * (max - min);
-  return Array.from({ length: 60 }, () => ({
-    left: rng(0, 100),
-    top: rng(0, 100),
-    size: rng(1, 1.8),
-    dur: rng(3, 7),
-    delay: rng(0, 6),
-    bright: rand() < 0.12,
-  }));
+  return Array.from({ length: 40 }, () => {
+    const speed = rng(2, 4);
+    return {
+      left: rng(2, 98),
+      top: rng(2, 98),
+      size: rng(1, 2.5),
+      alpha: rng(0.4, 0.8),
+      dur: 3 / speed,
+      // Stand-in for the app's per-star phase offset: a negative delay starts
+      // each star part-way through its cycle so they blink out of step.
+      delay: -rng(0, 3),
+    };
+  });
 })();
 
 export default function CosmicLayer() {
@@ -44,38 +58,27 @@ export default function CosmicLayer() {
           <span
             key={i}
             className="star"
-            style={{
-              left: `${s.left.toFixed(3)}%`,
-              top: `${s.top.toFixed(3)}%`,
-              width: Number(s.size.toFixed(3)),
-              height: Number(s.size.toFixed(3)),
-              background: 'rgba(255,255,255,0.7)',
-              boxShadow: s.bright ? '0 0 3px 1px rgba(255,255,255,0.35)' : 'none',
-              animationDuration: `${s.dur.toFixed(3)}s`,
-              animationDelay: `${s.delay.toFixed(3)}s`,
-            }}
+            style={
+              {
+                left: `${s.left.toFixed(3)}%`,
+                top: `${s.top.toFixed(3)}%`,
+                width: Number(s.size.toFixed(3)),
+                height: Number(s.size.toFixed(3)),
+                // Peak opacity, read by the twinkle keyframes.
+                '--a': s.alpha.toFixed(3),
+                animationDuration: `${s.dur.toFixed(3)}s`,
+                animationDelay: `${s.delay.toFixed(3)}s`,
+              } as React.CSSProperties
+            }
           />
         ))}
       </div>
 
-      {/* Drifting CSS star layers + aurora blobs — additive ambiance retained
-          from the previous design; the handoff keeps .stars in its stylesheet. */}
+      {/* Painted star layers behind the twinkling ones — extra depth, static. */}
       <div className="stars stars-dense" aria-hidden="true" />
-      <div
-        className="aurora-blob"
-        style={{ top: '10%', left: '12%', width: 380, height: 380, background: 'rgba(255, 200, 100, 0.07)' }}
-        aria-hidden="true"
-      />
-      <div
-        className="aurora-blob"
-        style={{ bottom: '12%', right: '8%', width: 460, height: 460, background: 'rgba(126, 77, 212, 0.09)' }}
-        aria-hidden="true"
-      />
-      <div
-        className="aurora-blob"
-        style={{ top: '60%', left: '55%', width: 320, height: 320, background: 'rgba(0, 230, 170, 0.05)' }}
-        aria-hidden="true"
-      />
+
+      <div className="cosmic-aurora" aria-hidden="true" />
+      <div className="cosmic-vignette" aria-hidden="true" />
     </>
   );
 }

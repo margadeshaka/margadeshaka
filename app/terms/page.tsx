@@ -54,7 +54,7 @@ export default function TermsPage() {
       </p>
       <ul>
         <li>Sakha is not a substitute for licensed mental-health, medical, financial, or legal professionals.</li>
-        <li>Astrological insights are for self-reflection, not for making consequential decisions in isolation.</li>
+        <li>Sakha&apos;s guidance is for self-reflection and emotional support, not a substitute for professional medical, mental-health, legal, or financial advice, and not for making consequential decisions in isolation.</li>
         <li>If you are in crisis, please contact your local emergency services or a mental-health helpline.</li>
       </ul>
 
