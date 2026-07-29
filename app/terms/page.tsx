@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import LegalLayout from '../components/LegalLayout';
+import { company } from '../lib/company';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -97,8 +98,14 @@ export default function TermsPage() {
 
       <h2>12. Governing Law</h2>
       <p>
-        These terms are governed by the laws of India. Disputes shall be resolved in the courts of Mumbai,
-        India, unless local consumer-protection laws require otherwise.
+        {/* Forum reads from the registered office in company.ts rather than being
+            hardcoded: this clause previously named Mumbai while /compliance
+            published the registered office as Mohali, Punjab. Deriving it from
+            one source means the two pages cannot disagree again. */}
+        These terms are governed by the laws of India. Disputes shall be resolved in the courts of{' '}
+        {company.registeredOffice.city}, {company.registeredOffice.state},{' '}
+        {company.registeredOffice.country}, where {company.legalNameTitleCase} has its registered
+        office, unless local consumer-protection laws require otherwise.
       </p>
 
       <h2>13. Changes to These Terms</h2>
