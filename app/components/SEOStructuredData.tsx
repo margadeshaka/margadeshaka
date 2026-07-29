@@ -91,7 +91,15 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
     ],
     keywords:
       'Sakha, Dronacharya, AI wellness companion, emotional support AI, AI tutoring, multi-agent AI, India AI startup, DPIIT recognised startup',
-    sameAs: [company.web.sakha, company.web.twitter, company.web.githubOrg],
+    // The organisation's own profiles. LinkedIn and Instagram are the two
+    // Google most reliably surfaces in a knowledge panel, so both belong here.
+    sameAs: [
+      company.web.sakha,
+      company.web.linkedin,
+      company.web.instagram,
+      company.web.twitter,
+      company.web.githubOrg,
+    ],
   };
 
   const sakhaData = {

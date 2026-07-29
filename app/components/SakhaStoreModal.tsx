@@ -15,11 +15,14 @@ function StoreBadge({
   icon,
   kicker,
   name,
+  variant,
 }: {
   href: string;
   icon: React.ReactNode;
   kicker: string;
   name: string;
+  /** 'play' sets the caps-and-tracking kicker Google's badge uses. */
+  variant?: 'play';
 }) {
   const live = !!href;
   const inner = (
@@ -31,6 +34,10 @@ function StoreBadge({
       </span>
     </>
   );
+  // The variant only styles the live badge; `is-soon` keeps the handoff's look.
+  const cls = ['store-badge', variant === 'play' && 'store-badge--play']
+    .filter(Boolean)
+    .join(' ');
   if (!live) {
     return (
       <span className="store-badge is-soon" aria-disabled="true">
@@ -39,7 +46,7 @@ function StoreBadge({
     );
   }
   return (
-    <a className="store-badge" href={href} target="_blank" rel="noopener noreferrer">
+    <a className={cls} href={href} target="_blank" rel="noopener noreferrer">
       {inner}
     </a>
   );
@@ -112,6 +119,7 @@ export default function SakhaStoreModal() {
             icon={<GooglePlay />}
             kicker="Get it on"
             name="Google Play"
+            variant="play"
           />
         </div>
       </div>

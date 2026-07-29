@@ -50,13 +50,11 @@ export default function SiteFooter() {
             <li>
               <SakhaCta>Sakha</SakhaCta>
             </li>
-            {/* Points at the article, not #products: the redesigned products
-                section is entirely Sakha, so the old anchor promised
-                Dronacharya content that isn't there. This post is the only
-                page on the site with real Dronacharya detail. */}
-            <li>
-              <Link href="/blog/dronacharya-active-learning">Dronacharya</Link>
-            </li>
+            {/* Dronacharya is deliberately not listed while it is unreleased —
+                it had pointed at /blog/dronacharya-active-learning, since the
+                redesigned products section is entirely Sakha and that post is
+                the only page with real Dronacharya detail. Restore the link
+                here once the product ships. */}
           </ul>
         </div>
 

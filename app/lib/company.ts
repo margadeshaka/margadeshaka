@@ -109,7 +109,18 @@ export const company = {
     site: 'https://margadeshaka.com',
     sakha: 'https://sakha.live',
     twitter: 'https://twitter.com/MargadeshakaAI',
-    instagram: 'https://www.instagram.com/margadeshaka',
+    /*
+     * Company LinkedIn page — distinct from `founder.linkedin`, which is
+     * Hitesh's personal profile and belongs only in the Person JSON-LD.
+     */
+    linkedin: 'https://www.linkedin.com/company/margadeshaka/',
+    /*
+     * Handle is `margadeshaka.ai` (the earlier `margadeshaka` was wrong).
+     * The `?igsh=…&utm_source=qr` params on the shared link are QR-share
+     * attribution — deliberately stripped, or every click from the site would
+     * be logged as coming from a QR scan.
+     */
+    instagram: 'https://www.instagram.com/margadeshaka.ai',
     githubOrg: 'https://github.com/margadeshaka',
   },
 } as const;
@@ -122,9 +133,22 @@ export const company = {
  * link to the store, otherwise we open the download modal, which shows
  * "Coming soon" for whichever store is still empty.
  */
+/**
+ * Sakha's live store listings.
+ *
+ * An empty string here is meaningful: it makes the download modal render
+ * "Coming soon to <store>" and disables the badge, and it makes `openSakha`
+ * fall back to that modal instead of deep-linking. Both apps have shipped, so
+ * both are populated — blanking one would silently regress it to "coming soon".
+ *
+ * The App Store link uses the region-neutral /app/id<trackId> form so Apple
+ * redirects each visitor to their own storefront rather than pinning everyone
+ * to /in/. trackId 6759238766 = "Sakha — AI Wellness Companion"; the Play id is
+ * the Android applicationId from android/app/build.gradle.kts.
+ */
 export const sakhaStore = {
-  appStore: '',
-  playStore: '',
+  appStore: 'https://apps.apple.com/app/id6759238766',
+  playStore: 'https://play.google.com/store/apps/details?id=com.margadeshaka.sakha',
 } as const;
 
 export type Company = typeof company;
