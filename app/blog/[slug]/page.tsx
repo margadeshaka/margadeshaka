@@ -32,13 +32,13 @@ export async function generateMetadata({
       publishedTime: post.isoDate,
       authors: [post.author],
       section: post.category,
-      images: [{ url: '/images/chakra.png', width: 1200, height: 630, alt: post.title }],
+      images: [{ url: '/images/og-margadeshaka.png', width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: ['/images/chakra.png'],
+      images: ['/images/og-margadeshaka.png'],
     },
   };
 }
@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     publisher: {
       '@type': 'Organization',
       name: company.brand,
-      logo: { '@type': 'ImageObject', url: `${baseUrl}/images/chakra.png` },
+      logo: { '@type': 'ImageObject', url: `${baseUrl}/icon.png` },
     },
   };
 

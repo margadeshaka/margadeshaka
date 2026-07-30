@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     title: 'Blog — Notes from the path | Margadeshaka',
     description,
     url: '/blog',
-    images: [{ url: '/images/chakra.png', width: 1200, height: 630, alt: 'The Margadeshaka Blog' }],
+    images: [{ url: '/images/og-margadeshaka.png', width: 1200, height: 630, alt: 'The Margadeshaka Blog' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Blog — Notes from the path | Margadeshaka',
     description,
-    images: ['/images/chakra.png'],
+    images: ['/images/og-margadeshaka.png'],
   },
 };
 

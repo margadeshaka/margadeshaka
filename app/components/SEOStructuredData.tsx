@@ -31,11 +31,14 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
     legalName: company.legalNameTitleCase,
     alternateName: 'AI for Guidance & Learning',
     url: baseUrl,
+    // Google wants a square-ish logo, min 112px. /icon.png is the brand mark at
+    // 1024². The old value pointed at chakra.png (ChakraVision-era art) and
+    // declared 400×400, which that file never was.
     logo: {
       '@type': 'ImageObject',
-      url: `${baseUrl}/images/chakra.png`,
-      width: '400',
-      height: '400',
+      url: `${baseUrl}/icon.png`,
+      width: '1024',
+      height: '1024',
     },
     description:
       'Margadeshaka AI Private Limited — DPIIT-recognised AI startup building products that combine Indian wisdom traditions with modern multi-agent AI. Home of Sakha (AI companion for emotional clarity) and Dronacharya (AI tutoring platform).',
@@ -201,7 +204,7 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
     '@type': ['LocalBusiness', 'ProfessionalService'],
     '@id': `${baseUrl}#business`,
     name: company.legalNameTitleCase,
-    image: `${baseUrl}/images/chakra.png`,
+    image: `${baseUrl}/images/og-margadeshaka.png`,
     url: baseUrl,
     email: company.contact.email,
     address: {
@@ -221,7 +224,7 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
     '@context': 'https://schema.org',
     '@type': 'Brand',
     name: company.brand,
-    logo: `${baseUrl}/images/chakra.png`,
+    logo: `${baseUrl}/icon.png`,
     description: 'AI for guidance and learning. The Margadeshaka brand family includes Sakha and Dronacharya.',
   };
 

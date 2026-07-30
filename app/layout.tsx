@@ -77,7 +77,7 @@ export const metadata: Metadata = {
       'Margadeshaka builds AI products that combine Indian wisdom traditions with modern multi-agent systems. Home of Sakha and Dronacharya.',
     images: [
       {
-        url: '/images/chakra.png',
+        url: '/images/og-margadeshaka.png',
         width: 1200,
         height: 630,
         alt: 'Margadeshaka — AI for Guidance & Learning',
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     creator: '@hiteshgupta3012',
     title: 'Margadeshaka — AI for Guidance & Learning',
     description: 'AI products that combine Indian wisdom with modern AI. Home of Sakha & Dronacharya.',
-    images: ['/images/chakra.png'],
+    images: ['/images/og-margadeshaka.png'],
   },
   robots: {
     index: true,
