@@ -9,6 +9,23 @@ import { company } from '../../lib/company';
 
 const endPathVar = (d: number) => ({ ['--d']: String(d) }) as CSSProperties;
 
+/**
+ * Distance from the viewport top at which a heading counts as "reached".
+ *
+ * Single source of truth for the scroll offset: it is applied as
+ * `scrollMarginTop` on each h2 (so native `#sec-N` anchor jumps land correctly)
+ * and reused by scrollToHeading. Previously those were two independent
+ * constants that happened to agree.
+ */
+const HEADING_OFFSET = 100;
+
+/**
+ * The line a heading must cross to become the active TOC entry. Sits a little
+ * below HEADING_OFFSET so the entry lights up as the heading settles into
+ * reading position rather than the instant it clears the navbar.
+ */
+const READ_LINE = HEADING_OFFSET + 40;
+
 export default function BlogArticle({ post }: { post: BlogPost }) {
   const { next } = getAdjacentPosts(post.slug);
 
@@ -23,7 +40,10 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
   const [ended, setEnded] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+
+    const measure = () => {
+      frame = 0;
       const h = document.documentElement;
       const max = h.scrollHeight - h.clientHeight;
       const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
@@ -31,34 +51,61 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
       // Reveal the closing CTAs at the bottom — and immediately when the article
       // is too short to scroll (max <= 0), so they're never permanently hidden.
       if (max <= 0 || p >= 0.99) setEnded(true);
+
+      /*
+       * Active heading = the LAST one whose top has passed the read line.
+       *
+       * This replaced an IntersectionObserver that only ever called
+       * setActiveId on `isIntersecting`, with rootMargin '-25% 0px -65% 0px'.
+       * That was wrong three ways: it never cleared the active id, so the
+       * highlight stuck; when several entries arrived in one callback the last
+       * in the array won (and `entries` is not in document order), so it could
+       * land on the wrong heading; and the live band was only 10% of the
+       * viewport, narrow enough that a heading could scroll straight through
+       * without ever firing — which is exactly what left the tick stranded
+       * during fast scrolling and during the TOC's own smooth-scroll jump.
+       *
+       * Reading positions directly is deterministic: it cannot miss a heading,
+       * it handles scrolling up, and it needs no rootMargin tuning. See MAR-538.
+       */
+      let current: string | null = null;
+      for (const { id } of headings) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= READ_LINE) current = id;
+        else break; // headings are in document order — nothing later can match
+      }
+      // Before the first heading, keep the first entry lit rather than nothing,
+      // so the TOC never looks inert at the top of the article.
+      setActiveId(current ?? headings[0]?.id ?? null);
     };
-    onScroll();
+
+    // rAF-throttled: scroll fires far more often than we can usefully repaint.
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    measure();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActiveId(e.target.id);
-        });
-      },
-      { rootMargin: '-25% 0px -65% 0px' },
-    );
-    headings.forEach((h) => {
-      const el = document.getElementById(h.id);
-      if (el) io.observe(el);
-    });
 
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
-      io.disconnect();
+      if (frame) cancelAnimationFrame(frame);
     };
   }, [headings]);
 
   const scrollToHeading = (id: string) => {
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    if (!el) return;
+    // `scrollMarginTop` on the h2 owns the offset for native anchor jumps; this
+    // path is manual, so it applies the same constant rather than a second,
+    // different magic number.
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.scrollY - HEADING_OFFSET,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -139,7 +186,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
           {post.body.map((block, i) => {
             if (block.type === 'h2') {
               return (
-                <h2 key={i} id={`sec-${i}`} style={{ fontSize: 26, marginTop: 40, scrollMarginTop: 100 }}>
+                <h2 key={i} id={`sec-${i}`} style={{ fontSize: 26, marginTop: 40, scrollMarginTop: HEADING_OFFSET }}>
                   {block.text}
                 </h2>
               );
