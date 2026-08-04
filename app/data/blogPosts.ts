@@ -39,6 +39,12 @@ export interface BlogPost {
   author: string;
   featured: boolean;
   accent: BlogAccent;
+  /**
+   * Optional cover image, served from /public. Posts without one simply render
+   * no cover rather than falling back to a placeholder — a generic stock image
+   * would say less than nothing.
+   */
+  cover?: { src: string; alt: string; width: number; height: number };
   body: BlogBlock[];
 }
 
@@ -55,6 +61,15 @@ export const posts: BlogPost[] = [
     author: 'Hitesh Gupta',
     featured: true,
     accent: 'gold',
+    cover: {
+      src: '/images/blog/why-margadeshaka-cover.webp',
+      // Describes what the image SHOWS. The title is baked into the artwork,
+      // so repeating it here would just make a screen reader read the headline
+      // twice — the alt carries what a sighted reader gets from the picture.
+      alt: 'A person sits at a laptop with their head in their hands, surrounded by floating notifications — news alerts, unread mail, follower counts, to-do lists and market charts — crowding in from every side.',
+      width: 1536,
+      height: 1024,
+    },
     body: [
       { type: 'p', text: `Why do we have answers at our fingertips and yet many of us are not confident in life? We are in the most connected era of mankind's history today. Information is readily available in seconds, whether it be deciding on a career, health, money or relationships. Today knowledge is more accessible than ever with the assistance of search engines, social media, podcasts, AI tools, and online courses.` },
       { type: 'p', text: `But, even with all of the information, millions of people feel lost.Have difficulty making decisions. They are always asking themselves "why?". They make comparisons about their lives and ask themselves if they are going in the right direction.` },
