@@ -135,7 +135,7 @@ export default function ProductsSection() {
             style={{
               fontSize: 'clamp(30px, 4.2vw, 46px)',
               fontWeight: 500,
-              color: '#fff',
+              color: 'rgb(var(--fg-rgb))',
               marginTop: 12,
               lineHeight: 1.14,
               letterSpacing: '-0.008em',
@@ -285,7 +285,7 @@ export default function ProductsSection() {
             marginTop: 20,
             fontSize: 20,
             fontWeight: 400,
-            color: 'rgba(255,255,255,0.82)',
+            color: 'rgb(var(--fg-rgb) / max(0.82, var(--fg-a-min)))',
             fontStyle: 'italic',
             letterSpacing: '-0.01em',
           }}

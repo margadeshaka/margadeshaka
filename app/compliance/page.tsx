@@ -305,7 +305,7 @@ export default function CompliancePage() {
           </Section>
 
           <p
-            className="text-xs text-white/40 mt-14"
+            className="text-xs text-white/60 mt-14"
             data-reveal="up"
             style={{ lineHeight: 1.65, '--rd': 4 } as React.CSSProperties}
           >

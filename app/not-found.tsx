@@ -27,7 +27,7 @@ export default function NotFound() {
         <h1
           style={{
             fontSize: 'clamp(32px, 5vw, 48px)',
-            color: '#fff',
+            color: 'rgb(var(--fg-rgb))',
             fontWeight: 500,
             lineHeight: 1.12,
             letterSpacing: '-0.01em',
@@ -37,7 +37,7 @@ export default function NotFound() {
         </h1>
         <p
           style={{
-            color: 'rgba(255,255,255,0.6)',
+            color: 'rgb(var(--fg-rgb) / 0.6)',
             marginTop: 14,
             marginBottom: 32,
             fontSize: 17,

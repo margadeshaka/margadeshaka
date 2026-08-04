@@ -86,7 +86,7 @@ export default function BlogListing() {
         </div>
 
         {list.length === 0 && (
-          <p style={{ marginTop: 32, color: 'rgba(255,255,255,0.5)' }}>No articles found.</p>
+          <p style={{ marginTop: 32, color: 'rgb(var(--fg-rgb) / max(0.5, var(--fg-a-min)))' }}>No articles found.</p>
         )}
       </div>
     </div>

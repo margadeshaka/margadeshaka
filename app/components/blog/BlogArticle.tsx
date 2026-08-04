@@ -290,6 +290,33 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
           </div>
         </header>
 
+        {post.cover && (
+          /*
+            Sits between the header and the body so it reads as the article's
+            own cover rather than page furniture. width/height are set from the
+            real pixel size so the browser reserves the box before the file
+            arrives — without them the whole article jumps down when it loads,
+            which is a layout shift on the largest element on the page.
+
+            eager + high priority because this is the LCP element on the route;
+            lazy-loading it would delay the very thing being measured.
+          */
+          <figure className="blog-cover" data-reveal="fade">
+            {/* eslint-disable-next-line @next/next/no-img-element -- next/image
+                is disabled repo-wide (output: 'export' + unoptimized), so it
+                would add a wrapper and no optimisation. */}
+            <img
+              src={post.cover.src}
+              alt={post.cover.alt}
+              width={post.cover.width}
+              height={post.cover.height}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </figure>
+        )}
+
         <div className="legal-prose" style={{ fontSize: 17.5, lineHeight: 1.8 }}>
           {post.body.map((block, i) => {
             if (block.type === 'h2') {
@@ -319,11 +346,11 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
                     margin: '32px 0',
                     padding: '20px 28px',
                     borderLeft: `3px solid ${ACCENT.color}`,
-                    background: 'rgba(255,255,255,0.04)',
+                    background: 'rgb(var(--fg-rgb) / 0.04)',
                     borderRadius: '0 14px 14px 0',
                     fontSize: 20,
                     fontStyle: 'italic',
-                    color: '#fff',
+                    color: 'rgb(var(--fg-rgb))',
                     lineHeight: 1.5,
                   }}
                 >

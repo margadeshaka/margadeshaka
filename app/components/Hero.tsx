@@ -68,7 +68,7 @@ export default function Hero() {
             letterSpacing: '-0.01em',
           }}
         >
-          <span style={{ color: '#fff' }}>Find clarity when life feels </span>
+          <span style={{ color: 'rgb(var(--fg-rgb))' }}>Find clarity when life feels </span>
           <span className="gold-text">uncertain.</span>
         </h1>
 
@@ -76,7 +76,7 @@ export default function Hero() {
           className="fade-up delay-200"
           style={{
             fontSize: 19,
-            color: 'rgba(255,255,255,0.72)',
+            color: 'rgb(var(--fg-rgb) / max(0.72, var(--fg-a-min)))',
             maxWidth: 620,
             margin: '0 auto 40px',
             lineHeight: 1.6,

@@ -58,7 +58,7 @@ export default function CredentialRow({ label, value, mono, note }: CredentialRo
             onClick={copy}
             aria-label={`Copy ${label}`}
             className="p-1.5 rounded-md inline-flex border border-white/[0.08] transition-colors"
-            style={{ color: copied ? '#4FE9C0' : 'rgba(255,255,255,0.45)' }}
+            style={{ color: copied ? '#4FE9C0' : 'rgb(var(--fg-rgb) / 0.45)' }}
           >
             {copied ? <CheckIcon /> : <CopyIcon />}
           </button>
