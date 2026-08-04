@@ -2134,7 +2134,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   box-shadow: 0 26px 60px -30px rgba(0,0,0,0.85);
 
   z-index: var(--z);
-  transform-origin: 50% 165%;
+  /*
+   * The pivot sits well below the card, which is what splays a rotation into a
+   * fan rather than spinning each card on the spot. How FAR below sets how much
+   * each card slides sideways per degree: at 165% the cards moved only 89px
+   * apart and covered 58% of each other, so not one label was readable and the
+   * hand read as a stack of clipped text. 215% opens the same 15deg spread to
+   * 128px, leaving 60% of every card showing — full label, first line legible —
+   * without tilting them any harder. The phone override below stays tight; this
+   * spread would run the fan off a 390px screen.
+   */
+  transform-origin: 50% 215%;
   transform: rotate(var(--rot));
   transition: transform 420ms cubic-bezier(0.32, 0.72, 0.3, 1),
               border-color 320ms var(--ease-std), box-shadow 320ms var(--ease-std);
@@ -2202,10 +2212,23 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .reflect-deck-hint { font-size: 13px; letter-spacing: 0.02em; color: rgba(255,255,255,0.42); margin-top: 4px; }
 
 @media (max-width: 720px) {
-  /* Tighter arc and a smaller card, or the fan runs off a phone screen. */
-  .reflect-deck { height: 380px; --card-w: 168px; --card-h: 240px; }
-  .reflect-card { transform-origin: 50% 175%; padding: 20px 18px; }
-  .reflect-q { font-size: 16px; }
+  /*
+   * Tighter arc and a smaller card, or the fan runs off a phone screen — it
+   * did: at 168px wide on a 175% pivot the outer cards were clipped by the
+   * viewport edge. Sizing this is not just 3 x offset + width, because a card
+   * rotated 22.5deg has a bounding box about 40px wider than the card itself,
+   * and it is that box which collides with the screen edge.
+   */
+  .reflect-deck { height: 340px; --card-w: 136px; --card-h: 200px; }
+  /* overflow:hidden is a guard, not the fix: a shorter card means the mood
+     chips no longer fit, and without this they spilled out past the card and
+     over the hint line below the deck. Shrinking them is what makes them fit;
+     this just guarantees nothing can ever escape a card face. */
+  .reflect-card { transform-origin: 50% 166%; padding: 16px 14px; overflow: hidden; }
+  .reflect-q { font-size: 14px; margin-top: 10px; }
+  .reflect-label { font-size: 9px; letter-spacing: 0.14em; }
+  .reflect-chips { gap: 4px; padding-top: 10px; }
+  .reflect-chip { padding: 3px 7px; font-size: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
