@@ -3765,12 +3765,20 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
    their text went through --fg-rgb and turned to dark ink, leaving dark on
    dark at about 1.1:1.
 
+   The contact orb is here for a related reason. It is a lit sphere, and the
+   specular highlight at its top-left was `#fff`. The sweep that made white
+   overlays theme-aware turned that into `rgb(var(--fg-rgb))`, which in light
+   mode resolves to dark ink — so the highlight rendered as a black hole burnt
+   into the orb. A highlight is light, not foreground: it is white in any
+   theme. Its inset shadow and the bubble's text had the same problem.
+
    Rather than restyle their interiors, the dark-theme channel values are
    pinned inside them. Everything within then resolves exactly as it does in
    dark mode, which is what these components were designed against.
    ============================================================ */
 :root[data-theme='light'] .sakha-phone,
-:root[data-theme='light'] .team-tooltip {
+:root[data-theme='light'] .team-tooltip,
+:root[data-theme='light'] .contact-orb {
   --fg-rgb: 255 255 255;
   --fg-a-min: 0.5;             /* white @0.5 on #0B0A19 = 5.32:1 */
   --gold-rgb: 255 200 100;
@@ -3783,3 +3791,32 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
    became dark gold, leaving dark on dark (3.37:1) the moment it takes focus —
    invisible exactly when a keyboard user needs it. */
 :root[data-theme='light'] .skip-link { color: #FFFFFF; }
+
+/* ============================================================
+   LIGHT THEME — team constellation thread
+
+   The thread is `rgba(255,200,110,0.18)`, a one-off warm literal the channel
+   sweep never covered, so it rendered identically in both themes. Pale gold
+   at 18% is a faint filament against near-black (1.45:1) but simply is not
+   there on cream (1.06:1) — the constellation lost its lines entirely.
+
+   Light mode inverts the relationship: the line has to be DARKER than the
+   page, not brighter. At 0.7 the accent reaches 3.14:1, clearing the 3:1
+   floor WCAG sets for a graphic that carries meaning — and this one does,
+   since it is what shows the team as connected rather than as four
+   free-floating discs.
+
+   The travelling pulse and the hover highlight are pale golds with the same
+   problem, so they take the accent too.
+   ============================================================ */
+:root[data-theme='light'] .team-thread-base {
+  stroke: rgb(var(--gold-rgb) / 0.7);
+}
+:root[data-theme='light'] .team-thread-seg--on {
+  stroke: rgb(var(--gold-rgb) / 0.95);
+  filter: drop-shadow(0 0 5px rgb(var(--gold-rgb) / 0.35));
+}
+:root[data-theme='light'] .team-thread-pulse {
+  stroke: rgb(var(--gold-rgb) / 1);
+  filter: drop-shadow(0 0 6px rgb(var(--gold-rgb) / 0.5));
+}
