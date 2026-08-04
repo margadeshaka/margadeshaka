@@ -73,8 +73,8 @@ export function ShieldIcon({ width = 20, height = 20, className }: IconProps) {
 // forward-looking hook.
 export const ACCENT = {
   color: 'var(--brand-gold)',
-  bg: 'rgba(255, 200, 100, 0.10)',
-  border: 'rgba(255, 200, 100, 0.28)',
+  bg: 'rgb(var(--gold-rgb) / 0.10)',
+  border: 'rgb(var(--gold-rgb) / 0.28)',
 } as const;
 
 type CatMeta = { Icon: (p: IconProps) => ReactNode; glyph: string };
@@ -117,7 +117,7 @@ export function CatChip({ post }: { post: BlogPost }) {
 export function MetaLine({ post }: { post: BlogPost }) {
   return (
     <span
-      style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', display: 'inline-flex', alignItems: 'center', gap: 8 }}
+      style={{ fontSize: 13, color: 'rgb(var(--fg-rgb) / max(0.5, var(--fg-a-min)))', display: 'inline-flex', alignItems: 'center', gap: 8 }}
     >
       {post.date} <span style={{ opacity: 0.4 }}>·</span> {post.readTime}
     </span>

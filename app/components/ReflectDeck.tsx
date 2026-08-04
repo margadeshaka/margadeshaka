@@ -86,7 +86,7 @@ export default function ReflectDeck() {
   };
 
   return (
-    <div className="reflect-deck-wrap">
+    <div className="reflect-deck-wrap" data-reveal="deck">
       <div className="reflect-deck">
         {REFLECT_CARDS.map((c, i) => {
           const isUp = active === i;

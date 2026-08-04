@@ -18,8 +18,8 @@ function PostRow({ post, i }: { post: BlogPost; i: number }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="blog-row fade-up"
-      style={{ animationDelay: `${i * 70}ms` }}
+      className="blog-row"
+      data-reveal="row"
     >
       <h2 className="blog-row-title">{post.title}</h2>
       <div className="blog-row-meta">
@@ -86,7 +86,7 @@ export default function BlogListing() {
         </div>
 
         {list.length === 0 && (
-          <p style={{ marginTop: 32, color: 'rgba(255,255,255,0.5)' }}>No articles found.</p>
+          <p style={{ marginTop: 32, color: 'rgb(var(--fg-rgb) / max(0.5, var(--fg-a-min)))' }}>No articles found.</p>
         )}
       </div>
     </div>

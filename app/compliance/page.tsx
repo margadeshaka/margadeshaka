@@ -46,14 +46,22 @@ const ArrowLeft = () => (
 function Section({
   heading,
   id,
+  rd = 0,
   children,
 }: {
   heading: string;
   id: string;
+  /** Stagger index for the scroll reveal. */
+  rd?: number;
   children: React.ReactNode;
 }) {
   return (
-    <section aria-labelledby={`${id}-h`} className="mb-14">
+    <section
+      aria-labelledby={`${id}-h`}
+      className="mb-14"
+      data-reveal="up"
+      style={{ '--rd': rd } as React.CSSProperties}
+    >
       <h2
         id={`${id}-h`}
         className="font-display text-white font-semibold mb-5"
@@ -119,7 +127,9 @@ export default function CompliancePage() {
             </p>
           </header>
 
-          {/* DPIIT hero card */}
+          {/* DPIIT hero card. Wrapped rather than tagged directly: .glass
+              declares `transition: all`, which the reveal rule would replace. */}
+          <div data-reveal="up" style={{ '--rd': 0 } as React.CSSProperties}>
           <div
             className="glass glass-accent relative overflow-hidden mb-14"
             style={{ padding: 'clamp(28px, 4vw, 48px)' }}
@@ -197,9 +207,10 @@ export default function CompliancePage() {
               </a>
             </div>
           </div>
+          </div>
 
           {/* Company identity */}
-          <Section heading="Company identity" id="company">
+          <Section heading="Company identity" id="company" rd={1}>
             <div className="glass-elevated" style={{ padding: '8px 28px' }}>
               <CredentialRow label="Legal name" value={c.legalNameTitleCase} />
               <CredentialRow label="Entity type" value={c.entityType} />
@@ -232,7 +243,7 @@ export default function CompliancePage() {
           </Section>
 
           {/* Trademark */}
-          <Section heading="Trademark" id="trademark">
+          <Section heading="Trademark" id="trademark" rd={2}>
             <div className="glass" style={{ padding: '8px 28px' }}>
               <CredentialRow label="Mark" value={`${c.trademark.mark}${c.trademark.symbol}`} />
               <CredentialRow label="Status" value={c.trademark.statusHuman} />
@@ -248,7 +259,7 @@ export default function CompliancePage() {
           </Section>
 
           {/* Registered office */}
-          <Section heading="Registered office" id="address">
+          <Section heading="Registered office" id="address" rd={3}>
             <div className="glass" style={{ padding: 32 }}>
               <address
                 className="not-italic text-white/85"
@@ -294,8 +305,9 @@ export default function CompliancePage() {
           </Section>
 
           <p
-            className="text-xs text-white/40 mt-14"
-            style={{ lineHeight: 1.65 }}
+            className="text-xs text-white/60 mt-14"
+            data-reveal="up"
+            style={{ lineHeight: 1.65, '--rd': 4 } as React.CSSProperties}
           >
             Information on this page is published verbatim from official Government of India records
             and certificates issued by the Ministry of Corporate Affairs (MCA) and the Department for

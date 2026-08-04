@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import SiteFooter from './components/SiteFooter';
 import SakhaStoreModal from './components/SakhaStoreModal';
 import CosmicLayer from './components/CosmicLayer';
+import ScrollReveal from './components/ScrollReveal';
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
@@ -124,8 +125,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#06050F',
-  colorScheme: 'dark',
+  /*
+   * themeColor and colorScheme deliberately omitted (MAR-545): both are baked
+   * into the export at build time and cannot follow a runtime toggle. If Next
+   * emitted its own theme-color meta we would end up with two, and the boot
+   * script would update the wrong one. The tag is written by hand in <head>
+   * below and kept in step by ThemeToggle; colorScheme is set in CSS, on
+   * :root and :root[data-theme='light'].
+   */
   width: 'device-width',
   initialScale: 1,
 };
@@ -138,10 +145,35 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`dark ${newsreader.variable} ${geist.variable} ${geistMono.variable} ${notoDevanagari.variable}`}
+      className={`${newsreader.variable} ${geist.variable} ${geistMono.variable} ${notoDevanagari.variable}`}
       suppressHydrationWarning
     >
       <head>
+        {/*
+          Applies the stored theme BEFORE first paint. A synchronous inline
+          script in <head> blocks parsing, which is the only way to avoid a
+          flash of the wrong theme on a static export — there is no server to
+          read a cookie and no React effect runs early enough.
+
+          Keep in sync with ThemeToggle: same key, same values, and dark is the
+          absence of the attribute. The validity check means a corrupted stored
+          value falls back to the OS preference instead of silently forcing
+          dark. try/catch covers Safari private mode, where reads can throw.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('md-theme');" +
+              "if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}" +
+              "if(t==='light')document.documentElement.dataset.theme='light';" +
+              // Created here rather than rendered as JSX: React would re-render
+              // its own copy after this script had already set the value,
+              // leaving two theme-color tags disagreeing with each other.
+              "var m=document.createElement('meta');m.name='theme-color';" +
+              "m.content=(t==='light'?'#F4EFE7':'#06050F');" +
+              "document.head.appendChild(m);}catch(e){}})();",
+          }}
+        />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -154,6 +186,8 @@ export default function RootLayout({
         </a>
         <CosmicLayer />
         <CosmicEffects />
+        {/* Arms the [data-reveal] system for every route. Renders nothing. */}
+        <ScrollReveal />
         <Navbar />
         <main id="main" style={{ position: 'relative', zIndex: 1 }}>
           {children}

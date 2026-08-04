@@ -27,7 +27,7 @@ export default function SiteFooter() {
           </Link>
           <p
             style={{
-              color: 'rgba(255,255,255,0.5)',
+              color: 'rgb(var(--fg-rgb) / max(0.5, var(--fg-a-min)))',
               fontSize: 14,
               lineHeight: 1.6,
               marginTop: 12,
@@ -36,8 +36,8 @@ export default function SiteFooter() {
           >
             AI for guidance &amp; learning. Building Sakha and Dronacharya from India.
           </p>
-          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>
-            <strong style={{ color: 'rgba(255,255,255,0.7)', display: 'block', marginBottom: 4 }}>
+          <p style={{ fontSize: 12, color: 'rgb(var(--fg-rgb) / max(0.45, var(--fg-a-min)))', lineHeight: 1.6 }}>
+            <strong style={{ color: 'rgb(var(--fg-rgb) / max(0.7, var(--fg-a-min)))', display: 'block', marginBottom: 4 }}>
               {company.legalNameTitleCase}
             </strong>
             CIN: <span className="font-mono">{company.cin}</span>
@@ -96,11 +96,11 @@ export default function SiteFooter() {
 
       <div
         style={{
-          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderTop: '1px solid rgb(var(--fg-rgb) / 0.05)',
           padding: '20px 24px',
           textAlign: 'center',
           fontSize: 12,
-          color: 'rgba(255,255,255,0.4)',
+          color: 'rgb(var(--fg-rgb) / max(0.4, var(--fg-a-min)))',
         }}
       >
         {/* Compliance bar — registered address plus government recognition IDs
@@ -109,11 +109,11 @@ export default function SiteFooter() {
             company's strongest trust marker. */}
         <p style={{ marginBottom: 6 }}>
           DPIIT Recognised Startup{' '}
-          <span className="font-mono" style={{ color: 'rgba(255,255,255,0.7)' }}>
+          <span className="font-mono" style={{ color: 'rgb(var(--fg-rgb) / max(0.7, var(--fg-a-min)))' }}>
             {company.dpiit.number}
           </span>
           {' · '}CIN{' '}
-          <span className="font-mono" style={{ color: 'rgba(255,255,255,0.7)' }}>
+          <span className="font-mono" style={{ color: 'rgb(var(--fg-rgb) / max(0.7, var(--fg-a-min)))' }}>
             {company.cin}
           </span>
           {' · '}
@@ -121,7 +121,7 @@ export default function SiteFooter() {
             View credentials →
           </Link>
         </p>
-        <address style={{ fontStyle: 'normal', marginBottom: 6, color: 'rgba(255,255,255,0.55)' }}>
+        <address style={{ fontStyle: 'normal', marginBottom: 6, color: 'rgb(var(--fg-rgb) / max(0.55, var(--fg-a-min)))' }}>
           {company.registeredOffice.city}, {company.registeredOffice.state},{' '}
           {company.registeredOffice.country}
         </address>

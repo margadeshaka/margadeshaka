@@ -20,6 +20,16 @@ export async function generateMetadata({
   const post = getPostBySlug(slug);
   if (!post) return {};
 
+  /*
+   * Prefer the post's own cover for social previews — it carries the article's
+   * title and subject, so a shared link shows what the piece is about instead
+   * of the generic site card. Falls back to the site card for posts with no
+   * cover of their own.
+   */
+  const social = post.cover
+    ? { url: post.cover.src, width: post.cover.width, height: post.cover.height, alt: post.cover.alt }
+    : { url: '/images/og-margadeshaka.png', width: 1200, height: 630, alt: post.title };
+
   return {
     title: post.title,
     description: post.excerpt,
@@ -32,13 +42,13 @@ export async function generateMetadata({
       publishedTime: post.isoDate,
       authors: [post.author],
       section: post.category,
-      images: [{ url: '/images/og-margadeshaka.png', width: 1200, height: 630, alt: post.title }],
+      images: [social],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: ['/images/og-margadeshaka.png'],
+      images: [social.url],
     },
   };
 }

@@ -7,6 +7,7 @@ import LogoMark from './LogoMark';
 import SakhaCta from './SakhaCta';
 import { ArrowRight } from './icons';
 import { NAV_SECTIONS, goToSection } from '../lib/scroll';
+import ThemeToggle from './ThemeToggle';
 
 /**
  * Primary navigation, ported from the handoff (shared.jsx: Navbar).
@@ -131,6 +132,8 @@ export default function Navbar() {
         <ul className="navbar-links">{navItems}</ul>
 
         <div className="navbar-actions">
+          <ThemeToggle />
+
           <SakhaCta className="btn btn-ghost btn-sm" style={{ display: 'inline-flex' }}>
             Try Sakha <ArrowRight />
           </SakhaCta>
