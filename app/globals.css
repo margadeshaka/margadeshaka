@@ -3101,8 +3101,18 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   overscroll-behavior: contain;
   display: none;
   z-index: 20;
+  transition: opacity 320ms var(--ease-std), transform 320ms var(--ease-out);
 }
 @media (min-width: 1300px) { .blog-toc { display: block; } }
+/* Retired once the last heading is behind you (BlogArticle sets .is-done) —
+   the rail is position: fixed, so otherwise it rides down over the footer.
+   visibility, not display, so the fade can play out. */
+.blog-toc.is-done {
+  opacity: 0;
+  transform: translateX(-8px);
+  visibility: hidden;
+  pointer-events: none;
+}
 .blog-toc-head {
   font-size: 11px;
   text-transform: uppercase;

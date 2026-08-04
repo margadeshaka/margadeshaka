@@ -38,6 +38,13 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
   const [progress, setProgress] = useState(0);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [ended, setEnded] = useState(false);
+  /*
+   * The rail is position: fixed, so without this it stays on screen past the
+   * end of the article and sits on top of the footer — measured at ~79,000px²
+   * of overlap once the "why-margadeshaka" post grew from 2 headings to 13.
+   * It retires once the reader reaches the closing block.
+   */
+  const [tocDone, setTocDone] = useState(false);
 
   useEffect(() => {
     let frame = 0;
@@ -51,6 +58,13 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
       // Reveal the closing CTAs at the bottom — and immediately when the article
       // is too short to scroll (max <= 0), so they're never permanently hidden.
       if (max <= 0 || p >= 0.99) setEnded(true);
+
+      // Retire the TOC once the last heading has scrolled past the read line:
+      // the rail has done its job, and leaving it fixed on screen is what let
+      // it collide with the footer. Reversible — scroll back up and it returns.
+      const lastId = headings[headings.length - 1]?.id;
+      const lastEl = lastId ? document.getElementById(lastId) : null;
+      setTocDone(!!lastEl && lastEl.getBoundingClientRect().bottom < 0);
 
       /*
        * Active heading = the LAST one whose top has passed the read line.
@@ -115,7 +129,11 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
       </div>
 
       {headings.length > 1 && (
-        <nav className="blog-toc" aria-label="On this page">
+        <nav
+          className={'blog-toc' + (tocDone ? ' is-done' : '')}
+          aria-label="On this page"
+          inert={tocDone ? true : undefined}
+        >
           <div className="blog-toc-head">On this page</div>
           <ul>
             {headings.map((h) => (
