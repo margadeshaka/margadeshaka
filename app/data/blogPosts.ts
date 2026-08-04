@@ -109,7 +109,7 @@ export const posts: BlogPost[] = [
       { type: 'p', text: `That individual is your "guide"!` },
       { type: 'p', text: `The following is a basic scenario to illustkrate the distinction between information and guidance.` },
       { type: 'p', text: `Information gives information about "that which is.` },
-      { type: 'p', text: `Guidance is a means of revealing to us what is best.` },
+      { type: 'p', text: `[Guidance](https://en.wikipedia.org/wiki/Guidance) is a means of revealing to us what is best.` },
       { type: 'p', text: `This is what Margadeshaka is all about.` },
       { type: 'h2', text: `What Does [Margadeshaka](/) Mean?` },
       { type: 'p', text: `Margadeshaka is a Sanskrit word.` },
