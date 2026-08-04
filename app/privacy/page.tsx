@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         use our products (Sakha, Dronacharya), how we use it, and the choices you have.
       </p>
 
-      <h2>1. Information We Collect</h2>
+      <h2 data-reveal="up">1. Information We Collect</h2>
 
       <h3>Information you provide directly</h3>
       <ul>
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
         <li><strong>Cookies and analytics:</strong> we use Google Analytics to understand aggregate site usage. We do not use advertising or cross-site tracking cookies.</li>
       </ul>
 
-      <h2>2. How We Use Information</h2>
+      <h2 data-reveal="up">2. How We Use Information</h2>
       <ul>
         <li>Provide, maintain, and improve our products.</li>
         <li>Personalize AI responses based on your emotional context, preferences, and feedback.</li>
@@ -40,21 +40,21 @@ export default function PrivacyPage() {
         <li>Detect and prevent fraud, abuse, and crisis situations (Sakha includes crisis-keyword detection that may trigger safety resources).</li>
       </ul>
 
-      <h2>3. How We Share Information</h2>
+      <h2 data-reveal="up">3. How We Share Information</h2>
       <p>We do not sell or rent your personal information. We share data only with:</p>
       <ul>
         <li><strong>Service providers</strong> who run our infrastructure: Google Cloud / Firebase (website hosting and analytics), Microsoft Azure (cloud hosting, OpenAI), MongoDB Atlas / Azure Cosmos DB (database), Resend (transactional email).</li>
         <li><strong>Legal authorities</strong> when required by law or to protect rights and safety.</li>
       </ul>
 
-      <h2>4. AI Processing</h2>
+      <h2 data-reveal="up">4. AI Processing</h2>
       <p>
         Conversations with our AI companions are sent to Azure OpenAI for response generation. Microsoft processes
         this data under their commitment that prompts and responses are not used to train OpenAI&apos;s public models.
         Conversations may be retained by Microsoft for up to 30 days for abuse monitoring.
       </p>
 
-      <h2>5. Your Rights</h2>
+      <h2 data-reveal="up">5. Your Rights</h2>
       <p>You have the right to:</p>
       <ul>
         <li>Access the personal data we hold about you.</li>
@@ -67,32 +67,32 @@ export default function PrivacyPage() {
         To exercise any of these rights, email <a href="mailto:contact@margadeshaka.com">contact@margadeshaka.com</a>.
       </p>
 
-      <h2>6. Data Retention</h2>
+      <h2 data-reveal="up">6. Data Retention</h2>
       <p>
         We retain your account and profile data for as long as your account is active. When you delete your
         account, we delete personal data within 30 days, except where retention is required by law.
       </p>
 
-      <h2>7. Security</h2>
+      <h2 data-reveal="up">7. Security</h2>
       <p>
         We use HTTPS everywhere, encrypted databases, JWT-based authentication, and rate limiting on sensitive
         endpoints. No method is 100% secure, but we work to protect your data and will notify affected users of
         any material breach within 72 hours.
       </p>
 
-      <h2>8. Children&apos;s Privacy</h2>
+      <h2 data-reveal="up">8. Children&apos;s Privacy</h2>
       <p>
         Our products are not directed to children under 13 (or 16 in some jurisdictions). We do not knowingly
         collect data from children. If you believe a child has provided us data, contact us and we will delete it.
       </p>
 
-      <h2>9. Changes to This Policy</h2>
+      <h2 data-reveal="up">9. Changes to This Policy</h2>
       <p>
         We may update this policy. Material changes will be communicated by email or in-product notice. The
         &quot;Last updated&quot; date at the top reflects the most recent version.
       </p>
 
-      <h2>10. Contact</h2>
+      <h2 data-reveal="up">10. Contact</h2>
       <p>
         Questions or requests: <a href="mailto:contact@margadeshaka.com">contact@margadeshaka.com</a>
       </p>

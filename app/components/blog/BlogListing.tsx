@@ -18,8 +18,8 @@ function PostRow({ post, i }: { post: BlogPost; i: number }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="blog-row fade-up"
-      style={{ animationDelay: `${i * 70}ms` }}
+      className="blog-row"
+      data-reveal="row"
     >
       <h2 className="blog-row-title">{post.title}</h2>
       <div className="blog-row-meta">

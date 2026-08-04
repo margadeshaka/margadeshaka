@@ -21,16 +21,22 @@ export default function ContactSection() {
       </div>
 
       <div className="container-narrow contact-orb-inner">
-        <span className="eyebrow">Say hello</span>
-        <h2 className="contact-orb-title">
+        <span className="eyebrow" data-reveal="up">Say hello</span>
+        <h2 className="contact-orb-title" data-reveal="up" style={{ '--rd': 1 } as React.CSSProperties}>
           Let&rsquo;s Start a <span className="gold-text">Conversation</span>
         </h2>
-        <p className="contact-orb-sub">
+        <p className="contact-orb-sub" data-reveal="up" style={{ '--rd': 2 } as React.CSSProperties}>
           Whether you&rsquo;re an early user, partner, investor, collaborator, or simply curious
           about what we&rsquo;re building, we&rsquo;d love to connect.
         </p>
 
-        <a className="contact-orb" href={`mailto:${email}`} aria-label="Email us">
+        <a
+          className="contact-orb"
+          href={`mailto:${email}`}
+          aria-label="Email us"
+          data-reveal="scale"
+          style={{ '--rd': 3 } as React.CSSProperties}
+        >
           <span className="contact-orb-ripple" aria-hidden="true" />
           <span className="contact-orb-core" aria-hidden="true" />
           <span className="contact-orb-bubble" aria-hidden="true">
@@ -38,11 +44,15 @@ export default function ContactSection() {
           </span>
         </a>
 
-        <SakhaCta className="btn btn-primary contact-orb-cta">
-          Start a Conversation <ArrowRight />
-        </SakhaCta>
+        {/* Wrapped rather than tagged directly: .btn owns a transition
+            shorthand that the reveal's umbrella rule would replace. */}
+        <div data-reveal="up" style={{ '--rd': 4 } as React.CSSProperties}>
+          <SakhaCta className="btn btn-primary contact-orb-cta">
+            Start a Conversation <ArrowRight />
+          </SakhaCta>
+        </div>
 
-        <div className="contact-orb-links">
+        <div className="contact-orb-links" data-reveal="up" style={{ '--rd': 5 } as React.CSSProperties}>
           <a className="orb-link" href={`mailto:${email}`}>
             <span className="orb-link-icon">
               <Mail />

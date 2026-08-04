@@ -109,16 +109,18 @@ export default function ProductsSection() {
   return (
     <section id="products" className="section">
       <div className="container sakha-editorial">
-        <div className="sakha-editorial-visual" ref={visualRef}>
+        <div className="sakha-editorial-visual" ref={visualRef} data-reveal="fade">
           <span className="sakha-editorial-glow" aria-hidden="true" />
           {/* Inline SVG, not the PNG: the parts grow in sequence (stem → left
               leaf → right leaf → orb), which a single raster can't do. */}
           <SakhaSprout />
         </div>
         <div className="sakha-editorial-copy">
-          <span className="sakha-editorial-label fade-up">MEET SAKHA</span>
-          <h2 className="sakha-editorial-heading fade-up delay-100">Clarity begins here.</h2>
-          <p className="sakha-editorial-lead fade-up delay-200">
+          <span className="sakha-editorial-label" data-reveal="up">MEET SAKHA</span>
+          <h2 className="sakha-editorial-heading" data-reveal="up" style={{ '--rd': 1 } as React.CSSProperties}>
+            Clarity begins here.
+          </h2>
+          <p className="sakha-editorial-lead" data-reveal="up" style={{ '--rd': 2 } as React.CSSProperties}>
             Sakha is your thoughtful AI companion for reflection, self-discovery, and meaningful
             conversations. Instead of rushing to give answers, it helps you understand yourself,
             think clearly, and move forward with confidence.
@@ -129,6 +131,7 @@ export default function ProductsSection() {
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: 700, margin: '0 auto' }}>
           <h2
+            data-reveal="up"
             style={{
               fontSize: 'clamp(30px, 4.2vw, 46px)',
               fontWeight: 500,
@@ -142,7 +145,7 @@ export default function ProductsSection() {
           </h2>
         </div>
 
-        <div className="sakha-showcase">
+        <div className="sakha-showcase" data-reveal="stage">
           <div className="sakha-phone-glow" aria-hidden="true" />
           <div className="sakha-phone-particles" aria-hidden="true">
             {Array.from({ length: 14 }).map((_, i) => (
@@ -254,8 +257,12 @@ export default function ProductsSection() {
             </div>
           </div>
 
-          {CONVOS.map((c) => (
-            <div key={c.side} className={`convo-card convo-${c.side}`}>
+          {CONVOS.map((c, i) => (
+            <div
+              key={c.side}
+              className={`convo-card convo-${c.side}`}
+              style={{ '--rd': i } as React.CSSProperties}
+            >
               <p className="convo-user">
                 <span>You</span>
                 {c.user}
@@ -273,7 +280,7 @@ export default function ProductsSection() {
 
       <div className="container-narrow" style={{ textAlign: 'center' }}>
         <p
-          className="fade-up"
+          data-reveal="up"
           style={{
             marginTop: 20,
             fontSize: 20,
@@ -286,8 +293,8 @@ export default function ProductsSection() {
           Every meaningful change begins with a single conversation.
         </p>
         <div
-          className="fade-up"
-          style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}
+          data-reveal="up"
+          style={{ marginTop: 28, display: 'flex', justifyContent: 'center', '--rd': 1 } as React.CSSProperties}
         >
           <SakhaCta className="btn btn-primary">
             Start Your Journey with Sakha <ArrowRight />

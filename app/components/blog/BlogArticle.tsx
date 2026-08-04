@@ -1,13 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
 import SakhaCta from '../SakhaCta';
 import { company } from '../../lib/company';
-
-const endPathVar = (d: number) => ({ ['--d']: String(d) }) as CSSProperties;
 
 /**
  * Inline links inside body copy.
@@ -78,6 +76,20 @@ const HEADING_OFFSET = 100;
  */
 const READ_LINE = HEADING_OFFSET + 40;
 
+/**
+ * Distance from the top of the viewport at which the TOC rail sits. Applied
+ * inline rather than in CSS so the lift calculation and the rendered position
+ * cannot drift apart.
+ */
+const TOC_TOP = 140;
+
+/**
+ * How far into the viewport the closing block must reach before it reveals.
+ * Enough that the reader sees it animate in rather than finding it already
+ * there, without waiting until it is halfway up the screen.
+ */
+const END_REVEAL = 120;
+
 export default function BlogArticle({ post }: { post: BlogPost }) {
   const { next } = getAdjacentPosts(post.slug);
 
@@ -91,12 +103,24 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [ended, setEnded] = useState(false);
   /*
-   * The rail is position: fixed, so without this it stays on screen past the
-   * end of the article and sits on top of the footer — measured at ~79,000px²
-   * of overlap once the "why-margadeshaka" post grew from 2 headings to 13.
-   * It retires once the reader reaches the closing block.
+   * How far to lift the rail so it never outlives the article.
+   *
+   * The rail is position: fixed, so left alone it rides down over the footer.
+   * The first fix hid it once the last heading passed the read line, but that
+   * moment comes well before the article ends — the final section's paragraphs,
+   * the divider and the closing block all follow it — so the rail vanished
+   * while there was still page to read.
+   *
+   * Instead it now tracks the bottom of the article: once the rail would
+   * extend past it, we translate it up by exactly the overshoot, so it scrolls
+   * away in lockstep with the content it belongs to (what position: sticky
+   * would do, which the fixed positioning rules out) and is clear of the
+   * footer by construction.
    */
-  const [tocDone, setTocDone] = useState(false);
+  const [tocLift, setTocLift] = useState(0);
+  const proseRef = useRef<HTMLDivElement>(null);
+  const tocRef = useRef<HTMLElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let frame = 0;
@@ -107,16 +131,29 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
       const max = h.scrollHeight - h.clientHeight;
       const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
       setProgress(p);
-      // Reveal the closing CTAs at the bottom — and immediately when the article
-      // is too short to scroll (max <= 0), so they're never permanently hidden.
-      if (max <= 0 || p >= 0.99) setEnded(true);
+      /*
+       * Reveal the closing block as it comes into view, not at a percentage of
+       * the page. It used to wait for p >= 0.99, but the footer is a large
+       * share of the scroll range, so 99% is effectively the very bottom — the
+       * block had been on screen for a while by then and only faded in once the
+       * reader had scrolled past it.
+       *
+       * Still reveals immediately when the article is too short to scroll
+       * (max <= 0), so it can never stay permanently hidden.
+       */
+      const end = endRef.current;
+      if (max <= 0 || (end && end.getBoundingClientRect().top < window.innerHeight - END_REVEAL)) {
+        setEnded(true);
+      }
 
-      // Retire the TOC once the last heading has scrolled past the read line:
-      // the rail has done its job, and leaving it fixed on screen is what let
-      // it collide with the footer. Reversible — scroll back up and it returns.
-      const lastId = headings[headings.length - 1]?.id;
-      const lastEl = lastId ? document.getElementById(lastId) : null;
-      setTocDone(!!lastEl && lastEl.getBoundingClientRect().bottom < 0);
+      // Lift the rail by however far it overshoots the end of the article, so
+      // it leaves with the content instead of floating on over the footer.
+      const prose = proseRef.current;
+      const rail = tocRef.current;
+      if (prose && rail) {
+        const railBottom = TOC_TOP + rail.offsetHeight;
+        setTocLift(Math.max(0, railBottom - prose.getBoundingClientRect().bottom));
+      }
 
       /*
        * Active heading = the LAST one whose top has passed the read line.
@@ -182,9 +219,10 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
 
       {headings.length > 1 && (
         <nav
-          className={'blog-toc' + (tocDone ? ' is-done' : '')}
+          ref={tocRef}
+          className="blog-toc"
           aria-label="On this page"
-          inert={tocDone ? true : undefined}
+          style={{ top: TOC_TOP, transform: tocLift ? `translateY(-${tocLift}px)` : undefined }}
         >
           <div className="blog-toc-head">On this page</div>
           <ul>
@@ -207,7 +245,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
         </nav>
       )}
 
-      <div className="container-prose page-enter">
+      <div ref={proseRef} className="container-prose page-enter">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-brand-gold text-sm mb-8 hover:text-brand-gold-light transition-colors"
@@ -256,7 +294,18 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
           {post.body.map((block, i) => {
             if (block.type === 'h2') {
               return (
-                <h2 key={i} id={`sec-${i}`} style={{ fontSize: 26, marginTop: 40, scrollMarginTop: HEADING_OFFSET }}>
+                /*
+                  `fade`, not `up`: the TOC reads each heading's
+                  getBoundingClientRect() to pick the active entry and to scroll
+                  to it, and a transform DOES move that box. Rising 26px would
+                  offset every TOC jump by 26px until the heading revealed.
+                */
+                <h2
+                  key={i}
+                  id={`sec-${i}`}
+                  data-reveal="fade"
+                  style={{ fontSize: 26, marginTop: 40, scrollMarginTop: HEADING_OFFSET }}
+                >
                   {withInlineLinks(block.text)}
                 </h2>
               );
@@ -265,6 +314,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
               return (
                 <blockquote
                   key={i}
+                  data-reveal="up"
                   style={{
                     margin: '32px 0',
                     padding: '20px 28px',
@@ -281,39 +331,51 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
                 </blockquote>
               );
             }
-            return <p key={i}>{withInlineLinks(block.text)}</p>;
+            return (
+              <p key={i} data-reveal="up">
+                {withInlineLinks(block.text)}
+              </p>
+            );
           })}
         </div>
 
         <div className="saffron-divider" style={{ margin: '48px 0' }} />
 
-        {/* `inert` until revealed keeps the hidden CTAs out of the tab order
-            and the a11y tree (they're opacity:0 / pointer-events:none in CSS). */}
-        <div className={`blog-end${ended ? ' is-ended' : ''}`} inert={!ended}>
-          <div className="blog-end-badge">
-            <span className="font-devanagari">✷</span> You&rsquo;ve reached the end of this article.
-          </div>
-          <div className="blog-end-paths">
-            <span className="blog-end-node" aria-hidden="true" />
-            <Link href={`/blog/${next.slug}`} className="glass glass-interactive blog-end-path" style={endPathVar(1)}>
-              <span className="blog-end-line" aria-hidden="true" />
-              <span className="blog-end-label">
-                Continue Reading <ArrowRight width={15} height={15} />
-              </span>
-            </Link>
+        {/*
+          A reader who just finished a post overwhelmingly wants the next one,
+          so that gets the weight and shows the real article — title, category,
+          length — rather than a generic "Next article" button they can't judge.
+          The product and home links stay, but as quiet text so they no longer
+          compete with it.
+
+          `inert` until revealed keeps the hidden links out of the tab order and
+          the a11y tree (they're opacity:0 / pointer-events:none in CSS).
+        */}
+        <div ref={endRef} className={`blog-end${ended ? ' is-ended' : ''}`} inert={!ended}>
+          {next.slug !== post.slug && (
+            <>
+              <div className="blog-end-eyebrow">Next article</div>
+              <Link href={`/blog/${next.slug}`} className="blog-end-next">
+                <div className="blog-end-next-top">
+                  <CatChip post={next} />
+                  <span className="blog-end-next-time">{next.readTime}</span>
+                </div>
+                <h3 className="blog-end-next-title">{next.title}</h3>
+                <p className="blog-end-next-excerpt">{next.excerpt}</p>
+                <span className="blog-end-next-read">
+                  Read article <ArrowRight width={14} height={14} />
+                </span>
+              </Link>
+            </>
+          )}
+          <div className="blog-end-more">
             {/* Routes to the App Store / Play Store per platform once those
                 listings are live, otherwise opens the download modal. */}
-            <SakhaCta className="glass glass-interactive blog-end-path" style={endPathVar(2)}>
-              <span className="blog-end-line" aria-hidden="true" />
-              <span className="blog-end-label">
-                Talk to Sakha <ArrowRight width={15} height={15} />
-              </span>
+            <SakhaCta className="btn btn-ghost blog-end-btn">
+              Talk to Sakha <ArrowRight width={15} height={15} />
             </SakhaCta>
-            <Link href="/" className="glass glass-interactive blog-end-path" style={endPathVar(3)}>
-              <span className="blog-end-line" aria-hidden="true" />
-              <span className="blog-end-label">
-                Explore Margadeshaka <ArrowRight width={15} height={15} />
-              </span>
+            <Link href="/" className="btn btn-secondary blog-end-btn">
+              Explore Margadeshaka <ArrowRight width={15} height={15} />
             </Link>
           </div>
         </div>

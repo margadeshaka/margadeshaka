@@ -57,25 +57,30 @@ export default function TeamSection() {
     <section id="team" className="section team-section">
       <div className="container">
         <div className="team-head">
-          <span className="eyebrow">Our Team</span>
-          <h2 className="team-title">
+          <span className="eyebrow" data-reveal="up">Our Team</span>
+          <h2 className="team-title" data-reveal="up" style={{ '--rd': 1 } as React.CSSProperties}>
             The People Behind <span className="gold-text">Sakha</span>
           </h2>
-          <p className="team-sub">
+          <p className="team-sub" data-reveal="up" style={{ '--rd': 2 } as React.CSSProperties}>
             A small team building technology that feels more human. Every conversation, every
             feature, and every experience is shaped by people who believe guidance should be
             accessible, compassionate, and personal.
           </p>
         </div>
 
-        <div className="team-stage">
+        <div className="team-stage" data-reveal="team">
           <svg
             className="team-lines"
             viewBox="0 0 1000 560"
             preserveAspectRatio="none"
             aria-hidden="true"
           >
-            <path className="team-thread-base" d={TEAM_FULL_D} />
+            {/* pathLength normalises the thread to 1 unit so the reveal can
+                draw it with a plain stroke-dashoffset: 1 -> 0, whatever the
+                real path length works out to. Only on the base path: the
+                pulse path's dasharray is in user units and renormalising it
+                would destroy the travelling dot. */}
+            <path className="team-thread-base" pathLength={1} d={TEAM_FULL_D} />
             {TEAM_SEGS.map((s, i) => (
               <path
                 key={i}
@@ -98,6 +103,8 @@ export default function TeamSection() {
                   left: `${TEAM_POS[i].x / 10}%`,
                   top: `${TEAM_POS[i].y / 5.6}%`,
                   '--fd': `${i * -1.9}s`,
+                  // Members light up one after another along the thread.
+                  '--rd': i,
                 } as React.CSSProperties
               }
               onMouseEnter={() => setActive(i)}

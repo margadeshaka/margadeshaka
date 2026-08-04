@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import SiteFooter from './components/SiteFooter';
 import SakhaStoreModal from './components/SakhaStoreModal';
 import CosmicLayer from './components/CosmicLayer';
+import ScrollReveal from './components/ScrollReveal';
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
@@ -154,6 +155,8 @@ export default function RootLayout({
         </a>
         <CosmicLayer />
         <CosmicEffects />
+        {/* Arms the [data-reveal] system for every route. Renders nothing. */}
+        <ScrollReveal />
         <Navbar />
         <main id="main" style={{ position: 'relative', zIndex: 1 }}>
           {children}

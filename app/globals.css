@@ -2953,86 +2953,110 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   box-shadow: 0 0 10px rgba(255,200,100,0.6);
 }
 /* Scroll-progress ending */
+/* End of article: one real next-post card, then quiet secondary links.
+   Left-aligned to sit in the same column as the prose the reader just left. */
 .blog-end {
   margin-top: 64px;
-  text-align: center;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
   pointer-events: none;
 }
 .blog-end.is-ended { opacity: 1; transform: translateY(0); pointer-events: auto; }
-.blog-end-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-  color: rgba(255,255,255,0.8);
-  padding: 10px 20px;
-  border-radius: 999px;
-  background: rgba(255,200,100,0.08);
-  border: 1px solid rgba(255,200,100,0.22);
+.blog-end-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 14px;
 }
-.blog-end-badge .font-devanagari { color: var(--brand-gold); font-size: 17px; }
-.blog-end-paths {
-  position: relative;
-  margin-top: 52px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.blog-end-node {
-  position: absolute;
-  top: -44px; left: 50%;
-  width: 10px; height: 10px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: var(--brand-gold);
-  box-shadow: 0 0 14px 3px rgba(255,200,100,0.6);
-  opacity: 0;
-  transition: opacity 400ms var(--ease-std);
-}
-.blog-end.is-ended .blog-end-node { opacity: 1; }
-.blog-end-path {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 22px 18px;
+.blog-end-next {
+  display: block;
+  padding: 26px 28px;
   border-radius: var(--r-lg);
   text-decoration: none;
   color: inherit;
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
-  transition-delay: calc(var(--d) * 160ms);
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.09);
+  transition: background 300ms var(--ease-std), border-color 300ms var(--ease-std),
+    transform 300ms var(--ease-std);
 }
-.blog-end.is-ended .blog-end-path { opacity: 1; transform: translateY(0); }
-.blog-end-line {
-  position: absolute;
-  left: 50%; bottom: 100%;
-  width: 1.5px; height: 44px;
-  transform: translateX(-50%) scaleY(0);
-  transform-origin: bottom;
-  background: linear-gradient(180deg, rgba(255,200,100,0.7), rgba(255,200,100,0.15));
-  transition: transform 450ms var(--ease-out);
-  transition-delay: calc(var(--d) * 160ms + 120ms);
+.blog-end-next:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,200,100,0.3);
+  transform: translateY(-2px);
 }
-.blog-end.is-ended .blog-end-line { transform: translateX(-50%) scaleY(1); }
-.blog-end-label {
+.blog-end-next-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.blog-end-next-time { font-size: 13px; color: rgba(255,255,255,0.45); }
+.blog-end-next-title {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.1vw, 26px);
+  font-weight: 500;
+  line-height: 1.26;
+  letter-spacing: -0.005em;
+  color: #fff;
+  margin: 0 0 10px;
+  text-wrap: pretty;
+  transition: color 220ms var(--ease-std);
+}
+.blog-end-next:hover .blog-end-next-title { color: var(--brand-gold); }
+.blog-end-next-excerpt {
+  margin: 0 0 18px;
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: rgba(255,255,255,0.6);
+  /* Two lines is enough to judge the post; excerpts vary in length and an
+     unclamped one would unbalance the card. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.blog-end-next-read {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: var(--brand-gold);
   transition: gap 220ms var(--ease-out);
 }
-.blog-end-label svg { color: var(--brand-gold); }
-.blog-end-path:hover .blog-end-label { gap: 12px; }
+.blog-end-next:hover .blog-end-next-read { gap: 12px; }
+.blog-end-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+/* Real buttons, reusing the site's .btn variants — as plain text these read as
+   body copy rather than as something you can click. */
+.blog-end-btn {
+  text-decoration: none;
+  transition: transform 200ms var(--ease-out), background 200ms var(--ease-out),
+    border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out),
+    gap 220ms var(--ease-out);
+}
+.blog-end-btn:hover { gap: 12px; transform: translateY(-1px); }
+/* Gold arrow on both, so the white-text secondary still carries the accent. */
+.blog-end-btn svg { color: var(--brand-gold); }
 @media (max-width: 640px) {
-  .blog-end-paths { grid-template-columns: 1fr; gap: 12px; }
-  .blog-end-line { display: none; }
+  .blog-end-next { padding: 20px; }
+  .blog-end-next-top { flex-wrap: wrap; gap: 8px; }
+  /* Full width and stacked: easier touch targets than two buttons crammed
+     onto one line, and the labels stay on a single line. */
+  .blog-end-more { flex-direction: column; align-items: stretch; gap: 10px; }
+  .blog-end-btn { justify-content: center; }
 }
 /* Header topic marquee */
 .blog-marquee {
@@ -3101,18 +3125,13 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   overscroll-behavior: contain;
   display: none;
   z-index: 20;
-  transition: opacity 320ms var(--ease-std), transform 320ms var(--ease-out);
+  /*
+   * No transform transition: BlogArticle translates this in lockstep with the
+   * scroll position as the article ends, so easing it would make the rail lag
+   * behind the page instead of moving with it.
+   */
 }
 @media (min-width: 1300px) { .blog-toc { display: block; } }
-/* Retired once the last heading is behind you (BlogArticle sets .is-done) —
-   the rail is position: fixed, so otherwise it rides down over the footer.
-   visibility, not display, so the fade can play out. */
-.blog-toc.is-done {
-  opacity: 0;
-  transform: translateX(-8px);
-  visibility: hidden;
-  pointer-events: none;
-}
 .blog-toc-head {
   font-size: 11px;
   text-transform: uppercase;
@@ -3221,7 +3240,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   padding: 34px 22px; margin: 0 -22px;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   text-decoration: none; color: inherit; border-radius: 14px;
-  transition: transform 240ms var(--ease-out), background 240ms var(--ease-std);
+  /* opacity slot is for the scroll reveal (data-reveal="row"); the 240ms
+     transform/background pair is the hover and stays untouched. */
+  transition: transform 240ms var(--ease-out), background 240ms var(--ease-std),
+              opacity 560ms var(--ease-out);
 }
 .blog-row:hover { transform: translateY(-2px); background: rgba(255,255,255,0.04); }
 .blog-row-title { font-family: var(--font-display); font-size: clamp(24px, 2.6vw, 31px); color: #fff; font-weight: 500; line-height: 1.22; letter-spacing: -0.005em; transition: color 220ms; text-wrap: pretty; }
@@ -3335,4 +3357,109 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   letter-spacing: 0.02em;
   line-height: 1;
   color: var(--brand-gold);
+}
+
+/* ============================================================
+   SCROLL REVEAL (MAR-543)
+
+   Content below the fold reveals as it scrolls into view instead of
+   animating invisibly at page load — which is what .fade-up did: it fired
+   on mount, so everything below the fold finished before being seen.
+
+   ScrollReveal.tsx adds `reveal-ready` to <html> when JS runs AND
+   prefers-reduced-motion is off, then toggles `.is-visible` per element:
+   added as it enters the viewport, removed once it has fully LEFT (14%
+   past either edge) — so every entrance replays when a section scrolls
+   back into view, in either direction. The add and remove lines differ
+   (hysteresis), which is what stops edge flicker, and removal happens
+   off-screen so the viewer only ever sees entrances.
+
+   EVERY hiding rule below is gated on html.reveal-ready. With no JS, or
+   with reduced motion, none of it applies and the page renders exactly as
+   it did before this system existed — content can never be stuck hidden.
+
+   Vocabulary (the attribute VALUE picks the effect):
+     up    — rise 26px + fade. Only for elements with no transform or
+             transition behaviour of their own: the umbrella rule below owns
+             their `transition` shorthand permanently, which would break
+             hovers on anything interactive (the MAR-537 cascade lesson).
+     fade  — opacity only, for elements whose transform belongs to their own
+             float/pulse animation.
+     scale — 0.94 -> 1 grow, for the contact orb.
+     stage — the phone showcase: the container fades, then each .convo-card
+             pops in staggered by its --rd. The cards drift via `translate`,
+             a separate property that opacity never touches.
+     deck  — the reflect hand: cards wait flat and stacked, then fan open to
+             their --rot angles. No transition is overridden here — the
+             pre-state simply stops applying on reveal and the cards' OWN
+             420ms transform transition carries them into the fan.
+     team  — the constellation: the thread draws itself (stroke-dashoffset
+             over pathLength=1, set on the base path only — the pulse path's
+             dasharray is in user units and must not be renormalised), then
+             members fade in one by one, then the pulse joins.
+     row   — blog listing rows, which own a hover transition. Their reveal
+             rides opacity/transform slots on that existing shorthand rather
+             than replacing it, so the hover timing survives.
+
+   Stagger: set `--rd` (an integer index) inline on the element.
+   ============================================================ */
+html.reveal-ready [data-reveal='up'],
+html.reveal-ready [data-reveal='fade'],
+html.reveal-ready [data-reveal='scale'],
+html.reveal-ready [data-reveal='stage'],
+html.reveal-ready [data-reveal='deck'] {
+  transition: opacity 640ms var(--ease-out), transform 640ms var(--ease-out);
+  transition-delay: calc(var(--rd, 0) * 90ms);
+}
+html.reveal-ready [data-reveal='up']:not(.is-visible),
+html.reveal-ready [data-reveal='fade']:not(.is-visible),
+html.reveal-ready [data-reveal='scale']:not(.is-visible),
+html.reveal-ready [data-reveal='stage']:not(.is-visible),
+html.reveal-ready [data-reveal='deck']:not(.is-visible) {
+  opacity: 0;
+}
+html.reveal-ready [data-reveal='up']:not(.is-visible) { transform: translateY(26px); }
+html.reveal-ready [data-reveal='scale']:not(.is-visible) { transform: scale(0.94); }
+
+/* stage — convo cards pop in after the showcase itself has faded up. */
+html.reveal-ready [data-reveal='stage'] .convo-card {
+  transition: opacity 560ms var(--ease-out);
+  transition-delay: calc(260ms + var(--rd, 0) * 120ms);
+}
+html.reveal-ready [data-reveal='stage']:not(.is-visible) .convo-card { opacity: 0; }
+
+/* deck — the fan opens from a flat stack.
+   The fade is on the WRAPPER (above), not the cards. Fading each card
+   individually put all four at ~0.75 opacity for the length of the reveal,
+   and because they overlap in the fan you could read the card behind through
+   the one in front — the hand looked like tracing paper instead of playing
+   cards. With the wrapper carrying the opacity the cards stay mutually
+   opaque throughout and only their transform animates, which is also the
+   cards' OWN 420ms transition, so the fan keeps its existing feel. */
+html.reveal-ready [data-reveal='deck']:not(.is-visible) .reflect-card {
+  transform: rotate(0deg) translateY(44px);
+}
+
+/* team — draw the thread, then the people, then the travelling pulse. */
+html.reveal-ready [data-reveal='team'] .team-thread-base {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset 1400ms var(--ease-std) 150ms;
+}
+html.reveal-ready [data-reveal='team']:not(.is-visible) .team-thread-base {
+  stroke-dashoffset: 1;
+}
+html.reveal-ready [data-reveal='team'] .team-node {
+  transition: opacity 600ms var(--ease-std);
+  transition-delay: calc(250ms + var(--rd, 0) * 150ms);
+}
+html.reveal-ready [data-reveal='team']:not(.is-visible) .team-node { opacity: 0; }
+html.reveal-ready [data-reveal='team'] .team-thread-pulse {
+  transition: opacity 500ms var(--ease-std) 1250ms;
+}
+html.reveal-ready [data-reveal='team']:not(.is-visible) .team-thread-pulse { opacity: 0; }
+
+/* row — pre-state only; the transition lives in .blog-row's own shorthand. */
+html.reveal-ready [data-reveal='row']:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(26px);
 }
