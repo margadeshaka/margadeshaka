@@ -11,6 +11,16 @@ export type BlogAccent = 'gold' | 'purple' | 'aurora';
 
 export type BlogCategory = 'Vision' | 'Engineering' | 'Product' | 'Trust';
 
+/**
+ * `p` and `h2` text may carry inline markdown links — `[label](/href)` —
+ * which BlogArticle splits out at render time; a leading `/` routes through
+ * next/link, anything else opens in a new tab. In an `h2` the link renders in
+ * the heading but is flattened back to its label for the "On this page" rail,
+ * which reuses the same string as plain text.
+ *
+ * Link sparingly. Repeating one anchor down a whole post reads as keyword
+ * stuffing to a crawler and dilutes the signal each link carries.
+ */
 export type BlogBlock =
   | { type: 'p'; text: string }
   | { type: 'h2'; text: string }
@@ -101,7 +111,7 @@ export const posts: BlogPost[] = [
       { type: 'p', text: `Information gives information about "that which is.` },
       { type: 'p', text: `Guidance is a means of revealing to us what is best.` },
       { type: 'p', text: `This is what Margadeshaka is all about.` },
-      { type: 'h2', text: `What Does Margadeshaka Mean?` },
+      { type: 'h2', text: `What Does [Margadeshaka](/) Mean?` },
       { type: 'p', text: `Margadeshaka is a Sanskrit word.` },
       { type: 'p', text: `It refers to one who shows the path, a guide who helps others move in right direction.` },
       { type: 'p', text: `A Margadeshaka does not provide endless answers, but rather assists in finding clarity.` },

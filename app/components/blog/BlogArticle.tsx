@@ -1,13 +1,65 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
 import SakhaCta from '../SakhaCta';
 import { company } from '../../lib/company';
 
 const endPathVar = (d: number) => ({ ['--d']: String(d) }) as CSSProperties;
+
+/**
+ * Inline links inside body copy.
+ *
+ * A body block is a plain string, so a link is authored as markdown —
+ * `[label](/href)` — and split back out here. Text containing no link is
+ * returned as the same string, so the overwhelmingly common case allocates
+ * nothing and React still renders a single text node.
+ *
+ * Internal hrefs go through next/link to stay client-side; anything else is
+ * treated as external and opens in a new tab.
+ */
+const INLINE_LINK = '\\[([^\\]]+)\\]\\(([^)]+)\\)';
+
+function withInlineLinks(text: string): ReactNode {
+  if (!text.includes('](')) return text;
+
+  // Built per call: a shared global regex carries lastIndex between calls, so
+  // reusing one would make every second paragraph skip its first link.
+  const pattern = new RegExp(INLINE_LINK, 'g');
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(text)) !== null) {
+    const at = match.index;
+    const [raw, label, href] = match;
+    if (at > cursor) parts.push(text.slice(cursor, at));
+    parts.push(
+      href.startsWith('/') ? (
+        <Link key={at} href={href}>
+          {label}
+        </Link>
+      ) : (
+        <a key={at} href={href} target="_blank" rel="noopener noreferrer">
+          {label}
+        </a>
+      ),
+    );
+    cursor = at + raw.length;
+  }
+  parts.push(text.slice(cursor));
+  return parts;
+}
+
+/**
+ * The same text with links flattened to their labels, for where a heading is
+ * reused as plain text: the "On this page" rail. Without this the rail would
+ * print the raw `[label](/href)` instead of the word.
+ */
+function plainText(text: string): string {
+  return text.includes('](') ? text.replace(new RegExp(INLINE_LINK, 'g'), '$1') : text;
+}
 
 /**
  * Distance from the viewport top at which a heading counts as "reached".
@@ -31,7 +83,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
 
   const headings = useMemo(
     () =>
-      post.body.flatMap((block, i) => (block.type === 'h2' ? [{ id: `sec-${i}`, text: block.text }] : [])),
+      post.body.flatMap((block, i) => (block.type === 'h2' ? [{ id: `sec-${i}`, text: plainText(block.text) }] : [])),
     [post],
   );
 
@@ -205,7 +257,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
             if (block.type === 'h2') {
               return (
                 <h2 key={i} id={`sec-${i}`} style={{ fontSize: 26, marginTop: 40, scrollMarginTop: HEADING_OFFSET }}>
-                  {block.text}
+                  {withInlineLinks(block.text)}
                 </h2>
               );
             }
@@ -229,7 +281,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
                 </blockquote>
               );
             }
-            return <p key={i}>{block.text}</p>;
+            return <p key={i}>{withInlineLinks(block.text)}</p>;
           })}
         </div>
 
