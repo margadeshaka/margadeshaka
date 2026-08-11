@@ -30,16 +30,23 @@ export default function SakhaSprout({ className, title = 'Sakha' }: Props) {
       aria-label={title}
     >
       <defs>
-        {/* SwiftUI: LinearGradient(#FFE4B5 → #E89620, .topLeading → .bottomTrailing) */}
+        {/*
+          White into a living green. The site accent is sage — muted by design
+          — and applied literally here the seedling came out grey and lifeless;
+          an earlier attempt at the site accent went the other way and looked
+          like a highlighter. These sit in sage's hue family but carry more
+          saturation, so the plant reads as alive while still belonging to the
+          palette. The white end gives each leaf its lit edge.
+        */}
         <linearGradient id="sakhaLeafGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FFE4B5" />
-          <stop offset="100%" stopColor="#E89620" />
+          <stop offset="0%" stopColor="#0B1410" />
+          <stop offset="100%" stopColor="#6FB77E" />
         </linearGradient>
         {/* SwiftUI: RadialGradient(center: (0.38, 0.32), endRadius: 0.72 · d) */}
         <radialGradient id="sakhaBudGrad" cx="0.38" cy="0.32" r="0.72">
-          <stop offset="0%" stopColor="#FFFDF6" />
-          <stop offset="44%" stopColor="#FFE9B0" />
-          <stop offset="100%" stopColor="#FFC864" />
+          <stop offset="0%" stopColor="#0B1410" />
+          <stop offset="45%" stopColor="#3E7F4E" />
+          <stop offset="100%" stopColor="#6FB77E" />
         </radialGradient>
       </defs>
 
@@ -49,7 +56,7 @@ export default function SakhaSprout({ className, title = 'Sakha' }: Props) {
         d="M50 128 C50 104 46 86 50 68 C52 56 50 44 50 34"
         pathLength={1}
         fill="none"
-        stroke="#FFC864"
+        stroke="#3C7646"
         strokeWidth={4.5}
         strokeLinecap="round"
       />

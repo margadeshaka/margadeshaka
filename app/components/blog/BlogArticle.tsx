@@ -268,7 +268,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
             <span
               className="w-10 h-10 rounded-full grid place-items-center font-display flex-none"
               style={{
-                background: 'linear-gradient(135deg, #FFB830, #FFC864 50%, #FFE4B5)',
+                background: 'linear-gradient(135deg, #3FAC52, #67B274 50%, #8ED49A)',
                 fontSize: 15,
                 fontWeight: 700,
                 color: '#1A1224',
