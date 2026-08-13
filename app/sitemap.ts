@@ -9,6 +9,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Sitemaps must list distinct indexable pages only — no hash fragments,
   // no query strings that produce the same content, no localhost URLs.
+  // Every URL carries a trailing slash: with `trailingSlash: true` (and
+  // skipTrailingSlashRedirect suppressing the reconciling redirect) the pages
+  // are served canonically at /blog/ etc., and the sitemap must advertise the
+  // exact canonical shape.
   return [
     {
       url: `${baseUrl}/`,
@@ -17,31 +21,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: `${baseUrl}/blog/`,
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     ...getAllSlugs().map((slug) => ({
-      url: `${baseUrl}/blog/${slug}`,
+      url: `${baseUrl}/blog/${slug}/`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
     {
-      url: `${baseUrl}/compliance`,
+      url: `${baseUrl}/compliance/`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/privacy`,
+      url: `${baseUrl}/privacy/`,
       lastModified: now,
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
-      url: `${baseUrl}/terms`,
+      url: `${baseUrl}/terms/`,
       lastModified: now,
       changeFrequency: 'yearly',
       priority: 0.5,

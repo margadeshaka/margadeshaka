@@ -158,7 +158,7 @@ export const posts: BlogPost[] = [
       { type: 'p', text: `Someone starts a new business.There is a person who begins a business out. There is someone who's traveling through the world. A new house is purchased. Someone gets promoted. A person is introducing their 'morning routine for success'.` },
       { type: 'p', text: `There were lots of these stories to view and naturally comparisons began. Questions start to arise within us.` },
       { type: 'p', text: `"What's going on, why am I so confused?" Why don't I know what I want? "All the others appear to be ahead of me."` },
-      { type: 'p', text: `So it's not like that. What you see in social media is highlighting, not struggles. All of the success stories have experienced some level of doubt, failure and uncertainty and these stories are not always publicized online. Comparing takes away clarity because it takes us on another route than where we need to go.` },
+      { type: 'p', text: `So it's not like that. What you see in social media is highlighting, not struggles. All of the success stories have experienced some level of doubt, failure and uncertainty and these stories are not always publicized online. Comparing takes away clarity because it takes us on another route than where we need to go. That same quiet comparison loop is one reason [so many of us feel we have no one to talk to](/blog/i-need-someone-to-talk-to).` },
       { type: 'h2', text: `Not yet discovered. As long as we're not there yet.` },
       { type: 'p', text: `Learning is extremely simple thanks to the Internet. It's also turned them into a way of life of constant preparation.` },
       { type: 'p', text: `We view videos about Productivity. We read books on how to be successful. Articles are archived for future use. We bookmark courses. We collect ideas.` },
@@ -233,6 +233,10 @@ export const posts: BlogPost[] = [
       {
         type: 'quote',
         text: `Memory where it matters, warmth where it helps. The context is yours; the conversation adapts to you.`,
+      },
+      {
+        type: 'p',
+        text: `If you have ever felt you [needed someone to talk to but had no one](/blog/i-need-someone-to-talk-to), this remembered context is exactly the gap Sakha is built to close.`,
       },
     ],
   },
