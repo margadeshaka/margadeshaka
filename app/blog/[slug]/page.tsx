@@ -67,6 +67,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     dateModified: post.isoDate,
     articleSection: post.category,
     inLanguage: 'en',
+    // Google's article rich results want an image; posts without a cover fall
+    // back to the site card rather than omitting the property.
+    image: post.cover ? `${baseUrl}${post.cover.src}` : `${baseUrl}/icon.png`,
     url: `${baseUrl}/blog/${post.slug}`,
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${baseUrl}/blog/${post.slug}` },
     author: {

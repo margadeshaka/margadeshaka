@@ -68,6 +68,14 @@ export function ShieldIcon({ width = 20, height = 20, className }: IconProps) {
   );
 }
 
+export function HeartIcon({ width = 20, height = 20, className }: IconProps) {
+  return (
+    <svg width={width} height={height} viewBox="0 0 24 24" className={className} aria-hidden="true" {...strokeProps}>
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  );
+}
+
 // Every accent resolves to the saffron gold thread — the design deliberately
 // unifies all post accents to gold, keeping `accent` in the data only as a
 // forward-looking hook.
@@ -84,6 +92,7 @@ const CAT_META: Record<BlogCategory, CatMeta> = {
   Engineering: { Icon: SparklesIcon, glyph: '✺' },
   Product: { Icon: BookIcon, glyph: '❈' },
   Trust: { Icon: ShieldIcon, glyph: '❊' },
+  Wellness: { Icon: HeartIcon, glyph: '❋' },
 };
 
 export function catMeta(category: BlogCategory): CatMeta {
