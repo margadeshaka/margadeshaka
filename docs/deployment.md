@@ -10,7 +10,7 @@ Pushing to a branch deploys it. `.github/workflows/deploy.yml` does the work.
 | Branch | Environment | Site | URL |
 |--------|-------------|------|-----|
 | `main` | production | `margadeshaka-af4de` | margadeshaka-af4de.web.app → margadeshaka.com once DNS moves |
-| `Develop` | staging | `margadeshaka-staging` | margadeshaka-staging.web.app |
+| `develop` | staging | `margadeshaka-staging` | margadeshaka-staging.web.app |
 
 Staging sends `X-Robots-Tag: noindex, nofollow`. It serves the same content on a
 different origin, so without that header Google can index it and treat it as

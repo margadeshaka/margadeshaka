@@ -136,7 +136,7 @@ Two Hosting sites in one Firebase project (`margadeshaka-af4de`):
 | Branch | Target | Site | URL |
 |--------|--------|------|-----|
 | `main` | `production` | `margadeshaka-af4de` | margadeshaka-af4de.web.app (→ margadeshaka.com once DNS moves) |
-| `Develop` | `staging` | `margadeshaka-staging` | margadeshaka-staging.web.app (`X-Robots-Tag: noindex`) |
+| `develop` | `staging` | `margadeshaka-staging` | margadeshaka-staging.web.app (`X-Robots-Tag: noindex`) |
 
 - **CI/CD**: `.github/workflows/deploy.yml` deploys on push to either branch (manual dispatch with environment choice also available). Authenticates via the `FIREBASE_SERVICE_ACCOUNT` repo secret (dedicated service account, `roles/firebasehosting.admin` + `roles/firebase.viewer` only). Concurrency-guarded so a slow old commit can't land over a newer one.
 - **`firebase.json` carries the config twice** (once per target) because Firebase can't share a hosting block across sites. `npm run verify:hosting` fails CI if the targets drift, staging loses `noindex`, or `trailingSlash` stops mirroring `next.config.js`. Keep it that way.

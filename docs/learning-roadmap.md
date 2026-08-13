@@ -151,7 +151,7 @@ zero new components written.
 | 5.2 | Reading the build output — chunks, sizes | terminal after a build |
 | 5.3 | Playwright tests — how they drive a real browser | `tests/*.spec.ts` |
 | 5.4 | Firebase Hosting — two sites, caching headers, noindex on staging | `firebase.json`, `.firebaserc` |
-| 5.5 | CI/CD — push `Develop` → staging, push `main` → production | `.github/workflows/deploy.yml` |
+| 5.5 | CI/CD — push `develop` → staging, push `main` → production | `.github/workflows/deploy.yml` |
 | 5.6 | Performance — chunk splitting, fonts, images | `next.config.js:27-79` |
 
 🔨 **Stage 5 exercise:** run `npm run build`, open `out/index.html` in a text
