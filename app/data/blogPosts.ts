@@ -9,7 +9,7 @@
 
 export type BlogAccent = 'gold' | 'purple' | 'aurora';
 
-export type BlogCategory = 'Vision' | 'Engineering' | 'Product' | 'Trust';
+export type BlogCategory = 'Vision' | 'Engineering' | 'Product' | 'Trust' | 'Wellness';
 
 /**
  * `p` and `h2` text may carry inline markdown links — `[label](/href)` —
@@ -50,6 +50,58 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'i-need-someone-to-talk-to',
+    title: 'I Need Someone to Talk To But Have No One: What You Can Do Today',
+    excerpt:
+      `Everything looks fine, yet you're carrying it all alone. Why the feeling of having no one to talk to builds up, the signs it leaves, and small steps you can take today.`,
+    category: 'Wellness',
+    date: 'August 13, 2026',
+    isoDate: '2026-08-13',
+    readTime: '6 min read',
+    author: 'Hitesh Gupta',
+    featured: true,
+    accent: 'gold',
+    cover: {
+      src: '/images/blog/i-need-someone-to-talk-to-cover.webp',
+      alt: 'A person sits at a desk by a window at dusk, chin resting on one hand, a mug and an open journal in front of them — alongside four gentle reminders: write it out, breathe and ground yourself, reach out, and be kind to yourself.',
+      width: 1536,
+      height: 1024,
+    },
+    body: [
+      { type: 'p', text: `At some point in our everyday lives, there comes a moment when we all feel "I need someone to talk to, but I have no one." This feeling often arrives unannounced — everything in life seems fine, but your heart craves a connection, or simply someone to tell the small details of your day, or how long you have been holding on alone.` },
+      { type: 'p', text: `Loneliness is becoming increasingly common. It is now recognised as a major global health concern affecting roughly one in six people, with real risks to both physical and mental health.` },
+      { type: 'h2', text: `Why do you feel like you have no one to talk to?` },
+      { type: 'p', text: `In the era of social media we constantly compare our lives with others, forgetting that they are also just humans who — like everyone else — share only the good moments from their life. Let's accept the fact: we humans fear judgement and fear being alone, and because of that we fear showing our authentic lives. We share only the parts we know will be accepted, because nobody wants to come across as the black sheep.` },
+      { type: 'p', text: `Another reason is that we lose touch with our loved ones as we grow up. Slowly those school friends, that college group, parents, siblings — it all starts to drift away in the race of life. Everyone gets busy building a stable future, without realising it is costing us our present. And before sharing your feelings you suddenly start to think: what if I am bothering them? Slowly this becomes a cycle. You keep things within you, it all bottles up, and one day your body can't take it anymore — and in that moment it doesn't even make sense why you are feeling this way.` },
+      { type: 'h2', text: `How keeping everything inside affects you` },
+      { type: 'p', text: `It might look like you can handle everything alone and you are doing fine, but your body and mind give you signs that seem like no big deal in the moment — until one day they aren't. If you notice these signs, it's time to talk about your emotions more:` },
+      { type: 'p', text: `● You start to isolate yourself` },
+      { type: 'p', text: `● You wake up feeling tired` },
+      { type: 'p', text: `● You find it difficult to sleep` },
+      { type: 'p', text: `● You react strongly to small things but feel numb when big problems arrive` },
+      { type: 'p', text: `● Everything in life seems fine, but you still don't feel good inside and can't figure out why` },
+      { type: 'p', text: `● You either cry a lot or you don't cry at all` },
+      { type: 'p', text: `● You don't feel motivated` },
+      { type: 'h2', text: `What you can do today` },
+      { type: 'p', text: `The fact that you are still reading this is itself a positive sign — it takes a lot of courage to work on yourself without anyone pushing you. Here are some ways to cope with feelings of isolation and loneliness.` },
+      { type: 'h2', text: `Journal your thoughts every night before sleep` },
+      { type: 'p', text: `You don't need a fancy journal for this — just a pen and paper to dump everything on your mind every night. It might feel weird or like too much at the start, but done consistently it provides real clarity, and you feel as if you actually told someone your thoughts.` },
+      { type: 'h2', text: `Take a short walk outside to calm your mind` },
+      { type: 'p', text: `Regular walking is scientifically shown to support mental health: it boosts your mood, reduces stress, and helps regulate a calm nervous system. It also leads to better sleep quality.` },
+      { type: 'h2', text: `Talk to someone you trust — even if it's been a while` },
+      { type: 'p', text: `Take the first step and call or meet someone you trust. You never know how much the other person is also looking forward to an honest conversation.` },
+      { type: 'h2', text: `Try an AI companion` },
+      { type: 'p', text: `In this digital era, many people also talk through their feelings with AI companions when they don't have someone to talk to. As long as you feel comfortable and safe, there is nothing wrong with it — an AI companion is affordable and available every time, even late at night when you cannot disturb your close ones.` },
+      { type: 'quote', text: `Asking for help is a strength, not a weakness.` },
+      { type: 'p', text: `Today people have normalised keeping things to themselves, thinking they are strong enough to endure it all — but holding onto things for long periods eventually backfires. We humans strive for connection, and it takes real courage to share your feelings.` },
+      { type: 'h2', text: `How Sakha can support you` },
+      { type: 'p', text: `Some days you don't need guidance or advice — that can exhaust you even more. You simply need a place to vent and feel understood. There are days when your friends are busy, and things you don't feel comfortable sharing with family because you don't want to stress them. You feel desperate for a safe place where you can just let it all out — and in those moments it is completely fine to look for another way to feel a sense of calm. That is exactly why we built [Sakha](/#products).` },
+      { type: 'p', text: `Sakha is an AI companion built for days like this. Instead of rushing to give you answers, it helps you understand yourself, think clearly and move forward. Your conversations are encrypted, there is no fear of being judged, and what you share stays private.` },
+      { type: 'h2', text: `Conclusion` },
+      { type: 'p', text: `You don't have to make isolation and loneliness your comfort place just because they feel familiar. Whether you open up to a close friend, seek professional help, or try Sakha — know that it takes strength to open up in the first place. Take one step today. You deserve to be heard, understood, and to feel enough. The first step towards a conversation can lead to a better tomorrow.` },
+    ],
+  },
+  {
     slug: 'why-margadeshaka',
     title: 'Why We Feel Lost Despite Having More Information Than Ever',
     excerpt:
@@ -59,7 +111,7 @@ export const posts: BlogPost[] = [
     isoDate: '2026-08-04',
     readTime: '7 min read',
     author: 'Hitesh Gupta',
-    featured: true,
+    featured: false,
     accent: 'gold',
     cover: {
       src: '/images/blog/why-margadeshaka-cover.webp',
