@@ -34,6 +34,7 @@ npm run clean              # Remove .next, out, node_modules/.cache
 ```
 
 - **Node.js ≥ 20** required.
+- `npm run lint` / `lint:check` are traps: the repo has **no ESLint config**, so `next lint` drops into an interactive setup prompt — don't configure one; CI deliberately skips lint and gates on `typecheck` + build instead.
 - `npm run start`, `npm run export`, and `npm run preview`'s cousin `next start` do NOT work here: `output: 'export'` makes `next start` hard-error. `preview` is already wired to `npx serve out`.
 - `npm run build:analyze` is non-functional: it sets `ANALYZE=true` but nothing reads it and no analyzer package is installed — it's a plain build.
 - `npm run test:visual` has **no committed snapshot baselines** — its first run fails everywhere and writes new baselines; review them before trusting.
@@ -80,7 +81,9 @@ The site is dark-only: nothing sets `data-theme="light"` any more — the `Theme
 ### Single sources of truth (edit these, never hardcode)
 
 - **`app/lib/company.ts`** — legal/company identifiers (legal name, CIN, PAN, TAN, DPIIT, dates, certificate URLs, store/social links). Ten importers including `/compliance`, `/terms`, `TeamSection`, `SakhaStoreModal`, `SiteFooter`, `SEOStructuredData`, blog JSON-LD. **Gotcha:** `/privacy` (entirely) and the contact links in `/terms` still hardcode `margadeshaka.com` / `contact@margadeshaka.com` — editing `company.ts` alone leaves those pages stale.
-- **`app/data/blogPosts.ts`** — typed blog content (block-based body: `p`/`h2`/`quote`, inline links supported). **Array order matters**: it drives the listing grid and prev/next links. Adding a post automatically updates `/blog`, static params, and the sitemap. (`app/data/blog.ts` is a dormant duplicate types file — don't import it.)
+- **`app/data/blogPosts.ts`** — typed blog content (block-based body: `p`/`h2`/`quote`, inline links supported). **Array order matters**: it drives the listing grid and prev/next links. Adding a post automatically updates `/blog`, static params, and the sitemap — but NOT `scripts/ping-indexnow.sh` (extend its hardcoded list). (`app/data/blog.ts` is a dormant duplicate types file — don't import it.)
+  - **Authoring rules** (from founder review): plain punctuation only — **no em-dashes** in post copy; keep in-post links minimal (recent posts were trimmed to ~2) and give internal ones trailing slashes; exactly **one** post carries `featured: true`; new covers via `cwebp -resize 1536 0 -q 82 -m 6 in.jpg -o public/images/blog/<slug>-cover.webp` (≈1536×1152 WebP), alt text describes the image, never repeats the title.
+  - **Bylines**: `author` must byte-match `company.founder.name` to get the founder treatment (initials disc, "Founder & CEO" line, JSON-LD jobTitle/LinkedIn) — the check is `isFounder()` in `company.ts`. Any other string renders a plain guest byline with no designation (the three 2026 wellness/content posts are by Vanshika). Known gaps: "●" bullet lines are plain `p` blocks (no semantic list type yet); bylines say "Vanshika" while `company.ts` team lists "Vanshika Garg".
 - **`app/lib/sakha.ts`** — Sakha try/download routing (platform detection, store deep links). **`app/lib/scroll.ts`** — cross-route section scrolling (`goToSection` works from non-home routes).
 
 ## Styling System
@@ -91,6 +94,7 @@ The site is dark-only: nothing sets `data-theme="light"` any more — the `Theme
 - `app/globals.css` (~2400 lines) is a **layered design system**: LAYER 1 = pre-redesign CSS, LAYER 2 = handoff design tokens (`:root` custom properties + `data-theme`/`data-sky` overrides), later layers for type/logo. New components should consume its custom properties rather than raw hexes.
 - Tailwind `fontFamily` reads `--font-body`/`--font-display`/`--font-devanagari`/`--font-mono` **from globals.css tokens**, which map from the `next/font` `*-src` variables in `layout.tsx`. Never point Tailwind directly at next/font variables — that exact mismatch previously broke every heading silently.
 - The `cosmic.*` Tailwind color scale is **unused by any file** (kept aliased to current values). Don't confuse it with the **live** global CSS classes `.cosmic-bg`/`.cosmic-text` in `globals.css`, used by `Hero`, `LegalLayout`, `BlogListing`, both blog routes, `/compliance`, and `not-found` — removing those flattens backgrounds site-wide.
+- `LogoMark` references `/assets/book-logo.svg?v=2` — bump the query whenever the SVG's pixels change: static assets ship with a day of max-age plus a week of stale-while-revalidate, so an unversioned swap lingers for up to a week in visitors' caches.
 
 ## Legacy / Dormant Code
 
@@ -139,6 +143,7 @@ Two Hosting sites in one Firebase project (`margadeshaka-af4de`):
 | `develop` | `staging` | `margadeshaka-staging` | margadeshaka-staging.web.app (`X-Robots-Tag: noindex`) |
 
 - **CI/CD**: `.github/workflows/deploy.yml` deploys on push to either branch (manual dispatch with environment choice also available). Authenticates via the `FIREBASE_SERVICE_ACCOUNT` repo secret (dedicated service account, `roles/firebasehosting.admin` + `roles/firebase.viewer` only). Concurrency-guarded so a slow old commit can't land over a newer one.
+- **Ship to production via PR `develop` → `main`** (PR #8 pattern), never by cherry-picking develop commits onto main: earlier cherry-picks left main with duplicate commits that diverged and made the next PR unmergeable until a reconciling merge of main back into develop.
 - **`firebase.json` carries the config twice** (once per target) because Firebase can't share a hosting block across sites. `npm run verify:hosting` fails CI if the targets drift, staging loses `noindex`, or `trailingSlash` stops mirroring `next.config.js`. Keep it that way.
 - **Post-deploy**: `scripts/ping-indexnow.sh` submits URLs to IndexNow. Its URL list is **hardcoded** (trailing-slash URLs, currently mirroring `app/sitemap.ts`) — extend it whenever a route or blog post is added.
 
