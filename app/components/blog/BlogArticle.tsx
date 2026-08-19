@@ -275,17 +275,26 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
               }}
               aria-hidden="true"
             >
-              HG
+              {post.author
+                .split(/\s+/)
+                .map((w) => w[0])
+                .join('')
+                .slice(0, 2)
+                .toUpperCase()}
             </span>
             <div>
               <div className="text-white text-sm font-semibold">{post.author}</div>
-              {/* Read from company.ts rather than hardcoding: the same title is
-                  also emitted into Organization JSON-LD, so a hardcoded string
-                  here drifts silently. Note company.team[0] separately lists
-                  Hitesh as "Director" — see the PR for that open question. */}
-              <div className="text-white/50 text-[13px]">
-                {company.founder.role}, {company.brand}
-              </div>
+              {/* The role line belongs to the founder alone — guest authors get
+                  no designation. Read from company.ts rather than hardcoding:
+                  the same title is also emitted into Organization JSON-LD, so a
+                  hardcoded string here drifts silently. Note company.team[0]
+                  separately lists Hitesh as "Director" — see the PR for that
+                  open question. */}
+              {post.author === company.founder.name && (
+                <div className="text-white/50 text-[13px]">
+                  {company.founder.role}, {company.brand}
+                </div>
+              )}
             </div>
           </div>
         </header>

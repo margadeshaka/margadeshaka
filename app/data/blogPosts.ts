@@ -58,7 +58,7 @@ export const posts: BlogPost[] = [
     date: 'August 19, 2026',
     isoDate: '2026-08-19',
     readTime: '5 min read',
-    author: 'Hitesh Gupta',
+    author: 'Vanshika',
     featured: true,
     accent: 'gold',
     cover: {
@@ -110,7 +110,7 @@ export const posts: BlogPost[] = [
     date: 'August 13, 2026',
     isoDate: '2026-08-13',
     readTime: '6 min read',
-    author: 'Hitesh Gupta',
+    author: 'Vanshika',
     featured: false,
     accent: 'gold',
     cover: {
@@ -162,7 +162,7 @@ export const posts: BlogPost[] = [
     date: 'August 4, 2026',
     isoDate: '2026-08-04',
     readTime: '7 min read',
-    author: 'Hitesh Gupta',
+    author: 'Vanshika',
     featured: false,
     accent: 'gold',
     cover: {

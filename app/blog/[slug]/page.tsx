@@ -72,12 +72,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     image: post.cover ? `${baseUrl}${post.cover.src}` : `${baseUrl}/icon.png`,
     url: `${baseUrl}/blog/${post.slug}`,
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${baseUrl}/blog/${post.slug}` },
-    author: {
-      '@type': 'Person',
-      name: post.author,
-      jobTitle: company.founder.role,
-      url: company.founder.linkedin,
-    },
+    // Only the founder carries a jobTitle and profile URL — guest authors are
+    // a plain Person, so their posts don't claim the founder's designation.
+    author:
+      post.author === company.founder.name
+        ? {
+            '@type': 'Person',
+            name: post.author,
+            jobTitle: company.founder.role,
+            url: company.founder.linkedin,
+          }
+        : { '@type': 'Person', name: post.author },
     publisher: {
       '@type': 'Organization',
       name: company.brand,
