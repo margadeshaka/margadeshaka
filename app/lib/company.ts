@@ -152,3 +152,13 @@ export const sakhaStore = {
 } as const;
 
 export type Company = typeof company;
+
+/**
+ * True when a blog byline belongs to the founder. The byline disc, the role
+ * line, and the BlogPosting JSON-LD jobTitle/url all key off this one
+ * exact-string comparison — keep the check here so the three call sites can't
+ * drift apart.
+ */
+export function isFounder(authorName: string): boolean {
+  return authorName === company.founder.name;
+}

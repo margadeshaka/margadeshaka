@@ -969,12 +969,12 @@ a:focus-visible {
 }
 
 /*
- * LIGHT THEME (MAR-545)
+ * LIGHT THEME (MAR-545) — INERT
  *
- * Set by the inline boot script in layout.tsx before first paint, and toggled
- * by ThemeToggle. `data-theme` rather than a class because <html> already
- * carries four next/font class variables and a data attribute cannot collide
- * with them; deleting the attribute restores dark, which stays the default.
+ * The site is dark-only: the ThemeToggle and its pre-paint boot script were
+ * removed (6e7646f), so nothing sets data-theme='light' any more. This block
+ * is deliberately kept (see CLAUDE.md) but unreachable — don't extend it, and
+ * don't resurrect the toggle without discussion.
  *
  * Every measurement below is against the cream base #F4EFE7.
  */
@@ -3570,48 +3570,6 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
   opacity: 0;
   transform: translateY(26px);
 }
-
-/* ============================================================
-   THEME TOGGLE (MAR-545)
-
-   Both icons are always in the DOM; CSS picks which one shows, so the
-   control is already correct at first paint. Deciding in JS would render
-   the dark icon on the server and correct it after hydration, which is the
-   same flash the boot script exists to prevent.
-
-   The icon shows the theme you would switch TO — a sun while you are in
-   dark. That reads as the affordance, not as a status indicator.
-   ============================================================ */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex: none;
-  border-radius: 999px;
-  border: 1px solid rgb(var(--fg-rgb) / 0.14);
-  background: rgb(var(--fg-rgb) / 0.04);
-  color: var(--brand-gold);
-  cursor: pointer;
-  transition: background 220ms var(--ease-std), border-color 220ms var(--ease-std),
-    color 220ms var(--ease-std);
-}
-.theme-toggle:hover {
-  background: rgb(var(--fg-rgb) / 0.09);
-  border-color: rgb(var(--gold-rgb) / 0.45);
-}
-/* Explicit focus ring: the outline has to be visible on BOTH a near-black and
-   a cream background, so it keys off the gold token rather than a fixed colour. */
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--brand-gold);
-  outline-offset: 2px;
-}
-.theme-toggle-icon { display: none; line-height: 0; }
-/* Dark is the default (no data-theme attribute) -> offer the sun. */
-.theme-toggle-sun { display: inline-flex; }
-:root[data-theme='light'] .theme-toggle-sun { display: none; }
-:root[data-theme='light'] .theme-toggle-moon { display: inline-flex; }
 
 /* ============================================================
    LIGHT THEME — cosmic layer

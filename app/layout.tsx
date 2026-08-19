@@ -143,7 +143,6 @@ export default function RootLayout({
     <html
       lang="en-IN"
       className={`${newsreader.variable} ${geist.variable} ${geistMono.variable} ${notoDevanagari.variable}`}
-      suppressHydrationWarning
     >
       <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />

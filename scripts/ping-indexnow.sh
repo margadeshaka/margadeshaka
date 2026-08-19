@@ -7,11 +7,20 @@ KEY="bfb494b3f2d98cdb2c9042961b3b3c98"
 HOST="margadeshaka.com"
 
 # Edit this list when you add new pages — pulls from sitemap.ts.
+# Every URL carries a trailing slash to match the canonical shape the site
+# serves (trailingSlash: true with no reconciling redirect).
 URLS=(
   "https://${HOST}/"
-  "https://${HOST}/compliance"
-  "https://${HOST}/privacy"
-  "https://${HOST}/terms"
+  "https://${HOST}/blog/"
+  "https://${HOST}/blog/feeling-lost-and-empty/"
+  "https://${HOST}/blog/i-need-someone-to-talk-to/"
+  "https://${HOST}/blog/why-margadeshaka/"
+  "https://${HOST}/blog/sakha-emotional-context/"
+  "https://${HOST}/blog/dronacharya-active-learning/"
+  "https://${HOST}/blog/privacy-first-ai/"
+  "https://${HOST}/compliance/"
+  "https://${HOST}/privacy/"
+  "https://${HOST}/terms/"
 )
 
 # Build the JSON payload.

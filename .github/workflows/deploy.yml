@@ -1,7 +1,7 @@
 name: Deploy to Firebase Hosting
 
 # main    → production site (margadeshaka-af4de.web.app, and margadeshaka.com once DNS points here)
-# Develop → staging site    (margadeshaka-staging.web.app, noindex)
+# develop → staging site    (margadeshaka-staging.web.app, noindex)
 #
 # Both sites live in the same Firebase project and share one firebase.json,
 # selected by the `target` input. scripts/verify-hosting-config.mjs fails the
@@ -9,7 +9,7 @@ name: Deploy to Firebase Hosting
 
 on:
   push:
-    branches: [main, Develop]
+    branches: [main, develop]
   workflow_dispatch:
     inputs:
       environment:

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
 import SakhaCta from '../SakhaCta';
-import { company } from '../../lib/company';
+import { company, isFounder } from '../../lib/company';
 
 /**
  * Inline links inside body copy.
@@ -265,27 +265,40 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
             {post.title}
           </h1>
           <div className="flex items-center gap-3 mt-6">
-            <span
-              className="w-10 h-10 rounded-full grid place-items-center font-display flex-none"
-              style={{
-                background: 'linear-gradient(135deg, #FFB830, #FFC864 50%, #FFE4B5)',
-                fontSize: 15,
-                fontWeight: 700,
-                color: '#1A1224',
-              }}
-              aria-hidden="true"
-            >
-              HG
-            </span>
+            {/* The initials disc reads as a founder mark — guest authors get a
+                plain-text byline, so a lone letter never sits in the circle. */}
+            {isFounder(post.author) && (
+              <span
+                className="w-10 h-10 rounded-full grid place-items-center font-display flex-none"
+                style={{
+                  background: 'linear-gradient(135deg, #FFB830, #FFC864 50%, #FFE4B5)',
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: '#1A1224',
+                }}
+                aria-hidden="true"
+              >
+                {post.author
+                  .split(/\s+/)
+                  .map((w) => w[0])
+                  .join('')
+                  .slice(0, 2)
+                  .toUpperCase()}
+              </span>
+            )}
             <div>
               <div className="text-white text-sm font-semibold">{post.author}</div>
-              {/* Read from company.ts rather than hardcoding: the same title is
-                  also emitted into Organization JSON-LD, so a hardcoded string
-                  here drifts silently. Note company.team[0] separately lists
-                  Hitesh as "Director" — see the PR for that open question. */}
-              <div className="text-white/50 text-[13px]">
-                {company.founder.role}, {company.brand}
-              </div>
+              {/* The role line belongs to the founder alone — guest authors get
+                  no designation. Read from company.ts rather than hardcoding:
+                  the same title is also emitted into Organization JSON-LD, so a
+                  hardcoded string here drifts silently. Note company.team[0]
+                  separately lists Hitesh as "Director" — see the PR for that
+                  open question. */}
+              {isFounder(post.author) && (
+                <div className="text-white/50 text-[13px]">
+                  {company.founder.role}, {company.brand}
+                </div>
+              )}
             </div>
           </div>
         </header>
