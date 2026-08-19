@@ -137,7 +137,7 @@ export default function CompliancePage() {
             <div
               className="absolute -top-[100px] -right-[80px] w-[380px] h-[380px] rounded-full pointer-events-none"
               style={{
-                background: 'radial-gradient(circle, rgba(88,193,106,0.20) 0%, transparent 65%)',
+                background: 'radial-gradient(circle, rgba(255,200,100,0.20) 0%, transparent 65%)',
                 filter: 'blur(50px)',
               }}
               aria-hidden="true"
@@ -153,7 +153,7 @@ export default function CompliancePage() {
                 className="w-24 h-24 rounded-full grid place-items-center flex-none"
                 style={{
                   background: 'linear-gradient(135deg, #FFB830, #FFC864 50%, #FFE4B5)',
-                  boxShadow: '0 0 60px rgba(88,193,106,0.45)',
+                  boxShadow: '0 0 60px rgba(255,200,100,0.45)',
                   color: '#1A1224',
                 }}
               >

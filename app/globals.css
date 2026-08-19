@@ -75,7 +75,7 @@
   background:
     radial-gradient(ellipse 80% 60% at 50% -20%, rgb(var(--gold-rgb) / 0.08) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 80% 60%, rgba(126, 77, 212, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0,197,34, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0, 230, 170, 0.04) 0%, transparent 50%),
     var(--bg-primary);
 }
 
@@ -246,12 +246,7 @@
    BUTTONS (Sakha component spec)
    ============================ */
 .btn-primary {
-  /* Vertical, not horizontal. A black-to-green gradient ACROSS a button is
-     unreadable by construction: dark text measures 1.03:1 at the edges and
-     white text 2.56:1 at the centre, so no single label colour survives both
-     ends. Top-to-bottom keeps the label inside a narrow luminance band while
-     still giving the button depth. */
-  background: linear-gradient(180deg, #7CC189 0%, #4E9A5E 55%, #2F6B39 100%);
+  background: linear-gradient(90deg, #EAB308 0%, #FFC864 50%, #EAB308 100%);
   color: #1A365D;
   padding: 14px 28px;
   border-radius: 14px;
@@ -289,7 +284,7 @@
 
 .btn-ghost {
   background: transparent;
-  color: #67B274;
+  color: #FFC864;
   padding: 14px 28px;
   border-radius: 14px;
   font-weight: 600;
@@ -301,7 +296,7 @@
   gap: 8px;
 }
 .btn-ghost:hover {
-  border-color: #67B274;
+  border-color: #FFC864;
   background: rgb(var(--gold-rgb) / 0.06);
 }
 
@@ -331,16 +326,16 @@ canvas {
     180deg,
     #6b4c2a 0%,
     #8b6914 15%,
-    #439050 30%,
-    #61C171 45%,
-    #439050 55%,
+    #c9a84c 30%,
+    #f5d778 45%,
+    #c9a84c 55%,
     #8b6914 70%,
     #6b4c2a 85%,
     #4a3218 100%
   );
   box-shadow:
     0 2px 8px rgb(var(--shadow-rgb) / 0.6),
-    inset 0 1px 0 rgba(101,198,118, 0.3);
+    inset 0 1px 0 rgba(255, 220, 120, 0.3);
   z-index: 2;
 }
 
@@ -363,9 +358,9 @@ canvas {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(119,207,134, 0.5) 20%,
-    rgba(140,213,153, 0.7) 50%,
-    rgba(119,207,134, 0.5) 80%,
+    rgba(255, 230, 150, 0.5) 20%,
+    rgba(255, 240, 180, 0.7) 50%,
+    rgba(255, 230, 150, 0.5) 80%,
     transparent 100%
   );
 }
@@ -379,14 +374,14 @@ canvas {
   border-radius: 4px;
   background: linear-gradient(
     180deg,
-    #439050 0%,
-    #61C171 35%,
-    #439050 65%,
+    #c9a84c 0%,
+    #f5d778 35%,
+    #c9a84c 65%,
     #7a5a20 100%
   );
   box-shadow:
     0 2px 6px rgb(var(--shadow-rgb) / 0.5),
-    inset 0 1px 0 rgba(119,207,134, 0.4);
+    inset 0 1px 0 rgba(255, 230, 150, 0.4);
 }
 
 .scroll-endcap-left { left: -4px; }
@@ -399,12 +394,12 @@ canvas {
   background:
     linear-gradient(
       180deg,
-      rgba(10,21,12, 0.92) 0%,
-      rgba(10,21,12, 0.95) 50%,
-      rgba(10,21,12, 0.92) 100%
+      rgba(28, 18, 8, 0.92) 0%,
+      rgba(22, 14, 6, 0.95) 50%,
+      rgba(28, 18, 8, 0.92) 100%
     );
-  border-left: 2px solid rgba(38,85,46, 0.35);
-  border-right: 2px solid rgba(38,85,46, 0.35);
+  border-left: 2px solid rgba(140, 105, 40, 0.35);
+  border-right: 2px solid rgba(140, 105, 40, 0.35);
   box-shadow:
     inset 4px 0 12px rgb(var(--shadow-rgb) / 0.4),
     inset -4px 0 12px rgb(var(--shadow-rgb) / 0.4),
@@ -424,9 +419,9 @@ canvas {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(52,117,63, 0.15) 15%,
-    rgba(64,140,77, 0.3) 50%,
-    rgba(52,117,63, 0.15) 85%,
+    rgba(180, 140, 50, 0.15) 15%,
+    rgba(200, 160, 70, 0.3) 50%,
+    rgba(180, 140, 50, 0.15) 85%,
     transparent 100%
   );
 }
@@ -437,7 +432,7 @@ canvas {
   font-size: 1.35rem;
   font-weight: 700;
   margin: 12px 0 8px;
-  background: linear-gradient(135deg, #d4a54a, #61C171, #d4a54a);
+  background: linear-gradient(135deg, #d4a54a, #f5d778, #d4a54a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -467,10 +462,10 @@ canvas {
 /* Ambient glow around the entire scroll */
 @keyframes scrollGlow {
   0%, 100% {
-    filter: drop-shadow(0 0 12px rgba(52,117,63, 0.12));
+    filter: drop-shadow(0 0 12px rgba(180, 140, 50, 0.12));
   }
   50% {
-    filter: drop-shadow(0 0 20px rgba(64,140,77, 0.22));
+    filter: drop-shadow(0 0 20px rgba(200, 160, 70, 0.22));
   }
 }
 
@@ -510,10 +505,10 @@ canvas {
 
 @keyframes glow {
   0%, 100% {
-    filter: drop-shadow(0 0 12px rgba(52,117,63, 0.12));
+    filter: drop-shadow(0 0 12px rgba(180, 140, 50, 0.12));
   }
   50% {
-    filter: drop-shadow(0 0 22px rgba(64,140,77, 0.22));
+    filter: drop-shadow(0 0 22px rgba(200, 160, 70, 0.22));
   }
 }
 
@@ -664,12 +659,12 @@ a:focus-visible {
   color: #e0b44a;
   text-decoration: underline;
   text-underline-offset: 2px;
-  text-decoration-color: rgba(69,161,85, 0.35);
+  text-decoration-color: rgba(224, 180, 74, 0.35);
 }
 
 .scroll-content .content-link:hover {
-  color: #61C171;
-  text-decoration-color: rgba(97,193,113, 0.5);
+  color: #f5d778;
+  text-decoration-color: rgba(245, 215, 120, 0.5);
 }
 
 /* Link styles within content */
@@ -681,7 +676,7 @@ a:focus-visible {
 }
 
 .content-link:hover {
-  color: #61C171;
+  color: #f5d778;
 }
 
 .content-link:focus-visible {
@@ -703,9 +698,9 @@ a:focus-visible {
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(52,117,63, 0.08) 25%,
-    rgba(52,117,63, 0.15) 50%,
-    rgba(52,117,63, 0.08) 75%
+    rgba(180, 140, 50, 0.08) 25%,
+    rgba(180, 140, 50, 0.15) 50%,
+    rgba(180, 140, 50, 0.08) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
@@ -733,7 +728,7 @@ a:focus-visible {
 
 /* Gold-on-gold gradient text (for headlines) */
 .gold-text {
-  background: linear-gradient(135deg, #3FAC52 0%, #67B274 50%, #8ED49A 100%);
+  background: linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFE4B5 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -756,14 +751,14 @@ a:focus-visible {
   white-space: nowrap;
 }
 .badge-ghost {
-  border-color: rgb(var(--fg-rgb) / 0.10);
+  border-color: rgb(var(--fg-rgb) / max(0.10, var(--fg-a-min)));
   background: rgb(var(--fg-rgb) / 0.04);
   color: rgb(var(--fg-rgb) / max(0.7, var(--fg-a-min)));
 }
 .badge-aurora {
-  border-color: rgba(0,197,34, 0.30);
-  background: rgba(0,197,34, 0.08);
-  color: #2BEC4D;
+  border-color: rgba(0, 230, 170, 0.30);
+  background: rgba(0, 230, 170, 0.08);
+  color: #4FE9C0;
 }
 
 /* Saffron divider (horizontal hairline) */
@@ -922,19 +917,19 @@ a:focus-visible {
    * value, so the hierarchy above the floor survives.
    */
   --fg-a-min: 0.5;             /* white @0.5 on #0B0A19 = 5.32:1 */
-  --gold-rgb: 103 178 116;    /* accent — forest, lightened for the dark base */
-  --gold-warm-rgb: 77 152 90; /* the deeper forest variant */
+  --gold-rgb: 255 200 100;    /* the Saffron Thread */
+  --gold-warm-rgb: 255 190 70;/* the warmer gold variant */
   --shadow-rgb: 0 0 0;        /* drop shadows */
   --surface-rgb: 6 5 15;      /* navbar / footer / modal fills */
 
   /* Brand */
-  --brand-gold: #67B274;
-  --brand-gold-light: #6CC67B;
-  --brand-gold-amber: #3FAC52;
-  --brand-gold-core: #8ED49A;
+  --brand-gold: #FFC864;
+  --brand-gold-light: #FFD280;
+  --brand-gold-amber: #FFB830;
+  --brand-gold-core: #FFE4B5;
   --cosmic-purple: #7E4DD4;
   --cosmic-purple-deep: #4C1F9F;
-  --aurora: #00C522;
+  --aurora: #00E6AA;
   --rose: #E01F3D;
 
   /* Backgrounds */
@@ -995,20 +990,20 @@ a:focus-visible {
    */
   --fg-rgb: 26 22 38;
   --fg-a-min: 0.72;            /* ink @0.72 on cream = 6.58:1 */
-  --gold-rgb: 55 107 64;       /* #376B40 — 5.49:1 on cream, 4.80:1 on a tinted chip */
-  --gold-warm-rgb: 60 118 70;  /* #3C7646 — the colour as given */
+  --gold-rgb: 132 82 0;        /* #845200 — 5.76:1 on cream, 5.07:1 on a gold-tinted chip */
+  --gold-warm-rgb: 168 106 10; /* the warm variant, kept a step lighter */
   --shadow-rgb: 120 100 70;    /* warm grey: pure black shadows look dirty on cream */
   --surface-rgb: 244 239 231;  /* #F4EFE7 */
 
   /*
-   * Gold has to darken hard. #7FBBA2 measures 1.34:1 on cream — below even the
+   * Gold has to darken hard. #FFC864 measures 1.34:1 on cream — below even the
    * 3:1 non-text floor, effectively invisible — against 12.8:1 on the dark
    * base. #945F00 keeps the same hue and saturation and passes AA at 4.71:1.
    */
-  --brand-gold: #376B40;
-  --brand-gold-light: #3C7646;
-  --brand-gold-amber: #2F5C37;
-  --brand-gold-core: #488852;
+  --brand-gold: #845200;
+  --brand-gold-light: #A86A0A;
+  --brand-gold-amber: #8A5600;
+  --brand-gold-core: #B07C1E;
 
   /* Glows are tuned for an additive dark canvas; at full strength on cream
      they read as dirt rather than light. */
@@ -1210,11 +1205,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   background-image:
     radial-gradient(1.4px 1.4px at 40px 60px, rgb(var(--fg-rgb) / 0.85), transparent),
     radial-gradient(1.3px 1.3px at 130px 20px, rgb(var(--fg-rgb) / 0.7), transparent),
-    radial-gradient(1.6px 1.6px at 200px 90px, rgba(109,199,124,0.9), transparent),
+    radial-gradient(1.6px 1.6px at 200px 90px, rgba(255,210,130,0.9), transparent),
     radial-gradient(1.3px 1.3px at 60px 160px, rgb(var(--fg-rgb) / 0.72), transparent),
     radial-gradient(1.8px 1.8px at 260px 40px, rgb(var(--fg-rgb) / 0.85), transparent),
     radial-gradient(1.3px 1.3px at 180px 200px, rgb(var(--fg-rgb) / 0.65), transparent),
-    radial-gradient(1.5px 1.5px at 320px 130px, rgba(109,199,124,0.85), transparent),
+    radial-gradient(1.5px 1.5px at 320px 130px, rgba(255,210,130,0.85), transparent),
     radial-gradient(1.3px 1.3px at 20px 230px, rgb(var(--fg-rgb) / 0.7), transparent),
     radial-gradient(1.6px 1.6px at 110px 250px, rgb(var(--fg-rgb) / 0.8), transparent);
   background-size: 340px 300px;
@@ -1231,7 +1226,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .stars-dense::after {
   background-image:
     radial-gradient(1.3px 1.3px at 70px 30px, rgb(var(--fg-rgb) / 0.7), transparent),
-    radial-gradient(1.4px 1.4px at 220px 70px, rgba(109,199,124,0.8), transparent),
+    radial-gradient(1.4px 1.4px at 220px 70px, rgba(255,210,130,0.8), transparent),
     radial-gradient(1.3px 1.3px at 150px 180px, rgb(var(--fg-rgb) / 0.68), transparent),
     radial-gradient(1.3px 1.3px at 300px 210px, rgb(var(--fg-rgb) / 0.62), transparent),
     radial-gradient(1.3px 1.3px at 40px 120px, rgb(var(--fg-rgb) / 0.6), transparent);
@@ -1324,7 +1319,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
       rgba(126, 77, 212, 0.04) 0%, rgba(126, 77, 212, 0.02) 40%, transparent 100%),
     /* teal — centre (0.95w, 0), r 1.3w */
     radial-gradient(circle 130vw at 95% 0%,
-      rgba(0,197,34, 0.03) 0%, rgba(0,197,34, 0.01) 40%, transparent 100%),
+      rgba(0, 230, 170, 0.03) 0%, rgba(0, 230, 170, 0.01) 40%, transparent 100%),
     /* warm gold — centre (0.5w, -0.05h), r 0.8w */
     radial-gradient(circle 80vw at 50% -5%,
       rgb(var(--gold-rgb) / 0.12) 0%, rgb(var(--gold-rgb) / 0.05) 40%, transparent 100%);
@@ -1417,12 +1412,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .btn-sm { padding: 10px 18px; font-size: 13px; }
 
 .btn-primary {
-  /* Vertical, not horizontal. A black-to-green gradient ACROSS a button is
-     unreadable by construction: dark text measures 1.03:1 at the edges and
-     white text 2.56:1 at the centre, so no single label colour survives both
-     ends. Top-to-bottom keeps the label inside a narrow luminance band while
-     still giving the button depth. */
-  background: linear-gradient(180deg, #7CC189 0%, #4E9A5E 55%, #2F6B39 100%);
+  background: linear-gradient(90deg, #EAB308 0%, #FFC864 50%, #EAB308 100%);
   color: #1A1224;
 }
 .btn-primary:hover {
@@ -1465,7 +1455,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .navbar.scrolled {
   background: rgb(var(--surface-rgb) / 0.85);
-  border-bottom-color: rgb(var(--fg-rgb) / 0.08);
+  border-bottom-color: rgb(var(--fg-rgb) / max(0.08, var(--fg-a-min)));
 }
 .navbar-inner {
   max-width: 1280px;
@@ -1485,7 +1475,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .navbar-dot {
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3FAC52 0%, #67B274 50%, #6CC67B 100%);
+  background: linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFD280 100%);
   box-shadow: 0 0 20px rgb(var(--gold-rgb) / calc(0.45 * var(--gold-intensity)));
   flex: none;
   display: grid;
@@ -1565,7 +1555,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   visibility: visible;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-top-color: rgb(var(--fg-rgb) / 0.08);
+  border-top-color: rgb(var(--fg-rgb) / max(0.08, var(--fg-a-min)));
   transition: max-height 320ms var(--ease-out), visibility 0s;
 }
 @media (min-width: 880px) {
@@ -1766,15 +1756,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   position: absolute; top: calc(50% - 185px); left: 50%; transform: translate(-50%,-50%) scale(0.4);
   width: 300px; height: 300px; border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(181,230,190,0.9) 0%, rgba(146,216,158,0.55) 6%, transparent 15%),
-    radial-gradient(circle, rgba(101,198,118,0.5) 0%, rgba(73,190,94,0.28) 22%, transparent 46%),
-    radial-gradient(circle, rgba(68,186,88,0.22) 0%, rgba(66,179,86,0.10) 40%, transparent 68%);
+    radial-gradient(circle, rgba(255,255,245,0.9) 0%, rgba(255,235,190,0.55) 6%, transparent 15%),
+    radial-gradient(circle, rgba(255,210,120,0.5) 0%, rgba(255,190,80,0.28) 22%, transparent 46%),
+    radial-gradient(circle, rgba(255,180,70,0.22) 0%, rgba(255,170,60,0.10) 40%, transparent 68%);
   filter: blur(6px); pointer-events: none;
   opacity: 0;
 }
 .sakha-editorial-glow::before, .sakha-editorial-glow::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; }
-.sakha-editorial-glow::before { background: radial-gradient(circle, rgba(84,192,103,0.35), rgba(66,179,86,0.12) 42%, transparent 66%); filter: blur(26px); transform: scale(1.35); }
-.sakha-editorial-glow::after { top: 34%; left: 42%; width: 14px; height: 14px; inset: auto; border-radius: 50%; background: radial-gradient(circle, rgb(var(--fg-rgb)), rgba(161,219,171,0.6) 55%, transparent 75%); filter: blur(1px); }
+.sakha-editorial-glow::before { background: radial-gradient(circle, rgba(255,200,95,0.35), rgba(255,180,60,0.12) 42%, transparent 66%); filter: blur(26px); transform: scale(1.35); }
+.sakha-editorial-glow::after { top: 34%; left: 42%; width: 14px; height: 14px; inset: auto; border-radius: 50%; background: radial-gradient(circle, rgb(var(--fg-rgb)), rgba(255,240,210,0.6) 55%, transparent 75%); filter: blur(1px); }
 /*
  * The glow belongs to the bud, so it must not precede it.
  *
@@ -1837,7 +1827,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   width: auto;
   display: block;
   overflow: visible;
-  filter: drop-shadow(0 0 26px rgba(69,183,89, 0.38));
+  filter: drop-shadow(0 0 26px rgb(var(--gold-warm-rgb) / 0.35));
 }
 /* Each part starts hidden; its animation's `forwards` fill reveals it, so
    nothing flashes before `.grown` lands. */
@@ -1913,11 +1903,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .sakha-seed-img {
   width: 200px; height: 200px; display: block;
   animation: orbPulse 4.5s var(--ease-std) infinite;
-  filter: drop-shadow(0 0 46px rgb(var(--gold-warm-rgb) / 0.5)) drop-shadow(0 0 18px rgba(101,198,118,0.4));
+  filter: drop-shadow(0 0 46px rgb(var(--gold-warm-rgb) / 0.5)) drop-shadow(0 0 18px rgba(255,210,120,0.4));
 }
 .hero-seed-img {
   width: 120px; height: 120px; display: block;
-  filter: drop-shadow(0 0 34px rgb(var(--gold-warm-rgb) / 0.45)) drop-shadow(0 0 14px rgba(101,198,118,0.35));
+  filter: drop-shadow(0 0 34px rgb(var(--gold-warm-rgb) / 0.45)) drop-shadow(0 0 14px rgba(255,210,120,0.35));
 }
 @keyframes orbPulse {
   0%, 100% { transform: scale(1); }
@@ -1942,7 +1932,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .sakha-phone-glow {
   position: absolute; top: 50%; left: 50%; z-index: 0;
   width: 620px; height: 620px; transform: translate(-50%, -48%);
-  background: radial-gradient(circle at 50% 50%, rgba(73,190,94,0.30) 0%, rgba(64,176,84,0.16) 32%, rgba(61,166,79,0.05) 55%, transparent 72%);
+  background: radial-gradient(circle at 50% 50%, rgba(255,190,80,0.30) 0%, rgba(255,165,55,0.16) 32%, rgba(255,150,40,0.05) 55%, transparent 72%);
   filter: blur(14px); pointer-events: none;
   animation: phoneGlow 9s ease-in-out infinite;
 }
@@ -1950,7 +1940,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .sakha-phone-particles { position: absolute; top: 50%; left: 50%; width: 560px; height: 640px; transform: translate(-50%,-50%); z-index: 1; pointer-events: none; }
 .sakha-phone-particles span {
   position: absolute; width: 3px; height: 3px; border-radius: 50%;
-  background: rgba(113,204,129,0.9); box-shadow: 0 0 6px rgba(94,196,112,0.8);
+  background: rgba(255,214,140,0.9); box-shadow: 0 0 6px rgba(255,200,110,0.8);
   top: calc(var(--i) * 7%); left: 22%;
   animation: particleFloat 11s ease-in-out infinite;
   animation-delay: calc(var(--i) * -0.8s);
@@ -2111,7 +2101,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
  * animations under `.sakha-editorial-visual.grown`, which does not wrap this
  * copy — without these three lines the mark renders completely blank.
  */
-.chat-intro-mark { height: 42px; width: auto; filter: drop-shadow(0 0 10px rgba(69,183,89, 0.5)); }
+.chat-intro-mark { height: 42px; width: auto; filter: drop-shadow(0 0 10px rgb(var(--gold-warm-rgb) / 0.5)); }
 .chat-intro-mark .sakha-sprout-stem { stroke-dashoffset: 0; }
 .chat-intro-mark .sakha-sprout-leaf,
 .chat-intro-mark .sakha-sprout-bud { opacity: 1; transform: none; }
@@ -2145,7 +2135,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border-radius: 14px;                /* cornerRadius: 18pt */
   text-wrap: pretty;
 }
-.chat-user { background: #67B274; color: #1A0A00; font-weight: 500; }  /* sakhaAccent / onBrandGold */
+.chat-user { background: #FFC864; color: #1A0A00; font-weight: 500; }  /* sakhaAccent / onBrandGold */
 .chat-sakha { background: rgb(var(--fg-rgb) / 0.08); color: rgb(var(--fg-rgb) / max(0.94, var(--fg-a-min))); }
 .chat-time { font-size: 8px; color: rgb(var(--fg-rgb) / max(0.42, var(--fg-a-min))); }   /* .caption2 = 11pt */
 @keyframes bubbleIn { to { opacity: 1; transform: translateY(0); } }
@@ -2414,16 +2404,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   display: block;
   flex: none;
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 32%, #8AD397 0%, #60C371 32%, #42B155 62%,
-    #235C2E 85%, #0B1410 100%);
-  box-shadow: 0 0 14px rgba(66,179,86, 0.55), 0 0 3px rgba(101,198,118, 0.8) inset;
+  background: radial-gradient(circle at 38% 32%, #FFE9B0 0%, #FFD070 34%, #FFB63A 70%, #F5A623 100%);
+  box-shadow: 0 0 14px rgba(255, 190, 60, 0.55), 0 0 3px rgba(255, 210, 120, 0.8) inset;
 }
 .logo-orb--hero {
   width: 110px;
   height: 110px;
-  box-shadow: 0 0 72px 18px rgba(66,179,86, 0.45),
-              0 0 36px 4px rgba(82,190,101, 0.5),
-              0 4px 24px rgba(61,166,79, 0.35) inset;
+  box-shadow: 0 0 72px 18px rgba(255, 180, 60, 0.45),
+              0 0 36px 4px rgba(255, 200, 90, 0.5),
+              0 4px 24px rgba(255, 170, 40, 0.35) inset;
 }
 
 @keyframes spin360 {
@@ -2495,21 +2484,21 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   /*
    * The orb (240px) sits over the inner ~33% of this 720px gradient, so only
    * the 33%–93% band is ever visible. The curve is weighted so the intensity
-   * AT the orb's edge matches the old `0 0 100px rgba(84,192,103,0.8)` shadow
+   * AT the orb's edge matches the old `0 0 100px rgba(255,200,95,0.8)` shadow
    * — a naive even falloff reads far dimmer than the original.
    */
   background: radial-gradient(circle closest-side,
-    rgba(110,202,126, 0.62) 0%,
-    rgba(93,195,111, 0.57) 20%,
-    rgba(84,192,103, 0.50) 30%,
-    rgba(81,190,100, 0.42) 37%,
-    rgba(73,190,94, 0.32) 45%,
-    rgba(70,186,90, 0.22) 53%,
-    rgba(68,182,88, 0.145) 61%,
-    rgba(66,179,86, 0.088) 69%,
-    rgba(64,178,84, 0.048) 77%,
-    rgba(64,176,84, 0.020) 85%,
-    rgba(65,173,84, 0) 93%);
+    rgba(255, 216, 134, 0.62) 0%,
+    rgba(255, 206, 108, 0.57) 20%,
+    rgba(255, 200, 95, 0.50) 30%,
+    rgba(255, 195, 88, 0.42) 37%,
+    rgba(255, 190, 80, 0.32) 45%,
+    rgba(255, 184, 72, 0.22) 53%,
+    rgba(255, 180, 65, 0.145) 61%,
+    rgba(255, 176, 60, 0.088) 69%,
+    rgba(255, 172, 56, 0.048) 77%,
+    rgba(255, 170, 54, 0.020) 85%,
+    rgba(255, 168, 52, 0) 93%);
   opacity: 0.82;
   transition: opacity 500ms var(--ease-std),
               transform 500ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -2534,15 +2523,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   inherits: false;
   initial-value: 1;
 }
-.contact-orb-core { position: absolute; inset: 0; border-radius: 50%; --orb-scale: 1; background: radial-gradient(circle at 38% 32%, rgb(var(--fg-rgb)) 0%, #96D8A2 20%, #69C87A 44%, #3C994C 70%, #235C2E 88%, #0B1410 100%); box-shadow: inset 0 4px 20px rgb(var(--fg-rgb) / 0.6), inset 0 -14px 40px rgba(11,20,16,0.62); animation: orbBreathe 6s ease-in-out infinite; transition: --orb-scale 500ms cubic-bezier(0.22,0.61,0.36,1); }
+.contact-orb-core { position: absolute; inset: 0; border-radius: 50%; --orb-scale: 1; background: radial-gradient(circle at 38% 32%, rgb(var(--fg-rgb)) 0%, #ffe9c2 22%, #ffcf7e 48%, #f5a623 78%, #d98a1e 100%); box-shadow: inset 0 4px 20px rgb(var(--fg-rgb) / 0.6), inset 0 -14px 40px rgba(180,110,20,0.5); animation: orbBreathe 6s ease-in-out infinite; transition: --orb-scale 500ms cubic-bezier(0.22,0.61,0.36,1); }
 /* Breathe multiplies the hover scale rather than replacing it — see --orb-scale. */
 @keyframes orbBreathe {
   0%, 100% { transform: scale(var(--orb-scale)); }
   50%      { transform: scale(calc(var(--orb-scale) * 1.04)); }
 }
-.contact-orb-ripple { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(101,198,118,0.5); opacity: 0; pointer-events: none; }
+.contact-orb-ripple { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(255,205,120,0.5); opacity: 0; pointer-events: none; }
 /* Only the inset highlights change here; the outer glow lives on ::before. */
-.contact-orb:hover .contact-orb-core { --orb-scale: 1.07; box-shadow: inset 0 4px 22px rgb(var(--fg-rgb) / 0.7), inset 0 -14px 44px rgba(41,101,51,0.5); }
+.contact-orb:hover .contact-orb-core { --orb-scale: 1.07; box-shadow: inset 0 4px 22px rgb(var(--fg-rgb) / 0.7), inset 0 -14px 44px rgba(180,110,20,0.5); }
 .contact-orb:hover .contact-orb-ripple { animation: orbRipple 1.6s ease-out infinite; }
 @keyframes orbRipple { 0% { opacity: 0.7; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
 .contact-orb-bubble { position: absolute; bottom: calc(100% + 20px); left: 50%; transform: translateX(-50%) translateY(8px); white-space: nowrap; padding: 13px 20px; border-radius: 16px; font-size: 15px; font-weight: 500; color: rgb(var(--fg-rgb)); background: rgba(26,24,36,0.72); border: 1px solid rgb(var(--fg-rgb) / 0.12); box-shadow: 0 24px 60px -18px rgb(var(--shadow-rgb) / 0.8), 0 0 40px -12px rgb(var(--gold-warm-rgb) / 0.3); opacity: 0; pointer-events: none; transition: opacity 340ms, transform 340ms; }
@@ -2554,13 +2543,13 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .contact-orb-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 38px; }
 .orb-link { position: relative; display: inline-flex; align-items: center; gap: 11px; padding: 12px 22px 12px 14px; border-radius: 999px; text-decoration: none; color: rgb(var(--fg-rgb) / max(0.72, var(--fg-a-min))); font-size: 15px; font-weight: 500; background: rgb(var(--fg-rgb) / 0.045); border: 1px solid rgb(var(--fg-rgb) / 0.10); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px -14px rgb(var(--shadow-rgb) / 0.6); transition: transform 300ms cubic-bezier(0.22,0.61,0.36,1), color 300ms, border-color 300ms, box-shadow 300ms, background 300ms; }
 .orb-link-icon { position: relative; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgb(var(--fg-rgb) / 0.06); color: rgb(var(--fg-rgb) / max(0.75, var(--fg-a-min))); transition: color 300ms, background 300ms; }
-.orb-link-icon::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid rgba(101,198,118,0.6); opacity: 0; transform: scale(0.8); pointer-events: none; }
-.orb-link:hover { transform: translateY(-5px); color: rgb(var(--fg-rgb)); border-color: rgba(101,198,118,0.35); background: rgba(94,196,112,0.07); box-shadow: 0 16px 40px -16px rgb(var(--shadow-rgb) / 0.7), 0 0 34px -8px rgb(var(--gold-warm-rgb) / 0.4); }
-.orb-link:hover .orb-link-icon { color: var(--brand-gold); background: rgba(94,196,112,0.12); }
+.orb-link-icon::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid rgba(255,205,120,0.6); opacity: 0; transform: scale(0.8); pointer-events: none; }
+.orb-link:hover { transform: translateY(-5px); color: rgb(var(--fg-rgb)); border-color: rgba(255,205,120,0.35); background: rgba(255,200,110,0.07); box-shadow: 0 16px 40px -16px rgb(var(--shadow-rgb) / 0.7), 0 0 34px -8px rgb(var(--gold-warm-rgb) / 0.4); }
+.orb-link:hover .orb-link-icon { color: var(--brand-gold); background: rgba(255,200,110,0.12); }
 .orb-link:hover .orb-link-icon::after { animation: orbLinkRing 1.5s ease-out infinite; }
 @keyframes orbLinkRing { 0% { opacity: 0.7; transform: scale(0.85); } 100% { opacity: 0; transform: scale(1.35); } }
 .orb-particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.orb-particles span { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: rgba(113,204,129,0.9); box-shadow: 0 0 6px rgba(94,196,112,0.8); left: calc(50% + (var(--i) - 6) * 5.4%); top: 58%; opacity: 0; animation: orbParticle 12s ease-in-out infinite; animation-delay: calc(var(--i) * -1s); }
+.orb-particles span { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: rgba(255,214,140,0.9); box-shadow: 0 0 6px rgba(255,200,110,0.8); left: calc(50% + (var(--i) - 6) * 5.4%); top: 58%; opacity: 0; animation: orbParticle 12s ease-in-out infinite; animation-delay: calc(var(--i) * -1s); }
 @keyframes orbParticle { 0% { opacity: 0; transform: translateY(30px); } 25% { opacity: 0.9; } 75% { opacity: 0.4; } 100% { opacity: 0; transform: translateY(-120px); } }
 
 /* ============================
@@ -2588,19 +2577,19 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .team-sub { margin: 22px auto 0; font-size: 19px; font-weight: 400; color: rgb(var(--fg-rgb) / max(0.62, var(--fg-a-min))); line-height: 1.7; max-width: 60ch; }
 .team-stage { position: relative; width: 100%; max-width: 1000px; margin: clamp(48px, 7vw, 96px) auto 0; aspect-ratio: 1000 / 560; }
 .team-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; }
-.team-thread-base { stroke: rgba(94,196,112,0.18); stroke-width: 1.4; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.team-thread-base { stroke: rgba(255,200,110,0.18); stroke-width: 1.4; vector-effect: non-scaling-stroke; stroke-linecap: round; }
 .team-thread-seg { stroke: transparent; stroke-width: 2.4; vector-effect: non-scaling-stroke; stroke-linecap: round; transition: stroke 420ms; }
-.team-thread-seg--on { stroke: rgba(104,199,121,0.85); filter: drop-shadow(0 0 5px rgba(73,190,94,0.6)); }
-.team-thread-pulse { stroke: rgba(131,208,144,0.95); stroke-width: 2.2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 6 620; filter: drop-shadow(0 0 6px rgb(var(--gold-rgb) / 0.9)); animation: teamFlow 6s linear infinite; }
+.team-thread-seg--on { stroke: rgba(255,208,125,0.85); filter: drop-shadow(0 0 5px rgba(255,190,80,0.6)); }
+.team-thread-pulse { stroke: rgba(255,226,165,0.95); stroke-width: 2.2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 6 620; filter: drop-shadow(0 0 6px rgb(var(--gold-rgb) / 0.9)); animation: teamFlow 6s linear infinite; }
 @keyframes teamFlow { from { stroke-dashoffset: 626; } to { stroke-dashoffset: 0; } }
 .team-node { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; cursor: default; z-index: 2; animation: teamFloat 8s ease-in-out infinite; animation-delay: var(--fd, 0s); }
 .team-node--active { z-index: 20; }
 @keyframes teamFloat { 0%,100% { translate: 0 0; } 50% { translate: 0 -9px; } }
 .team-node-inner { position: relative; width: clamp(96px, 11vw, 128px); height: clamp(96px, 11vw, 128px); transition: transform 380ms cubic-bezier(0.22,0.61,0.36,1); }
 .team-node:hover .team-node-inner { transform: scale(1.09); }
-.team-node-glow { position: absolute; inset: -22%; border-radius: 50%; background: radial-gradient(circle, rgba(84,192,103,0.42), rgba(66,179,86,0.14) 48%, transparent 70%); filter: blur(10px); transition: opacity 380ms, transform 380ms; opacity: 0.7; }
+.team-node-glow { position: absolute; inset: -22%; border-radius: 50%; background: radial-gradient(circle, rgba(255,200,95,0.42), rgba(255,180,60,0.14) 48%, transparent 70%); filter: blur(10px); transition: opacity 380ms, transform 380ms; opacity: 0.7; }
 .team-node:hover .team-node-glow { opacity: 1; transform: scale(1.15); }
-.team-avatar { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; padding: 2px; background: linear-gradient(150deg, rgba(113,204,129,0.9), rgba(66,179,86,0.35) 55%, rgb(var(--fg-rgb) / 0.08)); box-shadow: 0 12px 40px -12px rgb(var(--shadow-rgb) / 0.7), inset 0 0 0 1px rgb(var(--fg-rgb) / 0.12); }
+.team-avatar { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; padding: 2px; background: linear-gradient(150deg, rgba(255,214,140,0.9), rgba(255,168,60,0.35) 55%, rgb(var(--fg-rgb) / 0.08)); box-shadow: 0 12px 40px -12px rgb(var(--shadow-rgb) / 0.7), inset 0 0 0 1px rgb(var(--fg-rgb) / 0.12); }
 .team-avatar image-slot { width: 100%; height: 100%; border-radius: 50%; --slot-bg: #171622; font-family: var(--font-display); }
 .team-label { margin-top: 16px; text-align: center; }
 .team-name { font-family: var(--font-display); font-size: clamp(17px, 1.7vw, 20px); font-weight: 500; color: rgb(var(--fg-rgb)); letter-spacing: -0.005em; }
@@ -2645,7 +2634,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 .gold-text {
-  background: linear-gradient(135deg, #3FAC52 0%, #67B274 50%, #8ED49A 100%);
+  background: linear-gradient(135deg, #FFB830 0%, #FFC864 50%, #FFE4B5 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2675,14 +2664,14 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   letter-spacing: 0.02em;
 }
 .badge-ghost {
-  border-color: rgb(var(--fg-rgb) / 0.10);
+  border-color: rgb(var(--fg-rgb) / max(0.10, var(--fg-a-min)));
   background: rgb(var(--fg-rgb) / 0.04);
   color: rgb(var(--fg-rgb) / max(0.7, var(--fg-a-min)));
 }
 .badge-aurora {
-  border-color: rgba(0,197,34, 0.30);
-  background: rgba(0,197,34, 0.08);
-  color: #2BEC4D;
+  border-color: rgba(0, 230, 170, 0.30);
+  background: rgba(0, 230, 170, 0.08);
+  color: #4FE9C0;
 }
 
 /* Skip link */
@@ -2742,7 +2731,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   position: absolute; left: 50%; top: 20px;
   width: 22px; height: 22px; transform: translate(-50%, -50%);
   border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle, rgba(119,207,134,0.9) 0%, rgb(var(--gold-warm-rgb) / 0.55) 45%, rgb(var(--gold-warm-rgb) / 0) 78%);
+  background: radial-gradient(circle, rgba(255,224,150,0.9) 0%, rgb(var(--gold-warm-rgb) / 0.55) 45%, rgb(var(--gold-warm-rgb) / 0) 78%);
   filter: blur(2px);
   animation: sakhaOrbGlow 4.5s ease-in-out infinite;
 }
@@ -2785,7 +2774,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   transition: transform 260ms var(--ease-out, ease), box-shadow 260ms var(--ease-std, ease),
     border-color 260ms;
 }
-.store-badge:hover { transform: translateY(-3px); border-color: rgb(var(--fg-rgb) / 0.45); box-shadow: 0 18px 42px -18px rgb(var(--shadow-rgb) / 0.8), 0 0 34px -10px rgb(var(--gold-warm-rgb) / 0.45); }
+.store-badge:hover { transform: translateY(-3px); border-color: rgb(var(--fg-rgb) / max(0.45, var(--fg-a-min))); box-shadow: 0 18px 42px -18px rgb(var(--shadow-rgb) / 0.8), 0 0 34px -10px rgb(var(--gold-warm-rgb) / 0.45); }
 /* Both glyphs share a 0 0 24 24 viewBox, so one size keeps them optically
    equal regardless of the width/height baked into each SVG. */
 .store-badge-icon { display: grid; place-items: center; flex: none; }
@@ -2863,7 +2852,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .blog-filter button:hover { color: rgb(var(--fg-rgb)); border-color: rgb(var(--gold-rgb) / 0.3); }
 .blog-filter button[aria-pressed="true"] {
   color: #1A1224;
-  background: linear-gradient(90deg, #328240, #67B274 55%, #6CC67B);
+  background: linear-gradient(90deg, #EAB308, #FFC864 55%, #FFD280);
   border-color: transparent;
 }
 
@@ -2886,7 +2875,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   min-height: 220px;
   background:
     radial-gradient(ellipse 120% 90% at 80% 10%, rgb(var(--gold-rgb) / 0.18), transparent 60%),
-    linear-gradient(155deg, rgb(var(--gold-rgb) / 0.10) 0%, rgba(63,172,82,0.04) 100%),
+    linear-gradient(155deg, rgb(var(--gold-rgb) / 0.10) 0%, rgba(255,184,48,0.04) 100%),
     rgb(var(--fg-rgb) / 0.03);
   border-left: 1px solid rgb(var(--fg-rgb) / 0.06);
   display: grid;
@@ -3295,7 +3284,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   display: block;
   height: 100%;
   transform-origin: left;
-  background: linear-gradient(90deg, #3FAC52, #8ED49A);
+  background: linear-gradient(90deg, #FFB830, #FFE4B5);
   box-shadow: 0 0 10px rgb(var(--gold-rgb) / 0.6);
   transition: transform 90ms linear;
 }
@@ -3349,7 +3338,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .blog-controls { margin-top: 40px; padding-bottom: 20px; border-bottom: 1px solid rgb(var(--fg-rgb) / 0.09); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .blog-catfilter { display: flex; flex-wrap: wrap; gap: 6px; }
 .blog-catfilter button { padding: 7px 14px; border-radius: 999px; background: none; border: 1px solid rgb(var(--fg-rgb) / 0.12); cursor: pointer; font-family: inherit; font-size: 13px; color: rgb(var(--fg-rgb) / max(0.6, var(--fg-a-min))); transition: background 200ms, color 200ms, border-color 200ms; }
-.blog-catfilter button:hover { color: rgb(var(--fg-rgb)); border-color: rgb(var(--fg-rgb) / 0.28); }
+.blog-catfilter button:hover { color: rgb(var(--fg-rgb)); border-color: rgb(var(--fg-rgb) / max(0.28, var(--fg-a-min))); }
 .blog-catfilter button.is-active { background: rgb(var(--gold-rgb) / 0.12); border-color: rgb(var(--gold-rgb) / 0.32); color: var(--brand-gold); }
 
 .blog-list { display: flex; flex-direction: column; }
@@ -3429,7 +3418,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
  * drop-shadow follows the SVG's alpha, so the glow traces the book silhouette.
  */
 .logo-mark--hero {
-  filter: drop-shadow(0 0 36px rgba(66,179,86, 0.45))
+  filter: drop-shadow(0 0 36px rgba(255, 190, 60, 0.45))
           drop-shadow(0 0 14px rgb(var(--gold-rgb) / 0.55));
 }
 
@@ -3507,11 +3496,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
      stage — the phone showcase: the container fades, then each .convo-card
              pops in staggered by its --rd. The cards drift via `translate`,
              a separate property that opacity never touches.
-     deck  — the reflect hand deals open: stacked flat, then each card
-             rotates out to its --rot slot in turn with a slight overshoot.
-             A keyframe animation with `backwards` fill only, so it never
-             owns `transform` after it finishes and the cards' hover/pinned
-             states are untouched.
+     deck  — the reflect hand: cards wait flat and stacked, then fan open to
+             their --rot angles. No transition is overridden here — the
+             pre-state simply stops applying on reveal and the cards' OWN
+             420ms transform transition carries them into the fan.
      team  — the constellation: the thread draws itself (stroke-dashoffset
              over pathLength=1, set on the base path only — the pulse path's
              dasharray is in user units and must not be renormalised), then
@@ -3547,28 +3535,16 @@ html.reveal-ready [data-reveal='stage'] .convo-card {
 }
 html.reveal-ready [data-reveal='stage']:not(.is-visible) .convo-card { opacity: 0; }
 
-/* deck — the hand DEALS open: cards start stacked flat, then each one
-   rotates out to its --rot slot in turn, 110ms apart, overshooting its angle
-   by 12% before settling — a hand being fanned card by card rather than four
-   cards moving as one.
-
-   An animation, not a transition pre-state, for two reasons. Stagger needs a
-   per-card delay, and putting transition-delay on .reflect-card would also
-   delay every hover response (the MAR-537 trap in delay form). And the fill
-   mode is `backwards` ONLY: during the delay the card holds the stacked pose,
-   but after the animation ends it stops owning `transform` entirely, so the
-   hover and pinned states behave exactly as if the reveal never existed. The
-   card fade stays on the wrapper (umbrella rule above) — fading overlapping
-   cards individually made the hand read as tracing paper. */
-@keyframes deckDeal {
-  from { transform: rotate(0deg) translateY(56px) scale(0.94); }
-  70%  { transform: rotate(calc(var(--rot) * 1.12)) translateY(-4px); }
-  to   { transform: rotate(var(--rot)); }
-}
-html.reveal-ready [data-reveal='deck'].is-visible .reflect-card {
-  animation: deckDeal 620ms var(--ease-out) backwards;
-  /* --z is the card's stacking index (1-based), set inline by ReflectDeck. */
-  animation-delay: calc((var(--z) - 1) * 110ms + 100ms);
+/* deck — the fan opens from a flat stack.
+   The fade is on the WRAPPER (above), not the cards. Fading each card
+   individually put all four at ~0.75 opacity for the length of the reveal,
+   and because they overlap in the fan you could read the card behind through
+   the one in front — the hand looked like tracing paper instead of playing
+   cards. With the wrapper carrying the opacity the cards stay mutually
+   opaque throughout and only their transform animates, which is also the
+   cards' OWN 420ms transition, so the fan keeps its existing feel. */
+html.reveal-ready [data-reveal='deck']:not(.is-visible) .reflect-card {
+  transform: rotate(0deg) translateY(44px);
 }
 
 /* team — draw the thread, then the people, then the travelling pulse. */
@@ -3686,13 +3662,13 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
 :root[data-theme='light'] .glass-card,
 :root[data-theme='light'] .btn-secondary {
   background: rgb(255 255 255 / 0.66);
-  border-color: rgb(var(--fg-rgb) / 0.10);
+  border-color: rgb(var(--fg-rgb) / max(0.10, var(--fg-a-min)));
   box-shadow: 0 2px 10px -4px rgb(var(--shadow-rgb) / 0.28);
 }
 :root[data-theme='light'] .glass-elevated,
 :root[data-theme='light'] .glass-card-elevated {
   background: rgb(255 255 255 / 0.82);
-  border-color: rgb(var(--fg-rgb) / 0.10);
+  border-color: rgb(var(--fg-rgb) / max(0.10, var(--fg-a-min)));
   box-shadow: 0 10px 30px -18px rgb(var(--shadow-rgb) / 0.45);
 }
 :root[data-theme='light'] .glass-interactive:hover,
@@ -3704,34 +3680,21 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
 /* The chat cards floating either side of the phone. */
 :root[data-theme='light'] .convo-card {
   background: linear-gradient(180deg, rgb(255 255 255 / 0.94), rgb(255 255 255 / 0.82));
-  border-color: rgb(var(--fg-rgb) / 0.09);
+  border-color: rgb(var(--fg-rgb) / max(0.09, var(--fg-a-min)));
   box-shadow: 0 18px 40px -24px rgb(var(--shadow-rgb) / 0.5);
 }
 
-/* The fanned hand. Fully opaque, unlike the glass family: these cards
-   OVERLAP each other, and at 0.88 alpha you could read the card behind
-   through the one you were hovering — the whole point of lifting a card is
-   that it becomes the only thing you are reading. */
+/* The fanned hand. Kept slightly more opaque than the glass family so the
+   cards still read as solid objects overlapping one another. */
 :root[data-theme='light'] .reflect-card {
-  background: linear-gradient(#FFFFFF, #F7F3EC);
-  border-color: rgb(var(--fg-rgb) / 0.12);
+  background: linear-gradient(rgb(255 255 255 / 0.96), rgb(255 255 255 / 0.88));
+  border-color: rgb(var(--fg-rgb) / max(0.12, var(--fg-a-min)));
   box-shadow: 0 26px 60px -34px rgb(var(--shadow-rgb) / 0.55);
-}
-/* Hover/active feedback must be restated at this specificity: the surface
-   rule above outranks .reflect-card.is-hovered, so without these the card
-   lifted but its border and shadow never responded in light mode. */
-:root[data-theme='light'] .reflect-card.is-hovered {
-  border-color: rgb(var(--gold-rgb) / 0.5);
-  box-shadow: 0 44px 90px -34px rgb(var(--shadow-rgb) / 0.5), 0 0 46px -10px rgb(var(--gold-warm-rgb) / 0.3);
-}
-:root[data-theme='light'] .reflect-card.is-active {
-  border-color: rgb(var(--gold-rgb) / 0.65);
-  box-shadow: 0 50px 100px -34px rgb(var(--shadow-rgb) / 0.55), 0 0 52px -10px rgb(var(--gold-warm-rgb) / 0.35);
 }
 
 :root[data-theme='light'] .sakha-modal {
   background: rgb(252 250 246 / 0.97);
-  border-color: rgb(var(--fg-rgb) / 0.12);
+  border-color: rgb(var(--fg-rgb) / max(0.12, var(--fg-a-min)));
 }
 :root[data-theme='light'] .team-avatar { background: #FBF8F2; }
 
@@ -3788,7 +3751,7 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
   .blog-cover { margin-inline: -40px; }
 }
 
-/* Tailwind maps .text-brand-gold to the raw #7FBBA2, which measures 1.34:1 on
+/* Tailwind maps .text-brand-gold to the raw #FFC864, which measures 1.34:1 on
    cream. Compiled at build time, so only an override can reach it. */
 :root[data-theme='light'] .text-brand-gold,
 :root[data-theme='light'] .hover\:text-brand-gold-light:hover { color: var(--brand-gold); }
@@ -3818,9 +3781,9 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
 :root[data-theme='light'] .contact-orb {
   --fg-rgb: 255 255 255;
   --fg-a-min: 0.5;             /* white @0.5 on #0B0A19 = 5.32:1 */
-  --gold-rgb: 103 178 116;    /* accent — forest, lightened for the dark base */
-  --gold-warm-rgb: 77 152 90; /* the deeper forest variant */
-  --brand-gold: #67B274;
+  --gold-rgb: 255 200 100;
+  --gold-warm-rgb: 255 190 70;
+  --brand-gold: #FFC864;
   --text-primary: #E8E6F0;
 }
 
@@ -3832,7 +3795,7 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
 /* ============================================================
    LIGHT THEME — team constellation thread
 
-   The thread is `rgba(94,196,112,0.18)`, a one-off warm literal the channel
+   The thread is `rgba(255,200,110,0.18)`, a one-off warm literal the channel
    sweep never covered, so it rendered identically in both themes. Pale gold
    at 18% is a faint filament against near-black (1.45:1) but simply is not
    there on cream (1.06:1) — the constellation lost its lines entirely.
@@ -3856,16 +3819,4 @@ html.reveal-ready [data-reveal='row']:not(.is-visible) {
 :root[data-theme='light'] .team-thread-pulse {
   stroke: rgb(var(--gold-rgb) / 1);
   filter: drop-shadow(0 0 6px rgb(var(--gold-rgb) / 0.5));
-}
-
-/* The tooltip and the orb bubble pin the dark channel values, which assumes
-   they render as dark surfaces. At 0.72 alpha that holds over a near-black
-   page, but over cream they composite to mid-grey — and the accent, sitting
-   on what it thinks is a dark backdrop, drops to 2.8:1. Making them opaque in
-   light mode restores the surface those interiors were designed against. */
-:root[data-theme='light'] .team-tooltip,
-:root[data-theme='light'] .team-tooltip::after,
-:root[data-theme='light'] .contact-orb-bubble,
-:root[data-theme='light'] .contact-orb-bubble::after {
-  background: #1F1D2B;
 }

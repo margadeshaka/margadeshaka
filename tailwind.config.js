@@ -10,14 +10,14 @@ module.exports = {
         // Sakha brand family — single source of truth
         // (matches Sakha/docs/DESIGN_TOKENS.md)
         brand: {
-          gold: '#67B274',
-          'gold-light': '#6CC67B',
-          'gold-amber': '#3FAC52',
-          'gold-core': '#8ED49A',
+          gold: '#FFC864',
+          'gold-light': '#FFD280',
+          'gold-amber': '#FFB830',
+          'gold-core': '#FFE4B5',
         },
         saffron: {
-          50: '#030303', 100: '#CDF5D4', 200: '#FEF08A', 300: '#FDE047',
-          400: '#FACC15', 500: '#328240', 600: '#CA8A04', 700: '#A16207',
+          50: '#FEFCE8', 100: '#FEF9C3', 200: '#FEF08A', 300: '#FDE047',
+          400: '#FACC15', 500: '#EAB308', 600: '#CA8A04', 700: '#A16207',
           800: '#854D0E', 900: '#713F12', 950: '#422006',
         },
         navy: {
@@ -30,14 +30,14 @@ module.exports = {
           700: '#6538B8', 800: '#4C2B8A',
         },
         aurora: {
-          400: '#12FF3B', 500: '#00C522', 600: '#009219', 700: '#005F10',
+          400: '#33FFD1', 500: '#00E6AA', 600: '#00B386', 700: '#008060',
         },
         // Legacy alias for backward compatibility with existing chakra components
         cosmic: {
           dark: '#06050F',     // → navy.950
           blue: '#0C0A1D',     // → navy.900
           purple: '#7E4DD4',   // → cosmic-purple.600
-          gold: '#67B274',     // → brand.gold
+          gold: '#FFC864',     // → brand.gold
         },
       },
       // Point at the design tokens defined in globals.css LAYER 4, not at raw
@@ -67,8 +67,8 @@ module.exports = {
       },
       backgroundImage: {
         'cosmic-gradient': 'linear-gradient(180deg, #06050F 0%, #0C0A1D 50%, #1E1B4B 100%)',
-        'saffron-gradient': 'linear-gradient(90deg, #328240 0%, #67B274 50%, #328240 100%)',
-        'aurora-gradient': 'linear-gradient(90deg, #00C522 0%, #009219 100%)',
+        'saffron-gradient': 'linear-gradient(90deg, #EAB308 0%, #FFC864 50%, #EAB308 100%)',
+        'aurora-gradient': 'linear-gradient(90deg, #00E6AA 0%, #00B386 100%)',
         'cosmic-purple-gradient': 'linear-gradient(90deg, #7E4DD4 0%, #6538B8 100%)',
       },
       animation: {
