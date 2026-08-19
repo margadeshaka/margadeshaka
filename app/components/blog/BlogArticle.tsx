@@ -265,23 +265,27 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
             {post.title}
           </h1>
           <div className="flex items-center gap-3 mt-6">
-            <span
-              className="w-10 h-10 rounded-full grid place-items-center font-display flex-none"
-              style={{
-                background: 'linear-gradient(135deg, #FFB830, #FFC864 50%, #FFE4B5)',
-                fontSize: 15,
-                fontWeight: 700,
-                color: '#1A1224',
-              }}
-              aria-hidden="true"
-            >
-              {post.author
-                .split(/\s+/)
-                .map((w) => w[0])
-                .join('')
-                .slice(0, 2)
-                .toUpperCase()}
-            </span>
+            {/* The initials disc reads as a founder mark — guest authors get a
+                plain-text byline, so a lone letter never sits in the circle. */}
+            {post.author === company.founder.name && (
+              <span
+                className="w-10 h-10 rounded-full grid place-items-center font-display flex-none"
+                style={{
+                  background: 'linear-gradient(135deg, #FFB830, #FFC864 50%, #FFE4B5)',
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: '#1A1224',
+                }}
+                aria-hidden="true"
+              >
+                {post.author
+                  .split(/\s+/)
+                  .map((w) => w[0])
+                  .join('')
+                  .slice(0, 2)
+                  .toUpperCase()}
+              </span>
+            )}
             <div>
               <div className="text-white text-sm font-semibold">{post.author}</div>
               {/* The role line belongs to the founder alone — guest authors get

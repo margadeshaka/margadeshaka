@@ -18,7 +18,9 @@ export default function LogoMark({ size = 32, className, style }: Props) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/assets/book-logo.svg"
+      // ?v=2 busts caches that stored the short-lived green repaint of this
+      // SVG (assets ship with a day of max-age + a week of SWR).
+      src="/assets/book-logo.svg?v=2"
       alt=""
       className={['logo-book', className].filter(Boolean).join(' ')}
       style={{ width: size, height: size * (122 / 120), display: 'block', flex: 'none', ...style }}
