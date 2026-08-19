@@ -60,7 +60,7 @@ The current site was rebuilt from a claude.ai/design handoff (`Margadeshaka.html
 
 ### App shell lives in the root layout
 
-`app/layout.tsx` renders the shared shell for every route: fonts, SEO metadata (wellness-positioned, en-IN), `CosmicLayer` + `CosmicEffects` (background), `ScrollReveal` (site-wide scroll animations), `Navbar` (with mobile menu + `ThemeToggle`), `SiteFooter`, `SakhaStoreModal` (download dialog), `ScrollToTop`, `PerformanceMonitor` (dev-only), and gated `GoogleAnalytics`. Pages render only their content.
+`app/layout.tsx` renders the shared shell for every route: fonts, SEO metadata (wellness-positioned, en-IN), `CosmicLayer` + `CosmicEffects` (background), `ScrollReveal` (site-wide scroll animations), `Navbar` (with mobile menu), `SiteFooter`, `SakhaStoreModal` (download dialog), `ScrollToTop`, `PerformanceMonitor` (dev-only), and gated `GoogleAnalytics`. Pages render only their content.
 
 ### Routes
 
@@ -73,9 +73,9 @@ The current site was rebuilt from a claude.ai/design handoff (`Margadeshaka.html
 | `/compliance` | `app/compliance/page.tsx` | Standalone; `CredentialRow` + `company.ts` credentials |
 | 404 | `app/not-found.tsx` | Custom not-found page |
 
-### Theme system (dark default, light optional)
+### Theme system (dark-only)
 
-`ThemeToggle` sets `data-theme="light"` on `<html>` (dark = attribute absent), persisted in `localStorage`. Light-mode overrides live in `globals.css` under `:root[data-theme='light']`. There is also a `data-sky` tint system (dawn/day/dusk/night). **Any new UI must be checked in both themes** — dark-only styling is the common regression.
+The site is dark-only: nothing sets `data-theme="light"` any more — the `ThemeToggle` component and its pre-paint boot script were removed (`6e7646f`), and `themeColor`/`colorScheme` are static dark values in the viewport export. The light-mode CSS under `:root[data-theme='light']` in `globals.css` remains in place but is **inert** — don't extend it, and don't resurrect the toggle without discussion. There is also a `data-sky` tint system (dawn/day/dusk/night).
 
 ### Single sources of truth (edit these, never hardcode)
 
@@ -85,7 +85,7 @@ The current site was rebuilt from a claude.ai/design handoff (`Margadeshaka.html
 
 ## Styling System
 
-**The brand is forest green now, but the token names still say "gold."** The palette was repainted (saffron → green) while keeping Tailwind token names for compatibility: `brand.gold` = `#67B274`, `saffron.500` = `#328240`, `aurora.*` = greens. Don't "fix" a green value because the token is named gold, and don't reintroduce actual gold — the repaint was deliberate (`3e38612`).
+**The brand accent is saffron gold** (`brand.gold` = `#FFC864`, `saffron.500` = `#EAB308`, `aurora.*` = teals). A forest-green repaint (`3e38612`) shipped briefly and was reverted (`c63aaf7`) — don't reintroduce green accents without discussion.
 
 - `navy.*` scale unchanged; background base `navy.950` `#06050F`
 - `app/globals.css` (~2400 lines) is a **layered design system**: LAYER 1 = pre-redesign CSS, LAYER 2 = handoff design tokens (`:root` custom properties + `data-theme`/`data-sky` overrides), later layers for type/logo. New components should consume its custom properties rather than raw hexes.
