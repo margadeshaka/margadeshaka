@@ -3,7 +3,7 @@ import SEOStructuredData from '../components/SEOStructuredData';
 import BlogListing from '../components/blog/BlogListing';
 
 const description =
-  'Notes from the path — engineering, philosophy, and lessons on building AI that guides without deciding for you. Written by the founder of Margadeshaka.';
+  'Notes from the path — reflections on emotional wellbeing, engineering, and lessons on building AI that guides without deciding for you, from the Margadeshaka team.';
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -34,7 +34,7 @@ export default function BlogPage() {
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },
-          { name: 'Blog', href: '/blog' },
+          { name: 'Blog', href: '/blog/' },
         ]}
       />
     </>

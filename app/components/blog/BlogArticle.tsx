@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
 import SakhaCta from '../SakhaCta';
-import { company } from '../../lib/company';
+import { company, isFounder } from '../../lib/company';
 
 /**
  * Inline links inside body copy.
@@ -267,7 +267,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
           <div className="flex items-center gap-3 mt-6">
             {/* The initials disc reads as a founder mark — guest authors get a
                 plain-text byline, so a lone letter never sits in the circle. */}
-            {post.author === company.founder.name && (
+            {isFounder(post.author) && (
               <span
                 className="w-10 h-10 rounded-full grid place-items-center font-display flex-none"
                 style={{
@@ -294,7 +294,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
                   hardcoded string here drifts silently. Note company.team[0]
                   separately lists Hitesh as "Director" — see the PR for that
                   open question. */}
-              {post.author === company.founder.name && (
+              {isFounder(post.author) && (
                 <div className="text-white/50 text-[13px]">
                   {company.founder.role}, {company.brand}
                 </div>

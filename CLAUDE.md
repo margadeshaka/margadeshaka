@@ -49,7 +49,7 @@ The current site was rebuilt from a claude.ai/design handoff (`Margadeshaka.html
 
 - **Next.js 15** App Router + **React 19**, TypeScript strict, path alias `@/*`
 - **`output: 'export'`** — pure static HTML to `/out`. No SSR, no API routes. Dynamic routes need `generateStaticParams`; `app/sitemap.ts` is `force-static`; images `unoptimized`.
-- **`trailingSlash: true` + `skipTrailingSlashRedirect: true`** — pages serve canonically at `/blog/` etc. with no reconciling redirect. Links, tests, and submitted URL lists must carry the slash (known gap: `app/sitemap.ts` and `scripts/ping-indexnow.sh` currently emit non-slash URLs).
+- **`trailingSlash: true` + `skipTrailingSlashRedirect: true`** — pages serve canonically at `/blog/` etc. with no reconciling redirect. Links, tests, and submitted URL lists must carry the slash. `app/sitemap.ts`, `scripts/ping-indexnow.sh`, the blog JSON-LD/breadcrumbs, and the in-post markdown links all emit trailing-slash URLs — keep new ones consistent.
 - **Styling**: Tailwind + a large layered design system in `app/globals.css` (see Styling)
 - **Type stack**: Newsreader (display), Geist (body/UI), Geist Mono (registration numbers), Noto Serif Devanagari (Sanskrit) — self-hosted via `next/font`
 - **Animation**: CSS-driven (scroll reveals via `IntersectionObserver`, `prefers-reduced-motion` respected in live components). **GSAP, Three.js, and react-swipeable are installed but used ONLY by dormant chakra components** — do not add them to live code without discussion.
@@ -140,7 +140,7 @@ Two Hosting sites in one Firebase project (`margadeshaka-af4de`):
 
 - **CI/CD**: `.github/workflows/deploy.yml` deploys on push to either branch (manual dispatch with environment choice also available). Authenticates via the `FIREBASE_SERVICE_ACCOUNT` repo secret (dedicated service account, `roles/firebasehosting.admin` + `roles/firebase.viewer` only). Concurrency-guarded so a slow old commit can't land over a newer one.
 - **`firebase.json` carries the config twice** (once per target) because Firebase can't share a hosting block across sites. `npm run verify:hosting` fails CI if the targets drift, staging loses `noindex`, or `trailingSlash` stops mirroring `next.config.js`. Keep it that way.
-- **Post-deploy**: `scripts/ping-indexnow.sh` submits URLs to IndexNow — but its URL list is **hardcoded and missing `/blog` and all posts** (and uses non-slash URLs); extend it when adding routes.
+- **Post-deploy**: `scripts/ping-indexnow.sh` submits URLs to IndexNow. Its URL list is **hardcoded** (trailing-slash URLs, currently mirroring `app/sitemap.ts`) — extend it whenever a route or blog post is added.
 
 ## Claude Code Extras
 

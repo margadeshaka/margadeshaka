@@ -320,7 +320,7 @@ export default function CompliancePage() {
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },
-          { name: 'Compliance', href: '/compliance' },
+          { name: 'Compliance', href: '/compliance/' },
         ]}
       />
     </>

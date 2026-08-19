@@ -50,7 +50,7 @@ export default function LegalLayout({ title, lastUpdated, slug, children }: Lega
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },
-          { name: title, href: `/${slug}` },
+          { name: title, href: `/${slug}/` },
         ]}
       />
     </>

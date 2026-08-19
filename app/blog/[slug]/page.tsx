@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import SEOStructuredData from '../../components/SEOStructuredData';
 import BlogArticle from '../../components/blog/BlogArticle';
 import { getAllSlugs, getPostBySlug } from '../../data/blogPosts';
-import { company } from '../../lib/company';
+import { company, isFounder } from '../../lib/company';
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || company.web.site).trim();
 
@@ -68,14 +68,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     articleSection: post.category,
     inLanguage: 'en',
     // Google's article rich results want an image; posts without a cover fall
-    // back to the site card rather than omitting the property.
-    image: post.cover ? `${baseUrl}${post.cover.src}` : `${baseUrl}/icon.png`,
-    url: `${baseUrl}/blog/${post.slug}`,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${baseUrl}/blog/${post.slug}` },
+    // back to the same 1200x630 og card the social metadata uses (a logo is
+    // not article content, and it already appears as publisher.logo).
+    image: post.cover ? `${baseUrl}${post.cover.src}` : `${baseUrl}/images/og-margadeshaka.png`,
+    // Trailing slash: the canonical shape the site serves (trailingSlash: true,
+    // no reconciling redirect) — must match <link rel=canonical> and the sitemap.
+    url: `${baseUrl}/blog/${post.slug}/`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${baseUrl}/blog/${post.slug}/` },
     // Only the founder carries a jobTitle and profile URL — guest authors are
     // a plain Person, so their posts don't claim the founder's designation.
     author:
-      post.author === company.founder.name
+      isFounder(post.author)
         ? {
             '@type': 'Person',
             name: post.author,
@@ -105,8 +108,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <SEOStructuredData
         breadcrumbs={[
           { name: 'Home', href: '/' },
-          { name: 'Blog', href: '/blog' },
-          { name: post.title, href: `/blog/${post.slug}` },
+          { name: 'Blog', href: '/blog/' },
+          { name: post.title, href: `/blog/${post.slug}/` },
         ]}
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
