@@ -93,13 +93,17 @@ export default function Navbar() {
       {section('hero', 'Home')}
       {section('products', 'Products')}
       <li>
-        <Link href="/blog" className={blogActive ? 'active' : ''}>
+        <Link
+          href="/blog/"
+          className={blogActive ? 'active' : ''}
+          aria-current={blogActive ? 'page' : undefined}
+        >
           Blog
         </Link>
       </li>
       <li>
         <Link
-          href="/compliance"
+          href="/compliance/"
           className={path === '/compliance' ? 'active' : ''}
           aria-current={path === '/compliance' ? 'page' : undefined}
         >

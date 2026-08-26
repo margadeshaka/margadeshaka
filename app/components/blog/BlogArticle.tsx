@@ -247,7 +247,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
 
       <div ref={proseRef} className="container-prose page-enter">
         <Link
-          href="/blog"
+          href="/blog/"
           className="inline-flex items-center gap-2 text-brand-gold text-sm mb-8 hover:text-brand-gold-light transition-colors"
         >
           <ArrowLeft /> All articles
@@ -395,7 +395,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
           {next.slug !== post.slug && (
             <>
               <div className="blog-end-eyebrow">Next article</div>
-              <Link href={`/blog/${next.slug}`} className="blog-end-next">
+              <Link href={`/blog/${next.slug}/`} className="blog-end-next">
                 <div className="blog-end-next-top">
                   <CatChip post={next} />
                   <span className="blog-end-next-time">{next.readTime}</span>

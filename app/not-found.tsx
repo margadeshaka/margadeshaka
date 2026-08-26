@@ -50,7 +50,7 @@ export default function NotFound() {
           <Link href="/" className="btn btn-primary">
             Back to home
           </Link>
-          <Link href="/blog" className="btn btn-ghost">
+          <Link href="/blog/" className="btn btn-ghost">
             Read the blog
           </Link>
         </div>

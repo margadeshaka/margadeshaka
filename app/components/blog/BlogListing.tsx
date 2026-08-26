@@ -17,7 +17,7 @@ import { ArrowRight, Search } from '../icons';
 function PostRow({ post, i }: { post: BlogPost; i: number }) {
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/blog/${post.slug}/`}
       className="blog-row"
       data-reveal="row"
     >
