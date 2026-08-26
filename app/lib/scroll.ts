@@ -7,6 +7,8 @@
  * goToSection falls back to a real navigation with the section in the hash and
  * lets the home page scroll on mount.
  */
+import { homeSection } from './routes';
+
 const DURATION = 720;
 
 export function smoothScrollTo(targetY: number, duration = DURATION) {
@@ -47,7 +49,7 @@ export function goToSection(id: string, onHome: boolean) {
   if (onHome && scrollToSection(id)) return;
   // Not on the home page (or the section isn't mounted): let the browser
   // navigate, and HomeSectionScroll picks the hash up on arrival.
-  window.location.href = `/#${id}`;
+  window.location.href = homeSection(id);
 }
 
 /** Section ids tracked for the navbar's active state, in document order. */

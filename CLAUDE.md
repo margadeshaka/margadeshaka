@@ -13,7 +13,8 @@ npm run preview            # Build + serve /out on :3000 (npx serve)
 # Deploy (Firebase Hosting — normally CI does this on push)
 npm run deploy             # Build + deploy to production target
 npm run deploy:staging     # Build + deploy to staging target
-npm run verify:hosting     # Check firebase.json targets haven't drifted apart
+npm run verify:hosting     # firebase.json targets match + every internal route URL keeps its slash
+npm run verify:links       # Just the trailing-slash/broken-link check (needs a build in /out)
 
 # Code quality
 npm run lint               # ESLint with auto-fix
@@ -34,6 +35,7 @@ npm run clean              # Remove .next, out, node_modules/.cache
 ```
 
 - **Node.js ≥ 20** required.
+- `npm run verify:hosting` now **requires a build first** — its trailing-slash half inspects `/out` and hard-fails (with the build command) when `/out` is absent. CI runs it after the build for the same reason.
 - `npm run lint` / `lint:check` are traps: the repo has **no ESLint config**, so `next lint` drops into an interactive setup prompt — don't configure one; CI deliberately skips lint and gates on `typecheck` + build instead.
 - `npm run start`, `npm run export`, and `npm run preview`'s cousin `next start` do NOT work here: `output: 'export'` makes `next start` hard-error. `preview` is already wired to `npx serve out`.
 - `npm run build:analyze` is non-functional: it sets `ANALYZE=true` but nothing reads it and no analyzer package is installed — it's a plain build.
@@ -50,7 +52,11 @@ The current site was rebuilt from a claude.ai/design handoff (`Margadeshaka.html
 
 - **Next.js 15** App Router + **React 19**, TypeScript strict, path alias `@/*`
 - **`output: 'export'`** — pure static HTML to `/out`. No SSR, no API routes. Dynamic routes need `generateStaticParams`; `app/sitemap.ts` is `force-static`; images `unoptimized`.
-- **`trailingSlash: true` + `skipTrailingSlashRedirect: true`** — pages serve canonically at `/blog/` etc. with no reconciling redirect. Links, tests, and submitted URL lists must carry the slash. `app/sitemap.ts`, `scripts/ping-indexnow.sh`, the blog JSON-LD/breadcrumbs, and the in-post markdown links all emit trailing-slash URLs — keep new ones consistent.
+- **`trailingSlash: true` + `skipTrailingSlashRedirect: true`** — pages serve canonically at `/blog/` etc. with no reconciling redirect (and firebase.json sets `trailingSlash: true` on both targets). A slashless internal link isn't broken, it's a silent 301 round-trip on every click. Links, tests, and submitted URL lists must carry the slash.
+  - **Route paths come from `app/lib/routes.ts`** (`ROUTES.blog`, `blogPost(slug)`, `homeSection(id)`, `absolute()`) — never hardcode them. Surfaces that emit trailing-slash URLs: **component `<Link href>` / `<a href>` values**, `app/sitemap.ts`, `app/components/SEOStructuredData.tsx` (breadcrumbs + blog/article JSON-LD), the per-post JSON-LD in `app/blog/[slug]/page.tsx`, the in-post markdown links in `app/data/blogPosts.ts`, and `scripts/ping-indexnow.sh` (hardcoded list, extend by hand).
+  - **The non-obvious asymmetry that caused the last regression:** Next resolves `alternates.canonical` and `openGraph.url` against `metadataBase` **with the `trailingSlash` config applied**, so `canonical: '/blog'` already emits `.../blog/` and those are correct automatically. `<Link href>` is passed through **verbatim** and is not. That is why `app/blog/[slug]/page.tsx` metadata looks like a bug when it isn't — and why the component links drifted twice unnoticed while the metadata stayed right. Passing `ROUTES` into metadata is still correct (the normalisation is idempotent) and is what the code now does, so one rule holds everywhere.
+  - **`usePathname()` comparisons are the exception — do NOT slash them.** `Navbar.tsx:38` and `SectionLink.tsx:23` strip the trailing slash before comparing (`(pathname || '/').replace(/\/+$/, '') || '/'`) because `usePathname()` returns the served path. Hrefs carry the slash; comparisons must not. Slashing both sides silently breaks active-state highlighting and the `aria-current` attributes.
+  - Enforced by `scripts/verify-trailing-slashes.mjs` (via `npm run verify:hosting`, post-build in CI). It classifies each internal URL against the export itself — `out/<path>/index.html` exists ⇒ page, must end in `/`; `out/<path>` is a file ⇒ asset; neither ⇒ broken link — so there is no allowlist to maintain, and it also catches dead internal links.
 - **Styling**: Tailwind + a large layered design system in `app/globals.css` (see Styling)
 - **Type stack**: Newsreader (display), Geist (body/UI), Geist Mono (registration numbers), Noto Serif Devanagari (Sanskrit) — self-hosted via `next/font`
 - **Animation**: CSS-driven (scroll reveals via `IntersectionObserver`, `prefers-reduced-motion` respected in live components). **GSAP, Three.js, and react-swipeable are installed but used ONLY by dormant chakra components** — do not add them to live code without discussion.
@@ -84,6 +90,7 @@ The site is dark-only: nothing sets `data-theme="light"` any more — the `Theme
 - **`app/data/blogPosts.ts`** — typed blog content (block-based body: `p`/`h2`/`quote`, inline links supported). **Array order matters**: it drives the listing grid and prev/next links. Adding a post automatically updates `/blog`, static params, and the sitemap — but NOT `scripts/ping-indexnow.sh` (extend its hardcoded list). (`app/data/blog.ts` is a dormant duplicate types file — don't import it.)
   - **Authoring rules** (from founder review): plain punctuation only — **no em-dashes** in post copy; keep in-post links minimal (recent posts were trimmed to ~2) and give internal ones trailing slashes; exactly **one** post carries `featured: true`; new covers via `cwebp -resize 1536 0 -q 82 -m 6 in.jpg -o public/images/blog/<slug>-cover.webp` (≈1536×1152 WebP), alt text describes the image, never repeats the title.
   - **Bylines**: `author` must byte-match `company.founder.name` to get the founder treatment (initials disc, "Founder & CEO" line, JSON-LD jobTitle/LinkedIn) — the check is `isFounder()` in `company.ts`. Any other string renders a plain guest byline with no designation (the three 2026 wellness/content posts are by Vanshika). Known gaps: "●" bullet lines are plain `p` blocks (no semantic list type yet); bylines say "Vanshika" while `company.ts` team lists "Vanshika Garg".
+- **`app/lib/routes.ts`** — internal route paths, all trailing-slashed (`ROUTES`, `blogPost(slug)`, `homeSection(id)`, `absolute(base, path)`). Sixteen importers. Adding a route means adding it here, to `app/sitemap.ts`, and to `scripts/ping-indexnow.sh`. **Do not** feed `ROUTES` into a `usePathname()` comparison — see the `trailingSlash` bullet above.
 - **`app/lib/sakha.ts`** — Sakha try/download routing (platform detection, store deep links). **`app/lib/scroll.ts`** — cross-route section scrolling (`goToSection` works from non-home routes).
 
 ## Styling System
@@ -144,7 +151,7 @@ Two Hosting sites in one Firebase project (`margadeshaka-af4de`):
 
 - **CI/CD**: `.github/workflows/deploy.yml` deploys on push to either branch (manual dispatch with environment choice also available). Authenticates via the `FIREBASE_SERVICE_ACCOUNT` repo secret (dedicated service account, `roles/firebasehosting.admin` + `roles/firebase.viewer` only). Concurrency-guarded so a slow old commit can't land over a newer one.
 - **Ship to production via PR `develop` → `main`** (PR #8 pattern), never by cherry-picking develop commits onto main: earlier cherry-picks left main with duplicate commits that diverged and made the next PR unmergeable until a reconciling merge of main back into develop.
-- **`firebase.json` carries the config twice** (once per target) because Firebase can't share a hosting block across sites. `npm run verify:hosting` fails CI if the targets drift, staging loses `noindex`, or `trailingSlash` stops mirroring `next.config.js`. Keep it that way.
+- **`firebase.json` carries the config twice** (once per target) because Firebase can't share a hosting block across sites. `npm run verify:hosting` fails CI if the targets drift, staging loses `noindex`, or `trailingSlash` stops mirroring `next.config.js` — and, in its second half, if any internal route URL in `/out` has lost its trailing slash. Keep it that way.
 - **Post-deploy**: `scripts/ping-indexnow.sh` submits URLs to IndexNow. Its URL list is **hardcoded** (trailing-slash URLs, currently mirroring `app/sitemap.ts`) — extend it whenever a route or blog post is added.
 
 ## Claude Code Extras

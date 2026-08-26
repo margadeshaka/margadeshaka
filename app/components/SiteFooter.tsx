@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { company } from '../lib/company';
+import { ROUTES } from '../lib/routes';
 import LogoMark from './LogoMark';
 import SakhaCta from './SakhaCta';
 import SectionLink from './SectionLink';
@@ -21,7 +22,7 @@ export default function SiteFooter() {
     <footer className="footer" role="contentinfo">
       <div className="footer-grid">
         <div>
-          <Link href="/" className="navbar-brand" style={{ marginBottom: 16, display: 'inline-flex' }}>
+          <Link href={ROUTES.home} className="navbar-brand" style={{ marginBottom: 16, display: 'inline-flex' }}>
             <LogoMark size={34} />
             <span className="navbar-wordmark">{company.brand}</span>
           </Link>
@@ -62,7 +63,7 @@ export default function SiteFooter() {
           <h4>Company</h4>
           <ul>
             <li>
-              <Link href="/blog/">Blog</Link>
+              <Link href={ROUTES.blog}>Blog</Link>
             </li>
             <li>
               <SectionLink id="team">Team</SectionLink>
@@ -71,7 +72,7 @@ export default function SiteFooter() {
               <SectionLink id="contact">Contact</SectionLink>
             </li>
             <li>
-              <Link href="/compliance/">Compliance</Link>
+              <Link href={ROUTES.compliance}>Compliance</Link>
             </li>
           </ul>
         </div>
@@ -80,10 +81,10 @@ export default function SiteFooter() {
           <h4>Legal</h4>
           <ul>
             <li>
-              <Link href="/privacy/">Privacy</Link>
+              <Link href={ROUTES.privacy}>Privacy</Link>
             </li>
             <li>
-              <Link href="/terms/">Terms</Link>
+              <Link href={ROUTES.terms}>Terms</Link>
             </li>
             <li style={{ paddingTop: 6 }}>
               <a href={`mailto:${company.contact.email}`} style={{ wordBreak: 'break-all' }}>
@@ -117,7 +118,7 @@ export default function SiteFooter() {
             {company.cin}
           </span>
           {' · '}
-          <Link href="/compliance/" style={{ color: 'var(--brand-gold)' }}>
+          <Link href={ROUTES.compliance} style={{ color: 'var(--brand-gold)' }}>
             View credentials →
           </Link>
         </p>

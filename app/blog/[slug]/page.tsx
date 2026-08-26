@@ -4,6 +4,7 @@ import SEOStructuredData from '../../components/SEOStructuredData';
 import BlogArticle from '../../components/blog/BlogArticle';
 import { getAllSlugs, getPostBySlug } from '../../data/blogPosts';
 import { company, isFounder } from '../../lib/company';
+import { ROUTES, blogPost, absolute } from '../../lib/routes';
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || company.web.site).trim();
 
@@ -33,12 +34,12 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical: blogPost(post.slug) },
     openGraph: {
       type: 'article',
       title: post.title,
       description: post.excerpt,
-      url: `/blog/${post.slug}`,
+      url: blogPost(post.slug),
       publishedTime: post.isoDate,
       authors: [post.author],
       section: post.category,
@@ -71,10 +72,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     // back to the same 1200x630 og card the social metadata uses (a logo is
     // not article content, and it already appears as publisher.logo).
     image: post.cover ? `${baseUrl}${post.cover.src}` : `${baseUrl}/images/og-margadeshaka.png`,
-    // Trailing slash: the canonical shape the site serves (trailingSlash: true,
-    // no reconciling redirect) — must match <link rel=canonical> and the sitemap.
-    url: `${baseUrl}/blog/${post.slug}/`,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${baseUrl}/blog/${post.slug}/` },
+    // Absolute canonical URL — must match <link rel=canonical> and the sitemap.
+    // blogPost() supplies the trailing slash the site actually serves.
+    url: absolute(baseUrl, blogPost(post.slug)),
+    mainEntityOfPage: { '@type': 'WebPage', '@id': absolute(baseUrl, blogPost(post.slug)) },
     // Only the founder carries a jobTitle and profile URL — guest authors are
     // a plain Person, so their posts don't claim the founder's designation.
     author:
@@ -107,9 +108,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <SEOStructuredData
         breadcrumbs={[
-          { name: 'Home', href: '/' },
-          { name: 'Blog', href: '/blog/' },
-          { name: post.title, href: `/blog/${post.slug}/` },
+          { name: 'Home', href: ROUTES.home },
+          { name: 'Blog', href: ROUTES.blog },
+          { name: post.title, href: blogPost(post.slug) },
         ]}
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />

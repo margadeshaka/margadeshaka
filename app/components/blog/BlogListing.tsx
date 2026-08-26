@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { posts } from '../../data/blogPosts';
 import type { BlogPost } from '../../data/blogPosts';
 import { ArrowRight, Search } from '../icons';
+import { blogPost } from '../../lib/routes';
 
 /**
  * Blog listing, ported from the handoff (blog.jsx: BlogPage + PostRow).
@@ -17,7 +18,7 @@ import { ArrowRight, Search } from '../icons';
 function PostRow({ post, i }: { post: BlogPost; i: number }) {
   return (
     <Link
-      href={`/blog/${post.slug}/`}
+      href={blogPost(post.slug)}
       className="blog-row"
       data-reveal="row"
     >

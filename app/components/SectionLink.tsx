@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { goToSection } from '../lib/scroll';
+import { homeSection } from '../lib/routes';
 
 /**
  * Link to a home-page section. Ported from the handoff (shared.jsx:
@@ -18,10 +19,11 @@ export default function SectionLink({
   className?: string;
 }) {
   const pathname = usePathname();
+  // usePathname() carries the trailing slash; strip it to compare. See ROUTES.
   const onHome = ((pathname || '/').replace(/\/+$/, '') || '/') === '/';
   return (
     <a
-      href={`/#${id}`}
+      href={homeSection(id)}
       className={className}
       onClick={(e) => {
         e.preventDefault();

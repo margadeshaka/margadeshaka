@@ -4,8 +4,9 @@ name: Deploy to Firebase Hosting
 # develop → staging site    (margadeshaka-staging.web.app, noindex)
 #
 # Both sites live in the same Firebase project and share one firebase.json,
-# selected by the `target` input. scripts/verify-hosting-config.mjs fails the
-# build if the two targets' configs drift apart.
+# selected by the `target` input. `npm run verify:hosting` fails the build if
+# the two targets' configs drift apart, or if any internal route URL in the
+# export has lost its trailing slash.
 
 on:
   push:
@@ -68,9 +69,6 @@ jobs:
       # would prompt interactively and hang the runner.
       - run: npm run typecheck
 
-      - name: Verify hosting config
-        run: node scripts/verify-hosting-config.mjs
-
       - name: Build static export
         env:
           # Baked in at build time — they drive canonical URLs, the sitemap and
@@ -90,6 +88,13 @@ jobs:
           echo "exported $pages pages"
           [ "$pages" -ge 9 ] || { echo "::error::expected >=9 pages, got $pages"; exit 1; }
           grep -q 'sakha-editorial' out/index.html || { echo "::error::home page is missing the products section"; exit 1; }
+
+      # Two repo invariants, both cheap and both previously broken by hand:
+      # the two hosting targets must not drift apart, and every internal route
+      # URL must carry the trailing slash the site actually serves. The second
+      # half inspects out/, so this runs after the build rather than before it.
+      - name: Verify hosting config and internal URLs
+        run: npm run verify:hosting
 
       - name: Deploy
         id: deploy
