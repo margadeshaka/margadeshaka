@@ -51,10 +51,10 @@ export default function SiteFooter() {
             <li>
               <SakhaCta>Sakha</SakhaCta>
             </li>
-            {/* Dronacharya is deliberately not listed while it is unreleased —
-                it had pointed at /blog/dronacharya-active-learning, since the
-                redesigned products section is entirely Sakha and that post is
-                the only page with real Dronacharya detail. Restore the link
+            {/* Dronacharya is deliberately not listed while it is unreleased.
+                It used to point at /blog/dronacharya-active-learning, but that
+                post was one of the handoff-era placeholders and has been
+                removed, so there is no Dronacharya page to link to. Add one
                 here once the product ships. */}
           </ul>
         </div>
