@@ -6,6 +6,7 @@ import { getAdjacentPosts, type BlogPost } from '../../data/blogPosts';
 import { ArrowLeft, ArrowRight, CatChip, MetaLine, ACCENT } from './shared';
 import SakhaCta from '../SakhaCta';
 import { company, isFounder } from '../../lib/company';
+import { ROUTES, blogPost } from '../../lib/routes';
 
 /**
  * Inline links inside body copy.
@@ -247,7 +248,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
 
       <div ref={proseRef} className="container-prose page-enter">
         <Link
-          href="/blog"
+          href={ROUTES.blog}
           className="inline-flex items-center gap-2 text-brand-gold text-sm mb-8 hover:text-brand-gold-light transition-colors"
         >
           <ArrowLeft /> All articles
@@ -395,7 +396,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
           {next.slug !== post.slug && (
             <>
               <div className="blog-end-eyebrow">Next article</div>
-              <Link href={`/blog/${next.slug}`} className="blog-end-next">
+              <Link href={blogPost(next.slug)} className="blog-end-next">
                 <div className="blog-end-next-top">
                   <CatChip post={next} />
                   <span className="blog-end-next-time">{next.readTime}</span>
@@ -414,7 +415,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
             <SakhaCta className="btn btn-ghost blog-end-btn">
               Talk to Sakha <ArrowRight width={15} height={15} />
             </SakhaCta>
-            <Link href="/" className="btn btn-secondary blog-end-btn">
+            <Link href={ROUTES.home} className="btn btn-secondary blog-end-btn">
               Explore Margadeshaka <ArrowRight width={15} height={15} />
             </Link>
           </div>

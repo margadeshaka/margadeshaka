@@ -3,12 +3,13 @@ import Link from 'next/link';
 import CredentialRow from '../components/CredentialRow';
 import SEOStructuredData from '../components/SEOStructuredData';
 import { company } from '../lib/company';
+import { ROUTES } from '../lib/routes';
 
 export const metadata: Metadata = {
   title: 'Compliance & Legal',
   description:
     'Margadeshaka AI Private Limited — corporate identity, DPIIT Startup India recognition, trademark, and registered office. CIN U85499PB2025PTC063772.',
-  alternates: { canonical: '/compliance' },
+  alternates: { canonical: ROUTES.compliance },
 };
 
 const ShieldIcon = ({ size = 20 }: { size?: number }) => (
@@ -86,7 +87,7 @@ export default function CompliancePage() {
       >
         <div className="container-narrow">
           <Link
-            href="/"
+            href={ROUTES.home}
             className="inline-flex items-center gap-2 text-brand-gold text-sm mb-8 hover:text-brand-gold-light transition-colors"
           >
             <ArrowLeft /> Back to home
@@ -319,8 +320,8 @@ export default function CompliancePage() {
 
       <SEOStructuredData
         breadcrumbs={[
-          { name: 'Home', href: '/' },
-          { name: 'Compliance', href: '/compliance/' },
+          { name: 'Home', href: ROUTES.home },
+          { name: 'Compliance', href: ROUTES.compliance },
         ]}
       />
     </>

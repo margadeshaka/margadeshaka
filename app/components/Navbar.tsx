@@ -7,6 +7,7 @@ import LogoMark from './LogoMark';
 import SakhaCta from './SakhaCta';
 import { ArrowRight } from './icons';
 import { NAV_SECTIONS, goToSection } from '../lib/scroll';
+import { ROUTES, homeSection } from '../lib/routes';
 
 /**
  * Primary navigation, ported from the handoff (shared.jsx: Navbar).
@@ -32,6 +33,8 @@ export default function Navbar() {
   const pathname = usePathname();
 
   // trailingSlash: true means usePathname() yields '/compliance/', so strip it.
+  // Deliberate asymmetry: hrefs carry the slash (they come from ROUTES), the
+  // comparisons below must not. Slash both sides and every active state breaks.
   const path = (pathname || '/').replace(/\/+$/, '') || '/';
   const onHome = path === '/';
   const blogActive = path === '/blog' || path.startsWith('/blog/');
@@ -73,7 +76,7 @@ export default function Navbar() {
   const section = (id: string, label: string) => (
     <li key={id}>
       <a
-        href={`/#${id}`}
+        href={homeSection(id)}
         className={secActive(id) ? 'active' : ''}
         onClick={(e) => {
           e.preventDefault();
@@ -93,13 +96,17 @@ export default function Navbar() {
       {section('hero', 'Home')}
       {section('products', 'Products')}
       <li>
-        <Link href="/blog" className={blogActive ? 'active' : ''}>
+        <Link
+          href={ROUTES.blog}
+          className={blogActive ? 'active' : ''}
+          aria-current={blogActive ? 'page' : undefined}
+        >
           Blog
         </Link>
       </li>
       <li>
         <Link
-          href="/compliance"
+          href={ROUTES.compliance}
           className={path === '/compliance' ? 'active' : ''}
           aria-current={path === '/compliance' ? 'page' : undefined}
         >
@@ -115,7 +122,7 @@ export default function Navbar() {
     <header className={'navbar' + (scrolled ? ' scrolled' : '')}>
       <nav className="navbar-inner" aria-label="Primary">
         <a
-          href="/"
+          href={ROUTES.home}
           className="navbar-brand"
           aria-label="Margadeshaka home"
           onClick={(e) => {
