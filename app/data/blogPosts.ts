@@ -84,7 +84,7 @@ export const posts: BlogPost[] = [
       { type: 'p', text: `● Low self esteem` },
       { type: 'h2', text: `Signs that you are overthinking` },
       { type: 'p', text: `● You become impulsive when making decisions` },
-      { type: 'p', text: `● You feel mentally tired or exhausted` },
+      { type: 'p', text: `● You feel mentally tired or [exhausted](https://dictionary.cambridge.org/dictionary/english/exhausted)` },
       { type: 'p', text: `● You always imagine the worst possible outcome` },
       { type: 'p', text: `● You cannot sleep properly because your thoughts keep running` },
       { type: 'p', text: `● You second guess yourself constantly` },
