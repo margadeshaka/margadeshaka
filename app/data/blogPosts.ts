@@ -109,7 +109,7 @@ export const posts: BlogPost[] = [
       { type: 'h2', text: `6. Write your thoughts down` },
       { type: 'p', text: `This one works like magic. When you freely put your feelings down on paper, it genuinely feels like you told an actual person, and you can look at them again later with a clearer head.` },
       { type: 'h2', text: `When you need help understanding yourself` },
-      { type: 'p', text: `Sometimes being self aware is not enough. You can know all your patterns and still be unable to break the loop. We are human, we need help, and it is okay to need it. And if the worry has become constant and hard to control, that is worth taking seriously. According to the World Health Organization, [anxiety disorders are the most common mental disorders in the world](https://www.who.int/news-room/fact-sheets/detail/anxiety-disorders). They respond well to treatment, and yet only about one in four people affected ever receive any.` },
+      { type: 'p', text: `Sometimes being self aware is not enough. You can know all your patterns and still be unable to break the loop. We are human, we need help, and it is okay to need it.` },
       { type: 'p', text: `That is where a space to reflect makes the difference. [Sakha](/#products) is a companion designed for exactly those moments. It helps you explore your thoughts and emotions and find clarity. Instead of telling you to stop overthinking, it helps you take a breath and slow down in the present. It is a private and judgement free space. When you are stuck in a loop, Sakha helps you see things from another perspective, and helps you feel understood.` },
     ],
   },
