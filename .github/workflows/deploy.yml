@@ -1,7 +1,13 @@
-name: Deploy to Firebase Hosting
+name: Verify and deploy
 
-# main    → production site (margadeshaka-af4de.web.app, and margadeshaka.com once DNS points here)
-# develop → staging site    (margadeshaka-staging.web.app, noindex)
+# On a push:         build, verify, and deploy.
+#   main    → production site (margadeshaka-af4de.web.app, and margadeshaka.com once DNS points here)
+#   develop → staging site    (margadeshaka-staging.web.app, noindex)
+# On a pull request: everything except the deploy (see the Deploy step's `if`).
+#
+# One job serves both so there is exactly one build recipe — node version, env
+# vars, sanity checks. A second workflow duplicating it is how these things
+# drift apart, which is the failure mode verify:hosting exists to catch.
 #
 # Both sites live in the same Firebase project and share one firebase.json,
 # selected by the `target` input. `npm run verify:hosting` fails the build if
@@ -10,6 +16,10 @@ name: Deploy to Firebase Hosting
 
 on:
   push:
+    branches: [main, develop]
+  # Same branch list, read as the branch being merged INTO. Gives a PR author
+  # the typecheck/build/verify signal before merge instead of after it.
+  pull_request:
     branches: [main, develop]
   workflow_dispatch:
     inputs:
@@ -34,12 +44,15 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Resolve the environment once: the branch decides on push, the input on
-      # a manual run. Everything below keys off this.
+      # Resolve the environment once: the input decides on a manual run, the
+      # base branch on a pull request, the pushed branch otherwise. Everything
+      # below keys off this. A pull request never deploys, so here TARGET only
+      # picks which base URL the verification build is made with — and picking
+      # it from base_ref means a main-bound PR is verified as production.
       TARGET: >-
-        ${{ github.event_name == 'workflow_dispatch'
-            && inputs.environment
-            || (github.ref_name == 'main' && 'production' || 'staging') }}
+        ${{ github.event_name == 'workflow_dispatch' && inputs.environment
+        || ((github.event_name == 'pull_request' && github.base_ref || github.ref_name) == 'main'
+        && 'production' || 'staging') }}
 
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +73,11 @@ jobs:
             echo "site=margadeshaka-staging"  >> "$GITHUB_OUTPUT"
             echo "base_url=https://margadeshaka-staging.web.app" >> "$GITHUB_OUTPUT"
           fi
-          echo "Deploying $TARGET"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Verifying as $TARGET (pull request — no deploy)"
+          else
+            echo "Deploying $TARGET"
+          fi
 
       - run: npm ci
 
@@ -74,9 +91,12 @@ jobs:
           # Baked in at build time — they drive canonical URLs, the sitemap and
           # JSON-LD, so staging must not advertise the production domain.
           NEXT_PUBLIC_BASE_URL: ${{ steps.env.outputs.base_url }}
-          # Analytics only on production; staging traffic would pollute it.
-          # Optional: if the secret is unset, layout.tsx skips GoogleAnalytics.
-          NEXT_PUBLIC_GA_ID: ${{ env.TARGET == 'production' && secrets.NEXT_PUBLIC_GA_ID || '' }}
+          # Analytics only on a production deploy; staging traffic would
+          # pollute it, and a pull-request build is never served. Optional: if
+          # the secret is unset, layout.tsx skips GoogleAnalytics.
+          NEXT_PUBLIC_GA_ID: >-
+            ${{ (env.TARGET == 'production' && github.event_name != 'pull_request')
+            && secrets.NEXT_PUBLIC_GA_ID || '' }}
         run: npm run build
 
       # Cheap guard against shipping an empty or half-built export.
@@ -96,8 +116,11 @@ jobs:
       - name: Verify hosting config and internal URLs
         run: npm run verify:hosting
 
+      # Everything above is verification and runs on pull requests too.
+      # Everything from here down has side effects, so it does not.
       - name: Deploy
         id: deploy
+        if: github.event_name != 'pull_request'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
@@ -108,10 +131,22 @@ jobs:
 
       - name: Summary
         run: |
-          {
-            echo "### Deployed to \`$TARGET\`"
-            echo
-            echo "- site: \`${{ steps.env.outputs.site }}\`"
-            echo "- url: https://${{ steps.env.outputs.site }}.web.app"
-            echo "- commit: \`${{ github.sha }}\`"
-          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            {
+              echo "### Verified (no deploy)"
+              echo
+              echo "Typecheck, static export, hosting config and internal URLs all pass."
+              echo
+              echo "- would target: \`$TARGET\`"
+              echo "- base branch: \`${{ github.base_ref }}\`"
+              echo "- commit: \`${{ github.event.pull_request.head.sha }}\`"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "### Deployed to \`$TARGET\`"
+              echo
+              echo "- site: \`${{ steps.env.outputs.site }}\`"
+              echo "- url: https://${{ steps.env.outputs.site }}.web.app"
+              echo "- commit: \`${{ github.sha }}\`"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
