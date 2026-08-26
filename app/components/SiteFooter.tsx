@@ -62,7 +62,7 @@ export default function SiteFooter() {
           <h4>Company</h4>
           <ul>
             <li>
-              <Link href="/blog">Blog</Link>
+              <Link href="/blog/">Blog</Link>
             </li>
             <li>
               <SectionLink id="team">Team</SectionLink>
@@ -71,7 +71,7 @@ export default function SiteFooter() {
               <SectionLink id="contact">Contact</SectionLink>
             </li>
             <li>
-              <Link href="/compliance">Compliance</Link>
+              <Link href="/compliance/">Compliance</Link>
             </li>
           </ul>
         </div>
@@ -80,10 +80,10 @@ export default function SiteFooter() {
           <h4>Legal</h4>
           <ul>
             <li>
-              <Link href="/privacy">Privacy</Link>
+              <Link href="/privacy/">Privacy</Link>
             </li>
             <li>
-              <Link href="/terms">Terms</Link>
+              <Link href="/terms/">Terms</Link>
             </li>
             <li style={{ paddingTop: 6 }}>
               <a href={`mailto:${company.contact.email}`} style={{ wordBreak: 'break-all' }}>
@@ -117,7 +117,7 @@ export default function SiteFooter() {
             {company.cin}
           </span>
           {' · '}
-          <Link href="/compliance" style={{ color: 'var(--brand-gold)' }}>
+          <Link href="/compliance/" style={{ color: 'var(--brand-gold)' }}>
             View credentials →
           </Link>
         </p>
