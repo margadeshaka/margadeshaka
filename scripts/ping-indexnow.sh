@@ -12,6 +12,7 @@ HOST="margadeshaka.com"
 URLS=(
   "https://${HOST}/"
   "https://${HOST}/blog/"
+  "https://${HOST}/blog/how-to-stop-overthinking/"
   "https://${HOST}/blog/feeling-lost-and-empty/"
   "https://${HOST}/blog/i-need-someone-to-talk-to/"
   "https://${HOST}/blog/why-margadeshaka/"
