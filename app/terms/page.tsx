@@ -1,16 +1,17 @@
 import type { Metadata } from 'next';
 import LegalLayout from '../components/LegalLayout';
 import { company } from '../lib/company';
+import { ROUTES } from '../lib/routes';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'Margadeshaka terms of service for using our website and products.',
-  alternates: { canonical: '/terms' },
+  alternates: { canonical: ROUTES.terms },
 };
 
 export default function TermsPage() {
   return (
-    <LegalLayout title="Terms of Service" slug="terms" lastUpdated="May 7, 2026">
+    <LegalLayout title="Terms of Service" path={ROUTES.terms} lastUpdated="May 7, 2026">
       <p>
         These terms govern your use of <a href="https://margadeshaka.com">margadeshaka.com</a> and our
         products (Sakha and Dronacharya). By using any of these services, you agree to these terms.

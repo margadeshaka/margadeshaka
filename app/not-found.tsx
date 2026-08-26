@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ROUTES } from './lib/routes';
 
 /**
  * 404 page.
@@ -47,10 +48,10 @@ export default function NotFound() {
           It may have moved, or never been published yet.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/" className="btn btn-primary">
+          <Link href={ROUTES.home} className="btn btn-primary">
             Back to home
           </Link>
-          <Link href="/blog/" className="btn btn-ghost">
+          <Link href={ROUTES.blog} className="btn btn-ghost">
             Read the blog
           </Link>
         </div>

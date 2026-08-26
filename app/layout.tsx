@@ -10,6 +10,7 @@ import SiteFooter from './components/SiteFooter';
 import SakhaStoreModal from './components/SakhaStoreModal';
 import CosmicLayer from './components/CosmicLayer';
 import ScrollReveal from './components/ScrollReveal';
+import { ROUTES } from './lib/routes';
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
@@ -106,13 +107,13 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: '/',
+    canonical: ROUTES.home,
     languages: {
       // Explicit India targeting helps Google rank us in google.co.in.
       // x-default is the fallback for unmatched locales.
-      'en-IN': '/',
-      'en': '/',
-      'x-default': '/',
+      'en-IN': ROUTES.home,
+      'en': ROUTES.home,
+      'x-default': ROUTES.home,
     },
   },
   category: 'Technology',

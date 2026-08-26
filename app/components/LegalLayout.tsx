@@ -1,16 +1,17 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import SEOStructuredData from './SEOStructuredData';
+import { ROUTES } from '../lib/routes';
 
 interface LegalLayoutProps {
   title: string;
   lastUpdated: string;
-  /** Slug used for the breadcrumb item (e.g. 'privacy', 'terms'). */
-  slug: string;
+  /** Canonical route path for the breadcrumb item — pass a ROUTES value. */
+  path: string;
   children: ReactNode;
 }
 
-export default function LegalLayout({ title, lastUpdated, slug, children }: LegalLayoutProps) {
+export default function LegalLayout({ title, lastUpdated, path, children }: LegalLayoutProps) {
   return (
     <>
       <div
@@ -19,7 +20,7 @@ export default function LegalLayout({ title, lastUpdated, slug, children }: Lega
     >
         <div className="container-prose">
           <Link
-            href="/"
+            href={ROUTES.home}
             className="inline-flex items-center gap-2 text-brand-gold text-sm mb-8 hover:text-brand-gold-light transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -49,8 +50,8 @@ export default function LegalLayout({ title, lastUpdated, slug, children }: Lega
       </div>
       <SEOStructuredData
         breadcrumbs={[
-          { name: 'Home', href: '/' },
-          { name: title, href: `/${slug}/` },
+          { name: 'Home', href: ROUTES.home },
+          { name: title, href: path },
         ]}
       />
     </>

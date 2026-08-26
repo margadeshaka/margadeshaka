@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import LegalLayout from '../components/LegalLayout';
+import { ROUTES } from '../lib/routes';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Margadeshaka privacy policy: what data we collect, how we use it, and your rights.',
-  alternates: { canonical: '/privacy' },
+  alternates: { canonical: ROUTES.privacy },
 };
 
 export default function PrivacyPage() {
   return (
-    <LegalLayout title="Privacy Policy" slug="privacy" lastUpdated="May 7, 2026">
+    <LegalLayout title="Privacy Policy" path={ROUTES.privacy} lastUpdated="May 7, 2026">
       <p>
         Margadeshaka (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) respects your privacy. This policy describes
         what information we collect when you visit <a href="https://margadeshaka.com">margadeshaka.com</a> or

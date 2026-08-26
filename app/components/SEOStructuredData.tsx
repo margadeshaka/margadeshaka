@@ -1,4 +1,5 @@
 import { company } from '../lib/company';
+import { ROUTES, blogPost, absolute } from '../lib/routes';
 
 // Defensive trim — an env var piped in from a shell or a CI secret can carry a
 // trailing newline, which silently corrupts every URL/@id derived from baseUrl.
@@ -237,7 +238,7 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
           '@type': 'ListItem',
           position: i + 1,
           name: b.name,
-          item: b.href.startsWith('http') ? b.href : `${baseUrl}${b.href}`,
+          item: b.href.startsWith('http') ? b.href : absolute(baseUrl, b.href),
         })),
       }
     : null;
@@ -247,11 +248,11 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
     ? {
         '@context': 'https://schema.org',
         '@type': 'Blog',
-        '@id': `${baseUrl}/blog#blog`,
+        '@id': `${absolute(baseUrl, ROUTES.blog)}#blog`,
         name: 'The Margadeshaka Blog',
         description:
           'Engineering, philosophy, and the occasional wrong turn — how Margadeshaka builds AI that guides without deciding for you.',
-        url: `${baseUrl}/blog`,
+        url: absolute(baseUrl, ROUTES.blog),
         inLanguage: 'en',
         publisher: { '@id': `${baseUrl}#organization` },
         blogPost: blog.posts.map((p) => ({
@@ -259,7 +260,7 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
           headline: p.title,
           description: p.excerpt,
           datePublished: new Date(p.date).toISOString(),
-          url: `${baseUrl}/blog/${p.slug}`,
+          url: absolute(baseUrl, blogPost(p.slug)),
         })),
       }
     : null;
@@ -269,7 +270,7 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
     ? {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
-        '@id': `${baseUrl}/blog/${article.slug}#article`,
+        '@id': `${absolute(baseUrl, blogPost(article.slug))}#article`,
         headline: article.title,
         description: article.excerpt,
         datePublished: new Date(article.date).toISOString(),
@@ -282,8 +283,8 @@ export default function SEOStructuredData({ breadcrumbs, article, blog }: SEOStr
           sameAs: [company.founder.linkedin, company.founder.github],
         },
         publisher: { '@id': `${baseUrl}#organization` },
-        mainEntityOfPage: `${baseUrl}/blog/${article.slug}`,
-        isPartOf: { '@id': `${baseUrl}/blog#blog` },
+        mainEntityOfPage: absolute(baseUrl, blogPost(article.slug)),
+        isPartOf: { '@id': `${absolute(baseUrl, ROUTES.blog)}#blog` },
         inLanguage: 'en',
       }
     : null;
