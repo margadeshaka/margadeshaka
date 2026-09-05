@@ -159,3 +159,17 @@ Two Hosting sites in one Firebase project (`margadeshaka-af4de`):
 - `.claude/launch.json` — preconfigured `dev` and `preview` launch targets for preview servers.
 - `.claude/agent-model-routing.md` — model-routing guide for delegating to subagents/workflows (Haiku for mechanical work, Sonnet for edits, Opus/Fable for complex reasoning). Follow it when spawning agents.
 - `.claude/agents/a11y-reviewer.md` — accessibility review agent; run it on UI diffs before the axe-core suite.
+
+- `.claude/hooks/trap-guard.sh` — PreToolUse (Bash): blocks `npm run lint*` / `next lint` (no
+  ESLint config → interactive hang), `npm start` / `next start` / `npm run export` (hard-error under
+  `output: 'export'`), `test:visual` without `--update-snapshots` (no baselines), and any
+  Playwright run while something listens on `:3000` (`reuseExistingServer: !CI` would audit it).
+- `.claude/hooks/slash-check.sh` — PostToolUse on `app/**/*.{ts,tsx}`: flags a literal internal
+  `href` or in-post `](/path)` without the trailing slash. Early warning only;
+  `verify-trailing-slashes.mjs` against `/out` stays the authority. Both hooks have a
+  `*.test.sh` beside them.
+- `/new-post` (`.claude/skills/new-post/`) — adds a post to `blogPosts.ts`, extends
+  `ping-indexnow.sh`, runs typecheck/build/verify:hosting + `a11y-reviewer`, then branches and
+  opens a PR to `develop` on your yes. Encodes the authoring rules above.
+- `~/.claude/agents/claude-md-drift-checker.md` — user-level, read-only: statements in this file
+  that a diff invalidated.
