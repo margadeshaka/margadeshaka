@@ -11,6 +11,7 @@ import SakhaStoreModal from './components/SakhaStoreModal';
 import CosmicLayer from './components/CosmicLayer';
 import ScrollReveal from './components/ScrollReveal';
 import { ROUTES } from './lib/routes';
+import { isStagingBuild } from './lib/env';
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
@@ -44,6 +45,14 @@ const notoDevanagari = Noto_Serif_Devanagari({
 });
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://margadeshaka.com').trim();
+
+// Defence in depth, layer two (layer one is the X-Robots-Tag header in
+// firebase.json — see scripts/verify-hosting-config.mjs). Without this, every
+// staging page shipped a <meta name="robots" content="index, follow"> that
+// contradicted the header. See app/lib/env.ts for the fail-safe direction:
+// this only goes to noindex on an exact staging match, defaulting to
+// indexable otherwise.
+const staging = isStagingBuild();
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -96,11 +105,11 @@ export const metadata: Metadata = {
     images: ['/images/og-margadeshaka.png'],
   },
   robots: {
-    index: true,
-    follow: true,
+    index: !staging,
+    follow: !staging,
     googleBot: {
-      index: true,
-      follow: true,
+      index: !staging,
+      follow: !staging,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,

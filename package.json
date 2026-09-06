@@ -29,7 +29,7 @@
     "test:visual": "playwright test visual-regression",
     "test:ci": "playwright test --reporter=github",
     "deploy:staging": "next build && firebase deploy --only hosting:staging",
-    "verify:hosting": "node scripts/verify-hosting-config.mjs && node scripts/verify-trailing-slashes.mjs",
+    "verify:hosting": "node scripts/verify-hosting-config.mjs && node scripts/verify-trailing-slashes.mjs && node scripts/verify-noindex.mjs",
     "verify:links": "node scripts/verify-trailing-slashes.mjs"
   },
   "dependencies": {
