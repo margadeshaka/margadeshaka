@@ -7,6 +7,10 @@ input=$(cat)
 cmd=$(printf '%s' "$input" | jq -r '.tool_input.command // empty' 2>/dev/null) || exit 0
 [ -n "$cmd" ] || exit 0
 
+# Flatten: drop line-continuation backslashes, then join lines with spaces, so a command
+# split across lines is matched as the single command bash will run (grep is line-based).
+cmd="$(printf '%s' "$cmd" | sed -e 's/\\[[:space:]]*$//' | tr '\n' ' ')"
+
 m() { printf '%s' "$cmd" | grep -Eq -- "$1"; }
 B='(^|[[:space:];&|])'
 E='([[:space:]]|$)'

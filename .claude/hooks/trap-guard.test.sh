@@ -35,6 +35,14 @@ check 0 'npm ci'
 check 0 'git status'
 check 0 'ls -la'
 
+# multi-line / continuation
+check 2 $'npm run \\
+lint'
+check 2 $'echo first
+npm start'
+check 0 $'echo one
+echo two'
+
 # :3000 rule — needs the port free to test both branches
 if lsof -nP -iTCP:3000 -sTCP:LISTEN -t >/dev/null 2>&1; then
   echo "SKIP :3000 cases — something is already listening on :3000 (own dev server?)"
