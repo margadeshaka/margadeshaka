@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalLayout title="Privacy Policy" path={ROUTES.privacy} lastUpdated="May 7, 2026">
+    <LegalLayout title="Privacy Policy" path={ROUTES.privacy} lastUpdated="September 21, 2026">
       <p>
         Margadeshaka (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) respects your privacy. This policy describes
         what information we collect when you visit <a href="https://margadeshaka.com">margadeshaka.com</a> or
@@ -44,15 +44,16 @@ export default function PrivacyPage() {
       <h2 data-reveal="up">3. How We Share Information</h2>
       <p>We do not sell or rent your personal information. We share data only with:</p>
       <ul>
-        <li><strong>Service providers</strong> who run our infrastructure: Google Cloud / Firebase (website hosting and analytics), Microsoft Azure (cloud hosting, OpenAI), MongoDB Atlas / Azure Cosmos DB (database), Resend (transactional email).</li>
+        <li><strong>Service providers</strong> who run our infrastructure: Google Cloud / Firebase (website and application hosting, AI processing), Google Analytics (aggregate site usage), Resend (transactional email).</li>
         <li><strong>Legal authorities</strong> when required by law or to protect rights and safety.</li>
       </ul>
 
       <h2 data-reveal="up">4. AI Processing</h2>
       <p>
-        Conversations with our AI companions are sent to Azure OpenAI for response generation. Microsoft processes
-        this data under their commitment that prompts and responses are not used to train OpenAI&apos;s public models.
-        Conversations may be retained by Microsoft for up to 30 days for abuse monitoring.
+        Conversations with our AI companions are sent to a third-party cloud AI provider for response generation.
+        Today that provider is Google Cloud&apos;s Vertex AI, which processes this data under its commitment that
+        customer prompts and responses are not used to train its models. We may change AI provider as our products
+        evolve; this section names the provider we use today.
       </p>
 
       <h2 data-reveal="up">5. Your Rights</h2>
