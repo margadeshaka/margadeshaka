@@ -19,6 +19,9 @@ URLS=(
   "https://${HOST}/compliance/"
   "https://${HOST}/privacy/"
   "https://${HOST}/terms/"
+  "https://${HOST}/sakha/privacy/"
+  "https://${HOST}/sakha/terms/"
+  "https://${HOST}/sakha/delete-account/"
 )
 
 # Build the JSON payload.
