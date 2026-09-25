@@ -35,5 +35,33 @@
       "Edit(**/*.tfstate.*)",
       "Edit(**/*.tfvars)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/trap-guard.sh\"",
+            "timeout": 10,
+            "statusMessage": "Checking for documented traps"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/slash-check.sh\"",
+            "timeout": 15,
+            "statusMessage": "Checking trailing slashes"
+          }
+        ]
+      }
+    ]
   }
 }

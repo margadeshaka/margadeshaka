@@ -42,6 +42,14 @@ export const ROUTES = {
   compliance: '/compliance/',
   privacy: '/privacy/',
   terms: '/terms/',
+  // The Sakha app's own legal pages — distinct from the corporate /privacy and
+  // /terms above. These exist because sakha.live (the app's original site,
+  // Azure-hosted) went dark ~2026-08-20, taking the store-listed privacy,
+  // terms and account-deletion URLs with it. Google Play's Data safety form
+  // requires a working account-deletion URL before it can even be saved.
+  sakhaPrivacy: '/sakha/privacy/',
+  sakhaTerms: '/sakha/terms/',
+  sakhaDeleteAccount: '/sakha/delete-account/',
 } as const;
 
 /** Canonical path for a single blog post. */

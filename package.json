@@ -16,8 +16,8 @@
     "export": "next export",
     "build:static": "next build",
     "preview": "next build && npx serve out -p 3000",
-    "deploy": "next build && firebase deploy --only hosting:production",
-    "deploy:preview": "next build && firebase hosting:channel:deploy preview --only staging --expires 7d",
+    "deploy": "NEXT_PUBLIC_BASE_URL=https://margadeshaka.com next build && npm run verify:hosting && firebase deploy --only hosting:production",
+    "deploy:preview": "NEXT_PUBLIC_BASE_URL=https://margadeshaka-staging.web.app next build && npm run verify:hosting && firebase hosting:channel:deploy preview --only staging --expires 7d",
     "clean": "rm -rf .next out node_modules/.cache",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
@@ -28,8 +28,8 @@
     "test:performance": "playwright test performance",
     "test:visual": "playwright test visual-regression",
     "test:ci": "playwright test --reporter=github",
-    "deploy:staging": "next build && firebase deploy --only hosting:staging",
-    "verify:hosting": "node scripts/verify-hosting-config.mjs && node scripts/verify-trailing-slashes.mjs",
+    "deploy:staging": "NEXT_PUBLIC_BASE_URL=https://margadeshaka-staging.web.app next build && npm run verify:hosting && firebase deploy --only hosting:staging",
+    "verify:hosting": "node scripts/verify-hosting-config.mjs && node scripts/verify-trailing-slashes.mjs && node scripts/verify-noindex.mjs",
     "verify:links": "node scripts/verify-trailing-slashes.mjs"
   },
   "dependencies": {
