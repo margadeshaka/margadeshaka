@@ -18,9 +18,12 @@ export const metadata: Metadata = {
  * app/db/user_repository.py's USER_DATA_COLLECTIONS, the analyticsEvents
  * retention decision, deploy/vm/backup.sh) and from the current in-app delete
  * flows in sakha-ios-redesign and sakha-android. See the commit/PR that added
- * this page for the source citations and for facts that could not be
- * verified from code (offsite backup retention has no enforced lifecycle
- * rule as of writing).
+ * this page for the source citations.
+ *
+ * 2026-09-25: backup retention updated per founder decision ("Expire after
+ * 30 days") — a 30-day lifecycle rule is being added to the offsite backup
+ * bucket; local on-VM copies still rotate out after 14 days
+ * (deploy/vm/backup.sh's KEEP_DAYS default).
  */
 export default function SakhaDeleteAccountPage() {
   return (
@@ -58,7 +61,10 @@ export default function SakhaDeleteAccountPage() {
       </p>
 
       <h2 data-reveal="up">What gets deleted</h2>
-      <p>When your account is deleted, whether in the app or by request, we permanently remove:</p>
+      <p>
+        When your account is deleted, whether in the app or by request, we remove the following from our live
+        database immediately:
+      </p>
       <ul>
         <li>Your account and login credentials</li>
         <li>Your chat sessions and full conversation history</li>
@@ -83,8 +89,9 @@ export default function SakhaDeleteAccountPage() {
         </li>
         <li>
           <strong>Routine database backups.</strong> To protect against data loss from technical failures, we keep
-          routine encrypted backups of our database. We currently rotate these out after 14 days, so your data may
-          exist in a backup for up to that long after deletion before it is gone from every copy.
+          routine encrypted backups of our database (local copies within 14 days). These backups expire within 30
+          days, so your data may exist in a backup for up to 30 days after deletion before it is gone from every
+          copy.
         </li>
         <li>
           <strong>An anonymised deletion record.</strong> We keep a record that an account with a given ID was
