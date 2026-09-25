@@ -86,6 +86,19 @@ export default function SiteFooter() {
             <li>
               <Link href={ROUTES.terms}>Terms</Link>
             </li>
+            {/* Sakha's own legal pages, distinct from the corporate ones above —
+                the app's original site (sakha.live) went dark, so these moved
+                here (founder decision). Grouped under the same "Legal" column
+                since there is no separate Sakha footer section. */}
+            <li>
+              <Link href={ROUTES.sakhaPrivacy}>Sakha Privacy</Link>
+            </li>
+            <li>
+              <Link href={ROUTES.sakhaTerms}>Sakha Terms</Link>
+            </li>
+            <li>
+              <Link href={ROUTES.sakhaDeleteAccount}>Delete Sakha Account</Link>
+            </li>
             <li style={{ paddingTop: 6 }}>
               <a href={`mailto:${company.contact.email}`} style={{ wordBreak: 'break-all' }}>
                 {company.contact.email}
